@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import './assets/css/style.css'
-import { BrowserRouter } from 'react-router-dom';
-import { useFetching } from './hooks/useFetching'
-import MainMenuService from './api/MainMenuService'
-import AppRouter from './components/AppRouter';
+import { useState, useEffect } from "react";
+import "./assets/css/style.css";
+import { useFetching } from "./hooks/useFetching";
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./components/AppRouter";
+import MainMenuService from "./api/MainMenuService";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { MfMadiContext } from "./context";
 
 function App() {
+  const [isOpenSideMenu, setIsOpenSideMenu] = useState(false)
+
   const [mainMenu, setMainMenu] = useState([])
   const [getMainMenu, isMenuLoading, menuErr] = useFetching(async () => {
     const response = await MainMenuService.getAllMainMenu()
@@ -16,23 +19,29 @@ function App() {
     } else {
       console.log(menuErr)
     }
-  })
-
+  });
 
   useEffect(() => {
     getMainMenu()
   }, [])
 
   return (
-    <BrowserRouter>
-      <div className="page">
-        {isMenuLoading ? <div>Загрузка</div> : <Header mainMenu={mainMenu} />}
-        <main>
-          <AppRouter />
-        </main>
-        {isMenuLoading ? <div>Загрузка</div> : <Footer mainMenu={mainMenu} />}
-      </div>
-    </BrowserRouter>
+    <MfMadiContext.Provider
+      value={{
+        isOpenSideMenu,
+        setIsOpenSideMenu,
+      }}
+    >
+      <BrowserRouter>
+        <div className="page">
+          {isMenuLoading ? <div>Загрузка</div> : <Header mainMenu={mainMenu} />}
+          <main>
+            <AppRouter />
+          </main>
+          {isMenuLoading ? <div>Загрузка</div> : <Footer mainMenu={mainMenu} />}
+        </div>
+      </BrowserRouter>
+    </MfMadiContext.Provider>
   );
 }
 

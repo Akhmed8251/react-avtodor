@@ -1,14 +1,35 @@
 import logo from '../assets/images/logo.svg'
 import { Link } from 'react-router-dom'
 import { DynamicAdapt } from '../utils/dynamicAdapt'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
+import { MfMadiContext } from '../context'
 
 
 const Header = ({ mainMenu }) => {
+  const { isOpenSideMenu, setIsOpenSideMenu  } = useContext(MfMadiContext)
+
   useEffect(() => {
     const da = new DynamicAdapt("max")
     da.init()
   }, [])
+
+  const toggleSideMenu = () => {
+    setIsOpenSideMenu(prev => !prev);
+
+    document.body.classList.toggle("no-scroll")
+    document.body.classList.toggle("backdrop")
+  }
+
+  const openSubMenu = (menuWithSubmenu) => {
+    menuWithSubmenu.classList.toggle("_open")
+
+    const submenu = menuWithSubmenu.querySelector(".submenu");
+    if (menuWithSubmenu.classList.contains("_open")) {
+        submenu.style.maxHeight = submenu.scrollHeight + "px";
+    } else {
+        submenu.style.maxHeight = null;
+    }
+  }
   
   return (
     <header className="header">
@@ -59,42 +80,26 @@ const Header = ({ mainMenu }) => {
                             </li>
                         ))
                     }
-                    
-                    {/* <li className="header-main__item">
-                        <a href="/" className="header-main__link">
-                            Абитуриенту
-                        </a>
-                    </li>
-                    <li className="header-main__item">
-                        <a href="/" className="header-main__link">
-                            ДПО
-                        </a>
-                    </li>
-                    <li className="header-main__item">
-                        <a href="/" className="header-main__link">
-                            Контакты
-                        </a>
-                    </li> */}
                 </ul>
             </div>
         </div>
         <div className="header__bottom header-bottom">
             <div className="header-bottom__container container">
-                <button type="button" className="header-bottom__menu-btn" data-da=".header-top__container, 768, first"></button>
-                <div className="header-bottom__menu header-menu">
+                <button onClick={() => toggleSideMenu() } type="button" className={`header-bottom__menu-btn ${isOpenSideMenu ? "_close": ""}`} data-da=".header-top__container, 768, first"></button>
+                <div className={`header-bottom__menu header-menu ${isOpenSideMenu ? "_active" : ""}`}>
                     <div className="header-menu__body">
                         <div className="header-menu__top">
                             <span className="header-menu__top-item header-menu__top-item_main">МАДИ</span>
                             <span className="header-menu__top-item">Махачкалинский филиал</span>
                         </div>
                         <ul className="header-menu__list">
-                            <li className="header-menu__item has-submenu">
+                            <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
                                 <button className="header-menu__submenu-btn submenu-btn">
                                     <span className="submenu-btn__text">главная</span>
                                     <div className="submenu-btn__icon">
-                                        {/* <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" stroke-width="2"/>
-                                        </svg>  */}
+                                        <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
+                                        </svg> 
                                     </div>
                                 </button>
                                 <div className="submenu">
@@ -135,13 +140,13 @@ const Header = ({ mainMenu }) => {
                             <li className="header-menu__item">
                                 <a href="/" className="header-menu__link">Воспитательная и социальная работа</a>
                             </li>
-                            <li className="header-menu__item has-submenu">
+                            <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
                                 <button className="header-menu__submenu-btn submenu-btn">
                                     <span className="submenu-btn__text">студенту</span>
                                     <div className="submenu-btn__icon">
-                                        {/* <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" stroke-width="2"/>
-                                        </svg>  */}
+                                        <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
+                                        </svg> 
                                     </div>
                                 </button>
                                 <div className="submenu">
@@ -167,13 +172,13 @@ const Header = ({ mainMenu }) => {
                             <li className="header-menu__item">
                                 <a href="/" className="header-menu__link">абитуриенту</a>
                             </li>
-                            <li className="header-menu__item has-submenu">
+                            <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
                                 <button className="header-menu__submenu-btn submenu-btn">
                                     <span className="submenu-btn__text">Контакты</span>
                                     <div className="submenu-btn__icon">
-                                        {/* <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" stroke-width="2"/>
-                                        </svg>  */}
+                                        <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
+                                        </svg>
                                     </div>
                                 </button>
                                 <div className="submenu">

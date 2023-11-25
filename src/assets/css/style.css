@@ -81,6 +81,10 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.page {
+    overflow-x: hidden;
+}
+
 body::after {
     content: '';
     position: fixed;
@@ -100,12 +104,8 @@ body.backdrop::after {
     visibility: visible;
 }
 
-.page {
-    overflow-x: hidden;
-}
-
 .no-scroll {
-    overflow: hidden;
+    overflow-y: hidden;
 }
 
 .container {
@@ -369,25 +369,6 @@ body.backdrop::after {
     height: 100%;
 }
 
-/* .hero-slide::after {
-    content: '';
-    
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-} */
-
-.hero-slide img {
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
 .hero-slide__content {
     text-align: center;
     padding: 0 15px;
@@ -405,7 +386,6 @@ body.backdrop::after {
 }
 
 .swiper-pagination {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -470,7 +450,6 @@ body.backdrop::after {
     height: 78px;
     background: url('../images/arrow-prev.svg') no-repeat;
     opacity: 1;
-    position: absolute;
     top: auto;
     bottom: 9px;
     z-index: 999;
@@ -497,7 +476,7 @@ body.backdrop::after {
 
 .advertising__content::before {
     content: '';
-    background: url('../images/advertising-decor.svg') no-repeat;
+    background: url('../images/admission-decor.svg') no-repeat;
     width: 53px;
     height: 100%;
     display: block;
@@ -507,7 +486,13 @@ body.backdrop::after {
 }
 
 .advertising-block {
-    flex: 1 0 50%;
+    width: 50%;
+    height: 340px;
+}
+
+.advertising-block img {
+    width: 100%;
+    height: 100%;
 }
 
 .news {
@@ -708,7 +693,6 @@ body.backdrop::after {
     height: 600px; 
     position: relative; 
     z-index: 9;
-    overflow: hidden;
 }
 
 .ymaps-2-1-79-svg-icon {
@@ -925,13 +909,13 @@ body.backdrop::after {
     transition: .3s linear;
 }
 
-.has-submenu.open .submenu {
+.has-submenu._open .submenu {
     margin-top: 20px;
     margin-left: 20px;
     opacity: 1;
 }
 
-.has-submenu.open .submenu-btn__icon {
+.has-submenu._open .submenu-btn__icon {
     transform: rotate(180deg);
 }
 
@@ -951,12 +935,6 @@ body.backdrop::after {
     }
 }
 
-@media (max-width: 1100px) {
-    .advertising__content {
-        flex-direction: column;
-    }
-}
-
 @media (max-width: 1024px) {
     .header-menu__body {
         max-width: 436px;
@@ -964,6 +942,20 @@ body.backdrop::after {
 
     .header-menu._active .header-menu__body {
         padding-left: 96px;
+    }
+
+    .advertising__content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .advertising-block {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .advertising__content::before {
+        content: none;
     }
 
     .about__content {
@@ -1092,8 +1084,8 @@ body.backdrop::after {
         padding-top: 0;
     }
 
-    .advertising__content::before {
-        content: none;
+    .advertising-block {
+        height: 280px;
     }
 
     .news {
@@ -1304,6 +1296,10 @@ body.backdrop::after {
         margin-bottom: 35px;
     }
 
+    .advertising-block {
+        height: 240px;
+    }
+
     .news {
         margin-bottom: 30px;
     }
@@ -1362,7 +1358,7 @@ body.backdrop::after {
     }
 
     .partners .swiper-pagination {
-        bottom: -57px;
+        display: none;
     }
 
     .contacts {

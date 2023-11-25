@@ -84,49 +84,45 @@ const Footer = ({ mainMenu }) => {
         <div className="footer-bottom__container container">
           <ul className="footer-bottom__list">
             <li className="footer-bottom__item footer-item">
-              <div className="footer-item__column-wrapper">
-                <div className="footer-item__column-item">
-                  <h3 className="footer-item__title">Университет</h3>
-                  <ul className="footer-item__elements">
-                    <li className="footer-item__element">
-                      <a href="/" className="footer-item__link">
-                        Общая информация
-                      </a>
-                    </li>
-                    <li className="footer-item__element">
-                      <a href="/" className="footer-item__link">
-                        Стратегия развития МАДИ
-                      </a>
-                    </li>
-                    <li className="footer-item__element">
-                      <a href="/" className="footer-item__link">
-                        Политика в области качества
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="footer-item__column-item">
-                  <h3 className="footer-item__title">Контакты</h3>
-                  <ul className="footer-item__elements">
-                    <li className="footer-item__element">
-                      <a href="/" className="footer-item__link">
-                        Часто задаваемые вопросы
-                      </a>
-                    </li>
-                    <li className="footer-item__element">
-                      <a href="/" className="footer-item__link">
-                        Задать вопрос
-                      </a>
-                    </li>
-                    <li className="footer-item__element">
-                      <a href="/" className="footer-item__link">
-                        Анкета для выражения мнения о качестве условий оказания
-                        услуг
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              <h3 className="footer-item__title">Университет</h3>
+              <ul className="footer-item__elements">
+                <li className="footer-item__element">
+                  <a href="/" className="footer-item__link">
+                    Общая информация
+                  </a>
+                </li>
+                <li className="footer-item__element">
+                  <a href="/" className="footer-item__link">
+                    Стратегия развития МАДИ
+                  </a>
+                </li>
+                <li className="footer-item__element">
+                  <a href="/" className="footer-item__link">
+                    Политика в области качества
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li className="footer-bottom__item footer-item">
+              <h3 className="footer-item__title">Контакты</h3>
+              <ul className="footer-item__elements">
+                <li className="footer-item__element">
+                  <a href="/" className="footer-item__link">
+                    Часто задаваемые вопросы
+                  </a>
+                </li>
+                <li className="footer-item__element">
+                  <a href="/" className="footer-item__link">
+                    Задать вопрос
+                  </a>
+                </li>
+                <li className="footer-item__element">
+                  <a href="/" className="footer-item__link">
+                    Анкета для выражения мнения о качестве условий оказания
+                    услуг
+                  </a>
+                </li>
+              </ul>
             </li>
             <li className="footer-bottom__item footer-item">
               <h3 className="footer-item__title">Филиал</h3>
