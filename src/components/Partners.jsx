@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { FILES_URL } from '../api/config'
 import { Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 
 const Partners = ({ partnerItems }) => {
   return (

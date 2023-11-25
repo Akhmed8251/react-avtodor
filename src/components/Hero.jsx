@@ -2,7 +2,7 @@ import React from "react";
 import heroImg from '../assets/images/slider.jpg'
 import { Pagination, Navigation } from 'swiper/modules'
 import { Swiper,  SwiperSlide,  } from 'swiper/react';
-import 'swiper/css';
+
 
 const Hero = () => {
   return (

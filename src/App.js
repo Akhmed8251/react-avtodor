@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import 'swiper/swiper-bundle.css';
 import "./assets/css/style.css";
 import { useFetching } from "./hooks/useFetching";
 import { BrowserRouter } from "react-router-dom";
