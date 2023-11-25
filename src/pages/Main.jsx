@@ -7,6 +7,7 @@ import {useFetching}  from '../hooks/useFetching'
 import MainNews from '../components/MainNews'
 import NewsService from '../api/NewsService'
 import Map from '../components/Map'
+import About from '../components/About'
 
 const Main = () => {
   const [partners, setPartners] = useState([])
@@ -39,6 +40,7 @@ const Main = () => {
       <Hero />
       <Advertising />
       {isMainNewsLoading ? <div>Загрузка...</div> : <MainNews mainNewsItems={mainNews} />}
+      <About />
       {isPartnersLoading ? <div>Загрузка...</div> : <Partners partnerItems={partners} />}
       <Map />
     </>

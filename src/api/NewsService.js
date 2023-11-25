@@ -6,4 +6,13 @@ export default class NewsService {
         const response = await axios.get(`${API_URL}/News/GetAllNews`)
         return response;
     }
+
+    static async getNewsById(newsId) {
+        const response = await axios.get(`${API_URL}/News/GetNewsById`, {
+            params: {
+                newsId: newsId
+            }
+        })
+        return response;
+    }
 }
