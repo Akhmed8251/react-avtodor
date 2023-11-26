@@ -9,6 +9,11 @@ const Header = ({ mainMenu }) => {
   const { isOpenSideMenu, setIsOpenSideMenu  } = useContext(MfMadiContext)
 
   useEffect(() => {
+    const headerBottomList = document.querySelector(".header-bottom__list")
+    if (window.location.pathname === "/") {
+        headerBottomList.setAttribute("data-da", "main, 425, 1")
+    }
+
     const da = new DynamicAdapt("max")
     da.init()
   }, [])
@@ -202,7 +207,7 @@ const Header = ({ mainMenu }) => {
                         </ul>
                     </div>
                 </div>
-                <ul className="header-bottom__list" data-da="main, 425, 1">
+                <ul className="header-bottom__list">
                     <li className="header-bottom__item">
                         <a href="/" className="header-bottom__link">
                             ЭИОС (Moodle)

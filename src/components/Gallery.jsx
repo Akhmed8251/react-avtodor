@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Thumbs } from "swiper/modules";
+import { Pagination, Navigation, Thumbs, EffectCreative } from "swiper/modules";
 import { FILES_URL } from "../api/config";
 
 const Gallery = ({ images }) => {
@@ -17,12 +17,28 @@ const Gallery = ({ images }) => {
     setAmountImages(images?.length)
   }, [])
 
+
   return (
     <div className="gallery">
       <div className="gallery__images-block">
         <div className="gallery__images">
           <div className="gallery__images-slider-container">
-            <Swiper modules={[Navigation, Thumbs]} thumbs={{ swiper: thumbsSwiper }} allowTouchMove={false} navigation={{ enabled: amountImages > 1, prevEl: ".gallery .slider-arrow_prev", nextEl: ".gallery .slider-arrow_next" }} className="gallery__images-slider" onClick={toggleGallery}>
+            <Swiper
+             modules={[Navigation, Pagination, Thumbs, EffectCreative]} 
+             effect={'creative'}
+             creativeEffect={{ prev: {translate: ['-20%', 0, '-1px'], opacity: .4}, next: {translate: ['100%', 0, 0], opacity: .4}, shadowPerProgress: true }} 
+             speed={1000} 
+             thumbs={{ swiper: thumbsSwiper }} 
+             navigation={{ enabled: amountImages > 1, prevEl: ".gallery .slider-arrow_prev", nextEl: ".gallery .slider-arrow_next" }} 
+             className="gallery__images-slider" 
+             onClick={toggleGallery}
+             pagination={{ el: ".gallery__images-slider-container .swiper-pagination" }}
+             breakpoints={{
+              769: {
+                allowTouchMove: false
+              }
+             }}
+            >
               {
                 images?.map((fileModel, idx) => (
                   <SwiperSlide key={idx}>
@@ -45,10 +61,10 @@ const Gallery = ({ images }) => {
                 <div className="gallery__images-slider-bottom images-slider-bottom">
                 <div className="images-slider-bottom__arrows slider-arrows">
                     <div className="slider-arrow slider-arrow_prev">
-                        <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 7L10 12L15 17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLineCap="round" strokeLineJoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 7L10 12L15 17" stroke="#ffffff" strokeWidth="1.5" strokeLineCap="round" strokeLineJoin="round"></path> </g></svg>
                     </div>
                     <div className="slider-arrow slider-arrow_next">
-                        <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 7L10 12L15 17" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLineCap="round" strokeLineJoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 7L10 12L15 17" stroke="#ffffff" strokeWidth="1.5" strokeLineCap="round" strokeLineJoin="round"></path> </g></svg>
                     </div>
                 </div>
                 <div className="images-slider-bottom__amount slider-amount">
@@ -60,6 +76,7 @@ const Gallery = ({ images }) => {
                 </div>
                 </div>
             )}
+            <div className="swiper-pagination"></div>
           </div>
           
         </div>
@@ -103,6 +120,7 @@ const Gallery = ({ images }) => {
             <Swiper
               modules={[Navigation, Pagination]}
               onSwiper={setThumbsSwiper}
+              speed={700}
               pagination={{ type: "fraction" }}
               navigation={{
                 prevEl: ".gallery__slider-arrows .gallery__slider-arrow_prev",

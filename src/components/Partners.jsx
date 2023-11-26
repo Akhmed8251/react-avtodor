@@ -17,6 +17,9 @@ const Partners = ({ partnerItems }) => {
                     className="partners__slider"
                     spaceBetween={25}
                     breakpoints={{
+                        320: {
+                            slidesPerView: 1.5
+                        },
                         426: {
                             slidesPerView: 2
                         },
@@ -32,7 +35,7 @@ const Partners = ({ partnerItems }) => {
                         partnerItems.map(partner => (
                             <SwiperSlide>
                                 <Link to={partner.link} className="partners-slide">
-                                    <img src={`${FILES_URL}${partner.imageFileName}`} alt={partner.name} />
+                                    <img src={`${FILES_URL}/${partner.imageFileName}`} alt={partner.name} />
                                 </Link>
                             </SwiperSlide>
                         ))

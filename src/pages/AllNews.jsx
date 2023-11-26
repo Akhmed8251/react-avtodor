@@ -32,7 +32,7 @@ const AllNews = () => {
                       <li key={idx} className='news__item news-item'>
                         <Link to={`/news/${news.id}`} className="news-item__link">
                           <div className="news-item__image">
-                              <img src={`${FILES_URL}${news.mainImageFileName}`} alt="" />
+                              <img src={`${FILES_URL}/${news.mainImageFileName}`} alt="" />
                           </div>
                           <h3 className="news-item__title">{news.mainText}</h3>
                           <time datetime={formatTime(news.createDate)} className="news-item__date">{formatTime(news.createDate)}</time>
