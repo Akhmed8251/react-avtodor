@@ -8,6 +8,8 @@ import MainNews from '../components/MainNews'
 import NewsService from '../api/NewsService'
 import Map from '../components/Map'
 import About from '../components/About'
+import ContactsService from '../api/ContactsService'
+import Contacts from '../components/Contacts'
 
 const Main = () => {
   const [partners, setPartners] = useState([])
@@ -30,9 +32,20 @@ const Main = () => {
     }
   })
 
+  const [contacts, setContacts] = useState([])
+  const [getContacts, isContactsNewsLoading, contactsErr] = useFetching(async () => {
+    const response = await ContactsService.getAllContacts()
+    if (response.status === 200) {
+      setContacts(response.data)
+    } else {
+      console.log(contactsErr)
+    }
+  })
+
   useEffect(() => {
     getMainNews()
     getPartners()
+    getContacts()
   }, [])
 
   return (
@@ -42,6 +55,7 @@ const Main = () => {
       {isMainNewsLoading ? <div>Загрузка...</div> : <MainNews mainNewsItems={mainNews} />}
       <About />
       {isPartnersLoading ? <div>Загрузка...</div> : <Partners partnerItems={partners} />}
+      {isContactsNewsLoading ? <div>Загрузка...</div> : <Contacts contactItems={contacts} />}
       <Map />
     </>
   )
