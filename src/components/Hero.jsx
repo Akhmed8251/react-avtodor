@@ -1,6 +1,6 @@
 import React from "react";
 import heroImg from '../assets/images/slider.jpg'
-import { Pagination, Navigation } from 'swiper/modules'
+import { Pagination, Navigation, EffectCreative } from 'swiper/modules'
 import { Swiper,  SwiperSlide,  } from 'swiper/react';
 
 
@@ -10,10 +10,13 @@ const Hero = () => {
       <div className="hero__container container">
         <div className="hero__slider-container">
           <Swiper 
-            modules={[Navigation, Pagination]} 
+            modules={[Navigation, Pagination, EffectCreative]} 
             pagination
             navigation={{ prevEl: ".hero__slider-container .swiper-button-prev", nextEl: ".hero__slider-container .swiper-button-next", }}
             className="hero__slider"
+            effect={'creative'}
+            creativeEffect={{ prev: {translate: ['-20%', 0, '-1px'], opacity: .4}, next: {translate: ['100%', 0, 0], opacity: .4}, shadowPerProgress: true }} 
+            speed={1000} 
           >
             <SwiperSlide>
                <a 
