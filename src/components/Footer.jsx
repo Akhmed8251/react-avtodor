@@ -47,7 +47,7 @@ const Footer = ({ mainMenu }) => {
           </div>
           <ul className="footer-top__list">
             {mainMenu
-              .filter((m) => m.topMainPageIsVisible === true)
+              .filter((m) => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false)
               .map((mainMenuItem, idx) => (
                 <li key={idx} className="footer-top__item">
                   <Link to={mainMenuItem.link} className="footer-top__link">
@@ -83,7 +83,26 @@ const Footer = ({ mainMenu }) => {
       <div className="footer__bottom footer-bottom">
         <div className="footer-bottom__container container">
           <ul className="footer-bottom__list">
-            <li className="footer-bottom__item footer-item">
+          {
+            mainMenu
+              .filter((m) => m.topMainPageIsVisible === null && m.sideMenuIsVisible === null)
+              .map((mainMenuItem) => (
+                <li className="footer-bottom__item footer-item">
+                  <h3 className="footer-item__title">{mainMenuItem.name}</h3>
+                  <ul className="footer-item__elements">
+                    {
+                      mainMenuItem.childMenu.map(childMenuItem => (
+                        <li className="footer-item__element">
+                          <Link to={childMenuItem.link} className="footer-item__link">
+                            {childMenuItem.name}
+                          </Link>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </li>
+              ))}
+            {/* <li className="footer-bottom__item footer-item">
               <h3 className="footer-item__title">Университет</h3>
               <ul className="footer-item__elements">
                 <li className="footer-item__element">
@@ -243,15 +262,16 @@ const Footer = ({ mainMenu }) => {
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> */}
           </ul>
           <div className="footer-bottom__links">
-            <a href="/" className="footer-bottom__link">
-              Сведения об образовательной организации
-            </a>
-            <a href="/" className="footer-bottom__link">
-              Наука
-            </a>
+            {mainMenu
+              .filter((m) => m.topMainPageIsVisible === false)
+              .map((mainMenuItem) => (
+                <Link to={mainMenuItem.link} className="footer-bottom__link">
+                  {mainMenuItem.name}
+                </Link>
+              ))}
           </div>
         </div>
       </div>

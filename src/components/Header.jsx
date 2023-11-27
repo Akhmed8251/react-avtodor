@@ -77,7 +77,7 @@ const Header = ({ mainMenu }) => {
                 </div>
                 <ul className="header-main__list">
                     {
-                        mainMenu.filter(m => m.topMainPageIsVisible === true).map((mainMenuItem, idx) => (
+                        mainMenu.filter(m => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false).map((mainMenuItem, idx) => (
                             <li key={idx} className="header-main__item">
                                 <Link to={mainMenuItem.link} className="header-main__link">
                                     {mainMenuItem.name}
@@ -98,112 +98,37 @@ const Header = ({ mainMenu }) => {
                             <span className="header-menu__top-item">Махачкалинский филиал</span>
                         </div>
                         <ul className="header-menu__list">
-                            <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
-                                <button className="header-menu__submenu-btn submenu-btn">
-                                    <span className="submenu-btn__text">главная</span>
-                                    <div className="submenu-btn__icon">
-                                        <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
-                                        </svg> 
-                                    </div>
-                                </button>
-                                <div className="submenu">
-                                    <ul className="submenu__list">
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 1</a>
-                                        </li>
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 2</a>
-                                        </li>
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 3</a>
-                                        </li>
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 4</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li className="header-menu__item">
-                                <a href="/" className="header-menu__link">Сведения об образовательной организации</a>
-                            </li>
-                            <li className="header-menu__item">
-                                <a href="/" className="header-menu__link">Студенческий совет</a>
-                            </li>
-                            <li className="header-menu__item">
-                                <a href="/" className="header-menu__link">Комплексная безопасность</a>
-                            </li>
-                            <li className="header-menu__item">
-                                <a href="/" className="header-menu__link">Центр содействия трудоустройству выпускников</a>
-                            </li>
-                            <li className="header-menu__item">
-                                <a href="/" className="header-menu__link">Новости</a>
-                            </li>
-                            <li className="header-menu__item">
-                                <a href="/" className="header-menu__link">Внутренняя оценка качества образования</a>
-                            </li>
-                            <li className="header-menu__item">
-                                <a href="/" className="header-menu__link">Воспитательная и социальная работа</a>
-                            </li>
-                            <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
-                                <button className="header-menu__submenu-btn submenu-btn">
-                                    <span className="submenu-btn__text">студенту</span>
-                                    <div className="submenu-btn__icon">
-                                        <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
-                                        </svg> 
-                                    </div>
-                                </button>
-                                <div className="submenu">
-                                    <ul className="submenu__list">
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 1</a>
-                                        </li>
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 2</a>
-                                        </li>
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 3</a>
-                                        </li>
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 4</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li className="header-menu__item">
-                                <a href="/" className="header-menu__link">факультеты</a>
-                            </li>
-                            <li className="header-menu__item">
-                                <a href="/" className="header-menu__link">абитуриенту</a>
-                            </li>
-                            <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
-                                <button className="header-menu__submenu-btn submenu-btn">
-                                    <span className="submenu-btn__text">Контакты</span>
-                                    <div className="submenu-btn__icon">
-                                        <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div className="submenu">
-                                    <ul className="submenu__list">
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 1</a>
-                                        </li>
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 2</a>
-                                        </li>
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 3</a>
-                                        </li>
-                                        <li className="submenu__item">
-                                            <a href="/" className="submenu__link">пункт 4</a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </li>
+                            {
+                                mainMenu.filter(m => m.sideMenuIsVisible === true).map(mainMenuItem => (
+                                    (mainMenu.childMenu && mainMenuItem.childMenu.length > 0)
+                                        ?
+                                            <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
+                                                <button className="header-menu__submenu-btn submenu-btn">
+                                                    <span className="submenu-btn__text">{mainMenuItem.name}</span>
+                                                    <div className="submenu-btn__icon">
+                                                        <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
+                                                        </svg> 
+                                                    </div>
+                                                </button>
+                                                <div className="submenu">
+                                                    <ul className="submenu__list">
+                                                        {
+                                                            mainMenuItem.childMenu.map(childMenuItem => (
+                                                                <li className="submenu__item">
+                                                                    <Link to={childMenuItem.link} className="submenu__link">{childMenuItem.name}</Link>
+                                                                </li>
+                                                            ))
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        :
+                                            <li className="header-menu__item">
+                                                <Link to={mainMenuItem.link} className="header-menu__link">{mainMenuItem.name}</Link>
+                                            </li>
+                                ))
+                            }
                         </ul>
                     </div>
                 </div>
