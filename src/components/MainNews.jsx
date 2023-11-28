@@ -9,7 +9,7 @@ import NewsService from "../api/NewsService";
 const MainNews = () => {
   const [mainNews, setMainNews] = useState([])
   const [getMainNews, isMainNewsLoading, mainNewsErr] = useFetching(async () => {
-    const response = await NewsService.getAllNews()
+    const response = await NewsService.getNews()
     if (response.status === 200) {
       setMainNews(response.data)
     } else {
@@ -47,8 +47,8 @@ const MainNews = () => {
               }}
               className="news__slider"
             >
-              {mainNews.map((news) => (
-                <SwiperSlide>
+              {mainNews.map((news, idx) => (
+                <SwiperSlide key={idx}>
                   <div className="news-slide">
                     <Link to={`/news/${news.id}`} className="news-slide__link">
                       <div className="news-slide__image">

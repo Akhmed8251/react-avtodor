@@ -2,12 +2,12 @@ import React from 'react'
 
 const About = () => {
   return (
-    <section class="about">
-        <div class="about__container container">
-            <div class="about__wrapper">
-                <div class="about__content">
-                    <h2 class="about__title title">Махачкалинский филиал МАДИ</h2>
-                    <p class="about__desc">
+    <section className="about">
+        <div className="about__container container">
+            <div className="about__wrapper">
+                <div className="about__content">
+                    <h2 className="about__title title">Махачкалинский филиал МАДИ</h2>
+                    <p className="about__desc">
                         МАДИ — крупнейший автомобильно-дорожный вуз России, ведущий научно-образовательный и
                         методический центр
                         по подготовке бакалавров и специалистов в области строительства автомобильных дорог,
@@ -17,9 +17,9 @@ const About = () => {
                         и в строительстве, автоматизированных систем управления и организации дорожного
                         движения.
                     </p>
-                    <a href="/" class="about__btn btn btn_darker">Сведения об ОО</a>
+                    <a href="/" className="about__btn btn btn_darker">Сведения об ОО</a>
                 </div>
-                <div class="about__image"></div>
+                <div className="about__image"></div>
             </div>
         </div>
     </section>

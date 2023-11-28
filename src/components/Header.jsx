@@ -11,7 +11,7 @@ const Header = () => {
 
   const [mainMenu, setMainMenu] = useState([])
   const [getMainMenu, isMenuLoading, menuErr] = useFetching(async () => {
-    const response = await MainMenuService.getAllMainMenu()
+    const response = await MainMenuService.getMainMenu()
     if (response.status === 200) {
       setMainMenu(response.data)
     } else {
@@ -120,10 +120,10 @@ const Header = () => {
                                     ?
                                         <div>Загрузка...</div>
                                     :
-                                        mainMenu.filter(m => m.sideMenuIsVisible === true).map(mainMenuItem => (
+                                        mainMenu.filter(m => m.sideMenuIsVisible === true).map((mainMenuItem, idx) => (
                                             (mainMenu.childMenu && mainMenuItem.childMenu.length > 0)
                                                 ?
-                                                    <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
+                                                    <li key={idx} className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
                                                         <button className="header-menu__submenu-btn submenu-btn">
                                                             <span className="submenu-btn__text">{mainMenuItem.name}</span>
                                                             <div className="submenu-btn__icon">
@@ -135,8 +135,8 @@ const Header = () => {
                                                         <div className="submenu">
                                                             <ul className="submenu__list">
                                                                 {
-                                                                    mainMenuItem.childMenu.map(childMenuItem => (
-                                                                        <li className="submenu__item">
+                                                                    mainMenuItem.childMenu.map((childMenuItem, idx) => (
+                                                                        <li key={idx} className="submenu__item">
                                                                             <Link to={childMenuItem.link} className="submenu__link">{childMenuItem.name}</Link>
                                                                         </li>
                                                                     ))
@@ -145,7 +145,7 @@ const Header = () => {
                                                         </div>
                                                     </li>
                                                 :
-                                                    <li className="header-menu__item">
+                                                    <li key={idx} className="header-menu__item">
                                                         <Link to={mainMenuItem.link} className="header-menu__link">{mainMenuItem.name}</Link>
                                                     </li>
                                         ))

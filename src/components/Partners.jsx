@@ -9,7 +9,7 @@ import PartnersService from '../api/PartnersService'
 const Partners = ({ partnerItems }) => {
     const [partners, setPartners] = useState([])
     const [getPartners, isPartnersLoading, partnersErr] = useFetching(async () => {
-        const response = await PartnersService.getAllPartners()
+        const response = await PartnersService.getPartners()
         if (response.status === 200) {
             setPartners(response.data)
         } else {
@@ -53,8 +53,8 @@ const Partners = ({ partnerItems }) => {
                                 }}
                             >
                                 {
-                                    partners.map(partner => (
-                                        <SwiperSlide>
+                                    partners.map((partner, idx) => (
+                                        <SwiperSlide key={idx}>
                                             <Link to={partner.link} className="partners-slide">
                                                 <img src={`${FILES_URL}/${partner.imageFileName}`} alt={partner.name} />
                                             </Link>

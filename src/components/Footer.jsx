@@ -8,7 +8,7 @@ import MainMenuService from "../api/MainMenuService";
 const Footer = () => {
   const [mainMenu, setMainMenu] = useState([])
   const [getMainMenu, isMenuLoading, menuErr] = useFetching(async () => {
-    const response = await MainMenuService.getAllMainMenu()
+    const response = await MainMenuService.getMainMenu()
     if (response.status === 200) {
       setMainMenu(response.data)
     } else {

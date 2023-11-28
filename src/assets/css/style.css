@@ -656,19 +656,17 @@ body.backdrop::after {
     margin-bottom: 22px;
 }
 
-.contacts-item__address,
-.contacts-item__tel,
-.contacts-item__worktime {
+.contacts-item__value {
     font-weight: 500;
     line-height: 1.63;
     color: #313131;
 }
 
-.contacts-item__address {
+.contacts-item__value_address {
     max-width: 337px;
 }
 
-.contacts-item__worktime {
+.contacts-item__value_worktime {
     max-width: 180px;
 }
 
@@ -1791,9 +1789,7 @@ body.backdrop::after {
         margin-bottom: 5px;
     }
 
-    .contacts-item__address,
-    .contacts-item__tel,
-    .contacts-item__worktime {
+    .contacts-item__value {
         font-size: 14px;
     }
 
