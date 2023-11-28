@@ -1,9 +1,21 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import logo from "../assets/images/logo.svg";
 import { Link } from "react-router-dom";
 import { DynamicAdapt } from "../utils/dynamicAdapt";
+import { useFetching } from "../hooks/useFetching";
+import MainMenuService from "../api/MainMenuService";
 
-const Footer = ({ mainMenu }) => {
+const Footer = () => {
+  const [mainMenu, setMainMenu] = useState([])
+  const [getMainMenu, isMenuLoading, menuErr] = useFetching(async () => {
+    const response = await MainMenuService.getAllMainMenu()
+    if (response.status === 200) {
+      setMainMenu(response.data)
+    } else {
+      console.log(menuErr)
+    }
+  });
+
   useEffect(() => {
     const da = new DynamicAdapt("max");
     da.init();
@@ -46,15 +58,21 @@ const Footer = ({ mainMenu }) => {
             </span>
           </div>
           <ul className="footer-top__list">
-            {mainMenu
-              .filter((m) => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false)
-              .map((mainMenuItem, idx) => (
-                <li key={idx} className="footer-top__item">
-                  <Link to={mainMenuItem.link} className="footer-top__link">
-                    {mainMenuItem.name}
-                  </Link>
-                </li>
-              ))}
+            {
+              isMenuLoading
+              ?
+                <div>Звгрузка...</div>
+              :
+                mainMenu
+                .filter((m) => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false)
+                .map((mainMenuItem, idx) => (
+                  <li key={idx} className="footer-top__item">
+                    <Link to={mainMenuItem.link} className="footer-top__link">
+                      {mainMenuItem.name}
+                    </Link>
+                  </li>
+                ))
+            }
           </ul>
         </div>
       </div>
@@ -84,7 +102,11 @@ const Footer = ({ mainMenu }) => {
         <div className="footer-bottom__container container">
           <ul className="footer-bottom__list">
           {
-            mainMenu
+            isMenuLoading
+            ?
+              <div>Загрузка...</div>
+            :
+              mainMenu
               .filter((m) => m.topMainPageIsVisible === null && m.sideMenuIsVisible === null)
               .map((mainMenuItem) => (
                 <li className="footer-bottom__item footer-item">
@@ -101,7 +123,8 @@ const Footer = ({ mainMenu }) => {
                     }
                   </ul>
                 </li>
-              ))}
+              ))
+          }
             {/* <li className="footer-bottom__item footer-item">
               <h3 className="footer-item__title">Университет</h3>
               <ul className="footer-item__elements">
@@ -265,13 +288,19 @@ const Footer = ({ mainMenu }) => {
             </li> */}
           </ul>
           <div className="footer-bottom__links">
-            {mainMenu
-              .filter((m) => m.topMainPageIsVisible === false)
-              .map((mainMenuItem) => (
-                <Link to={mainMenuItem.link} className="footer-bottom__link">
-                  {mainMenuItem.name}
-                </Link>
-              ))}
+            {
+              isMenuLoading
+              ?
+                <div>Загрузка...</div>
+              :
+                mainMenu
+                .filter((m) => m.topMainPageIsVisible === false)
+                .map((mainMenuItem) => (
+                  <Link to={mainMenuItem.link} className="footer-bottom__link">
+                    {mainMenuItem.name}
+                  </Link>
+                ))
+            }
           </div>
         </div>
       </div>

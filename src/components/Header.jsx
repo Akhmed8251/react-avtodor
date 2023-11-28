@@ -1,12 +1,23 @@
 import logo from '../assets/images/logo.svg'
 import { Link } from 'react-router-dom'
 import { DynamicAdapt } from '../utils/dynamicAdapt'
-import { useContext, useEffect } from 'react'
-import { MfMadiContext } from '../context'
+import { useState, useEffect } from 'react'
+import { useFetching } from '../hooks/useFetching'
+import MainMenuService from '../api/MainMenuService'
 
 
-const Header = ({ mainMenu }) => {
-  const { isOpenSideMenu, setIsOpenSideMenu  } = useContext(MfMadiContext)
+const Header = () => {
+  const [isOpenSideMenu, setIsOpenSideMenu] = useState(false)
+
+  const [mainMenu, setMainMenu] = useState([])
+  const [getMainMenu, isMenuLoading, menuErr] = useFetching(async () => {
+    const response = await MainMenuService.getAllMainMenu()
+    if (response.status === 200) {
+      setMainMenu(response.data)
+    } else {
+      console.log(menuErr)
+    }
+  });
 
   useEffect(() => {
     const headerBottomList = document.querySelector(".header-bottom__list")
@@ -16,6 +27,8 @@ const Header = ({ mainMenu }) => {
 
     const da = new DynamicAdapt("max")
     da.init()
+
+    getMainMenu()
   }, [])
 
   const toggleSideMenu = () => {
@@ -77,13 +90,17 @@ const Header = ({ mainMenu }) => {
                 </div>
                 <ul className="header-main__list">
                     {
-                        mainMenu.filter(m => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false).map((mainMenuItem, idx) => (
-                            <li key={idx} className="header-main__item">
-                                <Link to={mainMenuItem.link} className="header-main__link">
-                                    {mainMenuItem.name}
-                                </Link>
-                            </li>
-                        ))
+                        isMenuLoading
+                            ?
+                                <div>Загрузка...</div>
+                            :
+                                mainMenu.filter(m => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false).map((mainMenuItem, idx) => (
+                                    <li key={idx} className="header-main__item">
+                                        <Link to={mainMenuItem.link} className="header-main__link">
+                                            {mainMenuItem.name}
+                                        </Link>
+                                    </li>
+                                ))
                     }
                 </ul>
             </div>
@@ -99,35 +116,39 @@ const Header = ({ mainMenu }) => {
                         </div>
                         <ul className="header-menu__list">
                             {
-                                mainMenu.filter(m => m.sideMenuIsVisible === true).map(mainMenuItem => (
-                                    (mainMenu.childMenu && mainMenuItem.childMenu.length > 0)
-                                        ?
-                                            <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
-                                                <button className="header-menu__submenu-btn submenu-btn">
-                                                    <span className="submenu-btn__text">{mainMenuItem.name}</span>
-                                                    <div className="submenu-btn__icon">
-                                                        <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
-                                                        </svg> 
-                                                    </div>
-                                                </button>
-                                                <div className="submenu">
-                                                    <ul className="submenu__list">
-                                                        {
-                                                            mainMenuItem.childMenu.map(childMenuItem => (
-                                                                <li className="submenu__item">
-                                                                    <Link to={childMenuItem.link} className="submenu__link">{childMenuItem.name}</Link>
-                                                                </li>
-                                                            ))
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        :
-                                            <li className="header-menu__item">
-                                                <Link to={mainMenuItem.link} className="header-menu__link">{mainMenuItem.name}</Link>
-                                            </li>
-                                ))
+                                isMenuLoading
+                                    ?
+                                        <div>Загрузка...</div>
+                                    :
+                                        mainMenu.filter(m => m.sideMenuIsVisible === true).map(mainMenuItem => (
+                                            (mainMenu.childMenu && mainMenuItem.childMenu.length > 0)
+                                                ?
+                                                    <li className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
+                                                        <button className="header-menu__submenu-btn submenu-btn">
+                                                            <span className="submenu-btn__text">{mainMenuItem.name}</span>
+                                                            <div className="submenu-btn__icon">
+                                                                <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
+                                                                </svg> 
+                                                            </div>
+                                                        </button>
+                                                        <div className="submenu">
+                                                            <ul className="submenu__list">
+                                                                {
+                                                                    mainMenuItem.childMenu.map(childMenuItem => (
+                                                                        <li className="submenu__item">
+                                                                            <Link to={childMenuItem.link} className="submenu__link">{childMenuItem.name}</Link>
+                                                                        </li>
+                                                                    ))
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                :
+                                                    <li className="header-menu__item">
+                                                        <Link to={mainMenuItem.link} className="header-menu__link">{mainMenuItem.name}</Link>
+                                                    </li>
+                                        ))
                             }
                         </ul>
                     </div>

@@ -1,13 +1,29 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { useFetching } from '../hooks/useFetching'
+import ContactsService from '../api/ContactsService'
 
-const Contacts = ({ contactItems }) => {
+const Contacts = () => {
+  const [contacts, setContacts] = useState([])
+  const [getContacts, isContactsNewsLoading, contactsErr] = useFetching(async () => {
+    const response = await ContactsService.getAllContacts()
+    if (response.status === 200) {
+      setContacts(response.data)
+    } else {
+      console.log(contactsErr)
+    }
+  })
+
+  useEffect(() => {
+    getContacts()
+  }, [])
+ 
   return (
     <section class="contacts">
         <div class="contacts__container container">
             <h2 class="contacts__title title">КОНТАКТЫ</h2>
             <ul class="contacts__list">
                 {
-                    contactItems.map(contact => (                 
+                    contacts.map(contact => (                 
                         <li class="contacts__item contacts-item">
                             <h3 class="contacts-item__title">Наш адрес:</h3>
                             {
