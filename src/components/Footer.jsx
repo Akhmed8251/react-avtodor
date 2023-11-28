@@ -19,6 +19,8 @@ const Footer = () => {
   useEffect(() => {
     const da = new DynamicAdapt("max");
     da.init();
+
+    getMainMenu()
   }, []);
 
   return (
@@ -77,26 +79,17 @@ const Footer = () => {
         </div>
       </div>
       <ul className="footer__menu-list">
-        <li className="footer__menu-item">
-          <a href="/" className="footer__menu-link">
-            ЭИОС (Moodle)
-          </a>
-        </li>
-        <li className="footer__menu-item footer__menu-item_dark">
-          <a href="/" className="footer__menu-link">
-            ЛК абитуриента
-          </a>
-        </li>
-        <li className="footer__menu-item">
-          <a href="/" className="footer__menu-link">
-            ЛК студента
-          </a>
-        </li>
-        <li className="footer__menu-item footer__menu-item_dark">
-          <a href="/" className="footer__menu-link">
-            Расписание занятий
-          </a>
-        </li>
+        {
+          isMenuLoading ? <div>Загрузка...</div>
+          :
+              mainMenu.filter(m => m.menuAboveAdvertisingIsVisible === true).map((mainMenuItem, idx) => (
+                  <li key={idx} className={`footer__menu-item ${idx % 2 != 0 ? "footer__menu-item_dark" : ""}`}>
+                      <Link to={mainMenuItem.link} className="footer__menu-link">
+                          {mainMenuItem.name}
+                      </Link>
+                  </li>
+              ))
+        }
       </ul>
       <div className="footer__bottom footer-bottom">
         <div className="footer-bottom__container container">
@@ -107,7 +100,7 @@ const Footer = () => {
               <div>Загрузка...</div>
             :
               mainMenu
-              .filter((m) => m.topMainPageIsVisible === null && m.sideMenuIsVisible === null)
+              .filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === null)
               .map((mainMenuItem) => (
                 <li className="footer-bottom__item footer-item">
                   <h3 className="footer-item__title">{mainMenuItem.name}</h3>

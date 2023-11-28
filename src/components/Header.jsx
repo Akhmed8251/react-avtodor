@@ -154,26 +154,17 @@ const Header = () => {
                     </div>
                 </div>
                 <ul className="header-bottom__list">
-                    <li className="header-bottom__item">
-                        <a href="/" className="header-bottom__link">
-                            ЭИОС (Moodle)
-                        </a>
-                    </li>
-                    <li className="header-bottom__item header-bottom__item_dark">
-                        <a href="/" className="header-bottom__link">
-                            ЛК абитуриента
-                        </a>
-                    </li>
-                    <li className="header-bottom__item">
-                        <a href="/" className="header-bottom__link">
-                            ЛК студента
-                        </a>
-                    </li>
-                    <li className="header-bottom__item header-bottom__item_dark">
-                        <a href="/" className="header-bottom__link">
-                            Расписание занятий
-                        </a>
-                    </li>
+                    {
+                        isMenuLoading ? <div>Загрузка...</div>
+                        :
+                            mainMenu.filter(m => m.menuAboveAdvertisingIsVisible === true).map((mainMenuItem, idx) => (
+                                <li key={idx} className={`header-bottom__item ${idx % 2 != 0 ? "header-bottom__item_dark" : ""}`}>
+                                    <Link to={mainMenuItem.link} className="header-bottom__link">
+                                        {mainMenuItem.name}
+                                    </Link>
+                                </li>
+                            ))
+                    }
                 </ul>
             </div>
         </div>
