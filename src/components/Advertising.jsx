@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import AdvertisingService from '../api/Advertising'
+import AdvertisingService from '../api/AdvertisingService'
 import { FILES_URL } from '../api/config'
 import { useFetching } from '../hooks/useFetching'
+import { Link } from 'react-router-dom'
 
 const Advertising = () => {
     const [advertisings, setAdvertisings] = useState([])
@@ -28,9 +29,9 @@ const Advertising = () => {
                             <div>Загрузка...</div>
                             :
                             advertisings?.map(advertisingItem => (
-                                <div className="advertising__block advertising-block">
+                                <Link to={advertisingItem.buttonLink} className="advertising__block advertising-block">
                                     <img src={`${FILES_URL}/${advertisingItem.avatarFileName}`} alt={advertisingItem.title} />
-                                </div>
+                                </Link>
                             ))
                     }
                 </div>
