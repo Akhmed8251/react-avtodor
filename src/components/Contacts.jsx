@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useFetching } from "../hooks/useFetching";
 import ContactsService from "../api/ContactsService";
+import Loader from './ui/Loader'
 
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -25,7 +26,7 @@ const Contacts = () => {
         <h2 className="contacts__title title">КОНТАКТЫ</h2>
         <ul className="contacts__list">
           {
-            isContactsLoading ? <div>Загрузка...</div>
+            isContactsLoading ? <Loader />
                 :
                 contacts
                 .filter((c) => c.contactType != 3)
@@ -47,7 +48,7 @@ const Contacts = () => {
                 ))
           }
           {
-            isContactsLoading ? <div>Загрузка...</div>
+            isContactsLoading ? <Loader />
               :
               <li className="contacts__item contacts-item">
                 <h3 className="contacts-item__title">Приемная МФ МАДИ:</h3>

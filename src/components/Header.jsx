@@ -4,6 +4,7 @@ import { DynamicAdapt } from '../utils/dynamicAdapt'
 import { useState, useEffect } from 'react'
 import { useFetching } from '../hooks/useFetching'
 import MainMenuService from '../api/MainMenuService'
+import Loader from './ui/Loader'
 
 
 const Header = () => {
@@ -92,7 +93,7 @@ const Header = () => {
                     {
                         isMenuLoading
                             ?
-                                <div>Загрузка...</div>
+                                <Loader />
                             :
                                 mainMenu.filter(m => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false).map((mainMenuItem, idx) => (
                                     <li key={idx} className="header-main__item">
@@ -118,7 +119,7 @@ const Header = () => {
                             {
                                 isMenuLoading
                                     ?
-                                        <div>Загрузка...</div>
+                                        <Loader />
                                     :
                                         mainMenu.filter(m => m.sideMenuIsVisible === true).map((mainMenuItem, idx) => (
                                             (mainMenu.childMenu && mainMenuItem.childMenu.length > 0)
@@ -155,7 +156,7 @@ const Header = () => {
                 </div>
                 <ul className="header-bottom__list">
                     {
-                        isMenuLoading ? <div>Загрузка...</div>
+                        isMenuLoading ? <Loader />
                         :
                             mainMenu.filter(m => m.menuAboveAdvertisingIsVisible === true).map((mainMenuItem, idx) => (
                                 <li key={idx} className={`header-bottom__item ${idx % 2 != 0 ? "header-bottom__item_dark" : ""}`}>

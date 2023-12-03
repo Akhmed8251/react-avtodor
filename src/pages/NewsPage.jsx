@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useFetching } from "../hooks/useFetching";
 import NewsService from "../api/NewsService";
 import { useParams } from "react-router-dom";
-import Gallery from "../components/Gallery";
+import Gallery from "../components/ui/Gallery";
+import Loader from '../components/ui/Loader'
 
 const NewsPage = () => {
   const urlParams = useParams();
@@ -27,7 +28,7 @@ const NewsPage = () => {
     <section className="news-page">
       <div className="news-page__container container">
         {isNewsLoading ? (
-          <div>Загрузка...</div>
+          <Loader />
         ) : (
           <>
             <h1 className="news-page__title title">{newsInfo?.content.title}</h1>

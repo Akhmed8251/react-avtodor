@@ -4,11 +4,12 @@ import { formatTime } from '../utils/time'
 import { FILES_URL } from '../api/config'
 import { Link } from 'react-router-dom'
 import {useFetching}  from '../hooks/useFetching'
+import Loader from '../components/ui/Loader'
 
 const AllNews = () => {
   const [allNews, setAllNews] = useState([])
   const [getAllNews, isAllNewsLoading, allNewsErr] = useFetching(async () => {
-    const response = await NewsService.getAllNews()
+    const response = await NewsService.getNews()
     if (response.status === 200) {
       setAllNews(response.data)
     } else {
@@ -21,18 +22,18 @@ const AllNews = () => {
   }, [])
 
   return (
-    <section className="news">
-        <div className="news__container container">
-            <h2 className="news__title title">ВСЕ НОВОСТИ</h2>
-            <ul className='news__list'>
+    <section className="all-news">
+        <div className="all-news__container container">
+            <h2 className="all-news__title title">ВСЕ НОВОСТИ</h2>
+            <ul className='all-news__list'>
               {
-                isAllNewsLoading ? <div>Загрузка...</div>
+                isAllNewsLoading ? <Loader />
                   :
                     allNews.map((news, idx) => (
-                      <li key={idx} className='news__item news-item'>
+                      <li key={idx} className='all-news__item news-item'>
                         <Link to={`/news/${news.id}`} className="news-item__link">
                           <div className="news-item__image">
-                              <img src={`${FILES_URL}/${news.mainImageFileName}`} alt="" />
+                            <img src={`${FILES_URL}/${news.content?.fileModels[0].name}`} alt="" />
                           </div>
                           <h3 className="news-item__title">{news.mainText}</h3>
                           <time datetime={formatTime(news.createDate)} className="news-item__date">{formatTime(news.createDate)}</time>
@@ -40,6 +41,7 @@ const AllNews = () => {
                       </li>
                     ))
                 }
+                <div className=''></div>
             </ul>
         </div>
     </section>

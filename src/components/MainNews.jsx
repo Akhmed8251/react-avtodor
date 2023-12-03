@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { formatTime } from "../utils/time";
 import { useFetching } from "../hooks/useFetching";
 import NewsService from "../api/NewsService";
+import Loader from './ui/Loader'
 
 const MainNews = () => {
   const [mainNews, setMainNews] = useState([])
@@ -28,7 +29,7 @@ const MainNews = () => {
         {
           isMainNewsLoading
             ?
-              <div></div>
+              <Loader />
             :
             <Swiper
               autoHeight
@@ -49,13 +50,13 @@ const MainNews = () => {
             >
               {mainNews.map((news, idx) => (
                 <SwiperSlide key={idx}>
-                  <div className="news-slide">
-                    <Link to={`/news/${news.id}`} className="news-slide__link">
-                      <div className="news-slide__image">
-                        <img src={`${FILES_URL}${news.mainImageFileName}`} alt="" />
+                  <div className="news-item">
+                    <Link to={`/news/${news.id}`} className="news-item__link">
+                      <div className="news-item__image">
+                        <img src={`${FILES_URL}/${news.content?.fileModels[0].name}`} alt="" />
                       </div>
-                      <h3 className="news-slide__title">{news.mainText}</h3>
-                      <time className="news-slide__date">{formatTime(news.createDate)}</time>
+                      <h3 className="news-item__title">{news.mainText}</h3>
+                      <time className="news-item__date">{formatTime(news.createDate)}</time>
                     </Link>
                   </div>
                 </SwiperSlide>

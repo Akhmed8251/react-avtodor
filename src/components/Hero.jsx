@@ -45,11 +45,6 @@ const Hero = () => {
               </a>
             </SwiperSlide>
             <SwiperSlide>
-              {/* <a 
-                href="/" 
-                className="hero-slide" 
-                style={{ background: `linear-gradient(359deg, rgba(0, 0, 0, 0.80) 0.87%, rgba(0, 0, 0, 0.30) 99.42%), url("${heroImg}") no-repeat center / cover, lightgray 50% / cover no-repeat` }}>
-              </a> */}
                <a 
                 href="/" 
                 className="hero-slide" 

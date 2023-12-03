@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Thumbs, EffectCreative } from "swiper/modules";
-import { FILES_URL } from "../api/config";
+import { Pagination, Navigation, Thumbs } from "swiper/modules";
+import { FILES_URL } from "../../api/config";
 
 const Gallery = ({ images }) => {
   const [amountImages, setAmountImages] = useState(0);
@@ -24,9 +24,7 @@ const Gallery = ({ images }) => {
         <div className="gallery__images">
           <div className="gallery__images-slider-container">
             <Swiper
-             modules={[Navigation, Pagination, Thumbs, EffectCreative]} 
-             effect={'creative'}
-             creativeEffect={{ prev: {translate: ['-20%', 0, '-1px'], opacity: .4}, next: {translate: ['100%', 0, 0], opacity: .4}, shadowPerProgress: true }} 
+             modules={[Navigation, Pagination, Thumbs]} 
              speed={1000} 
              thumbs={{ swiper: thumbsSwiper }} 
              navigation={{ enabled: amountImages > 1, prevEl: ".gallery .slider-arrow_prev", nextEl: ".gallery .slider-arrow_next" }} 

@@ -5,6 +5,7 @@ import { Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useFetching } from '../hooks/useFetching';
 import PartnersService from '../api/PartnersService'
+import Loader from './ui/Loader'
 
 const Partners = () => {
     const [partners, setPartners] = useState([])
@@ -29,7 +30,7 @@ const Partners = () => {
                     {
                         isPartnersLoading
                             ?
-                                <div>Загрузка...</div>
+                                <Loader />
                             :
                             <Swiper
                                 modules={[Pagination]}

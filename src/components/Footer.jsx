@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { DynamicAdapt } from "../utils/dynamicAdapt";
 import { useFetching } from "../hooks/useFetching";
 import MainMenuService from "../api/MainMenuService";
+import Loader from './ui/Loader'
 
 const Footer = () => {
   const [mainMenu, setMainMenu] = useState([])
@@ -63,7 +64,7 @@ const Footer = () => {
             {
               isMenuLoading
               ?
-                <div>Звгрузка...</div>
+                <Loader />
               :
                 mainMenu
                 .filter((m) => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false)
@@ -80,7 +81,7 @@ const Footer = () => {
       </div>
       <ul className="footer__menu-list">
         {
-          isMenuLoading ? <div>Загрузка...</div>
+          isMenuLoading ? <Loader />
           :
               mainMenu.filter(m => m.menuAboveAdvertisingIsVisible === true).map((mainMenuItem, idx) => (
                   <li key={idx} className={`footer__menu-item ${idx % 2 != 0 ? "footer__menu-item_dark" : ""}`}>
@@ -97,7 +98,7 @@ const Footer = () => {
           {
             isMenuLoading
             ?
-              <div>Загрузка...</div>
+              <Loader />
             :
               mainMenu
               .filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === null)
@@ -118,173 +119,12 @@ const Footer = () => {
                 </li>
               ))
           }
-            {/* <li className="footer-bottom__item footer-item">
-              <h3 className="footer-item__title">Университет</h3>
-              <ul className="footer-item__elements">
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Общая информация
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Стратегия развития МАДИ
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Политика в области качества
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li className="footer-bottom__item footer-item">
-              <h3 className="footer-item__title">Контакты</h3>
-              <ul className="footer-item__elements">
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Часто задаваемые вопросы
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Задать вопрос
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Анкета для выражения мнения о качестве условий оказания
-                    услуг
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li className="footer-bottom__item footer-item">
-              <h3 className="footer-item__title">Филиал</h3>
-              <ul className="footer-item__elements">
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Воспитательная и социальная работа
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Студенческий совет
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Комплексная безопасность
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Профком работников
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Центр содействия трудоустройству выпускников
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Пресс-центр
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Новости
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Внутренняя оценка качества образования
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li className="footer-bottom__item footer-item">
-              <h3 className="footer-item__title">Студенту</h3>
-              <ul className="footer-item__elements">
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Учебно-методический отдел
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Библиотека
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Нормативные документы
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Стипендиальное обеспечение
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Обучение инвалидов и лиц с ОВЗ
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Основные профессиональные образовательные программы
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Расписание
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li className="footer-bottom__item footer-item">
-              <h3 className="footer-item__title">Факультеты</h3>
-              <ul className="footer-item__elements">
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Факультет транспорта, дорожного строительства и экономики
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Кафедра «Автомобильного транспорта и дорожного хозяйства»
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Кафедра «Экономики и управления»
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Факультет заочного обучения
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Кафедра «Автомобильного транспорта и дорожного хозяйства»
-                  </a>
-                </li>
-                <li className="footer-item__element">
-                  <a href="/" className="footer-item__link">
-                    Кафедра «Экономики и управления»
-                  </a>
-                </li>
-              </ul>
-            </li> */}
           </ul>
           <div className="footer-bottom__links">
             {
               isMenuLoading
               ?
-                <div>Загрузка...</div>
+                <Loader />
               :
                 mainMenu
                 .filter((m) => m.topMainPageIsVisible === false)
