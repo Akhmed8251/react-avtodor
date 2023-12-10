@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { AdminContext } from '../../context'
 
-const Sidebar = ({ activeSideBarLinkName }) => {  
-  const { isOpenSidebar } = useContext(AdminContext)
+const Sidebar = () => {  
+  const { isOpenSidebar, currentPageName } = useContext(AdminContext)
 
   const clearLinks = () => {
     const links = document.querySelectorAll(".sidebar__item")
@@ -22,10 +22,10 @@ const Sidebar = ({ activeSideBarLinkName }) => {
   }
 
   useEffect(() => {
-    if (activeSideBarLinkName) {
-      setActiveLinkByName(activeSideBarLinkName)
+    if (currentPageName) {
+      setActiveLinkByName(currentPageName)
     }
-  }, [])
+  }, [currentPageName])
 
   return (
     <aside className={`sidebar ${isOpenSidebar ? "_open" : ""}`}>

@@ -93,6 +93,7 @@ table, tr, th, td {
     display: flex;
     align-items: center;
     gap: 20px;
+    border: 0;
 }
 
 .edit,

@@ -1,29 +1,34 @@
 import { Controller, useForm } from "react-hook-form";
 import NewsService from "../../../api/NewsService";
 import { useFetching } from "../../../hooks/useFetching";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CKEditorUI from "../../../components/ui/CKEditorUI";
 
-const CreateNews = () => {
-  const redirect = useNavigate()
+const EditNews = () => {
+  const location = useLocation();
+  const editedNews = location.state;
+
+  const redirect = useNavigate();
 
   const [createNews, isCreateLoading, createErr] = useFetching(async (news) => {
-    const response = await NewsService.createNews(news)
+    const response = await NewsService.createNews(news);
     if (response.status == 200) {
-      redirect('/admin/news')
+      redirect("/admin/news");
     } else {
-      console.log(createErr)
+      console.log(createErr);
     }
-  })
+  });
 
-  
-  const {control, handleSubmit} = useForm({
-    mode: "onSubmit"
-  })
+  const { control, handleSubmit } = useForm({
+    mode: "onSubmit",
+    defaultValues: {
+        title: editedNews.content?.title,
+        htmlContent: editedNews.content?.htmlContent
+    }
+  });
 
-
-  const onCreate = (data) => {
-    // const newNews = {
+  const onEdit = (data) => {
+    // const editNews = {
     //   isDeleted: false,
     //   content: {
     //     title: data.title,
@@ -34,17 +39,17 @@ const CreateNews = () => {
     //     parentId: 0
     //   }
     //}
-    console.log(data)
-  }
+    console.log(data);
+  };
 
   return (
     <section>
       <div className="container">
-        <h1 className="title">Создание новости</h1>
+        <h1 className="title">Изменение новости</h1>
         <form
           action="#"
           className="admin-login__form form"
-          onSubmit={handleSubmit(onCreate)}
+          onSubmit={handleSubmit(onEdit)}
         >
           <label className="form__label">
             <span className="form__text">Заголовок</span>
@@ -54,8 +59,9 @@ const CreateNews = () => {
               rules={{
                 required: true,
               }}
-              render={({ field: { onChange }, fieldState: { error } }) => (
+              render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <input
+                  value={value}
                   type="text"
                   className={`form__input ${error ? " error" : ""}`}
                   onChange={(newValue) => onChange(newValue)}
@@ -89,10 +95,13 @@ const CreateNews = () => {
               rules={{
                 required: true,
               }}
-              render={({ field: { onChange }, fieldState: { error } }) => (
+              render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <div className={`${error ? "error" : ""}`}>
                   <CKEditorUI
-                    onChange={(newValue) => {onChange(newValue.editor.getData())}}
+                    initData={value}
+                    onChange={(newValue) => {
+                      onChange(newValue.editor.getData());
+                    }}
                   />
                 </div>
               )}
@@ -110,4 +119,4 @@ const CreateNews = () => {
   );
 };
 
-export default CreateNews;
+export default EditNews;

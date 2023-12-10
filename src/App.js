@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import AdminRouter from "./components/AdminRouter";
 import HeaderAdmin from "./components/admin/HeaderAdmin";
-import Sidebar from "./components/admin/Sidebar";
+import Sidebar from "./components/ui/Sidebar";
 import { AdminContext } from "./context";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
+  const [currentPageName, setCurrentPageName] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ function App() {
   return (
     !isLoading &&
     (isAuth ? (
-      <AdminContext.Provider value={{ isOpenSidebar, setIsOpenSidebar }}>
+      <AdminContext.Provider value={{ isOpenSidebar, setIsOpenSidebar, currentPageName, setCurrentPageName }}>
         <BrowserRouter>
           <div className="page">
             <HeaderAdmin />
