@@ -26,7 +26,7 @@ function App() {
   return (
     !isLoading &&
     (isAuth ? (
-      <AdminContext.Provider value={{ isOpenSidebar, setIsOpenSidebar, currentPageName, setCurrentPageName }}>
+      <AdminContext.Provider value={{ setIsAuth, isOpenSidebar, setIsOpenSidebar, currentPageName, setCurrentPageName }}>
         <BrowserRouter>
           <div className="page">
             <HeaderAdmin />

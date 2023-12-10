@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <section className="admin-login">
       <div className="admin-login__content">
-        <h1 className="title">Авторизация</h1>
+        <h1 className="admin-title title">Авторизация</h1>
         <form
           action="#"
           className="admin-login__form form"

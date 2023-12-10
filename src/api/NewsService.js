@@ -20,4 +20,14 @@ export default class NewsService {
         const response = await axios.post(`${API_URL}/News/CreateNews`, news)
         return response;
     }
+
+    static async updateNews(news) {
+        const response = await axios.post(`${API_URL}/News/UpdateNews`, news)
+        return response;
+    }
+
+    static async deleteNews(newsId) {
+        const response = await axios.post(`${API_URL}/News/DeleteNews?id=${newsId}`, )
+        return response;
+    }
 }

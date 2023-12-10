@@ -10,12 +10,12 @@ const EditNews = () => {
 
   const redirect = useNavigate();
 
-  const [createNews, isCreateLoading, createErr] = useFetching(async (news) => {
-    const response = await NewsService.createNews(news);
+  const [editNews, isEditLoading, editErr] = useFetching(async (news) => {
+    const response = await NewsService.updateNews(news);
     if (response.status == 200) {
       redirect("/admin/news");
     } else {
-      console.log(createErr);
+      console.log(editErr);
     }
   });
 
@@ -45,7 +45,7 @@ const EditNews = () => {
   return (
     <section>
       <div className="container">
-        <h1 className="title">Изменение новости</h1>
+        <h1 className="admin-title title">Изменение новости</h1>
         <form
           action="#"
           className="admin-login__form form"
@@ -108,10 +108,10 @@ const EditNews = () => {
             />
           </label>
           <button
-            className={`form__btn btn${isCreateLoading ? " disable" : ""}`}
-            disabled={isCreateLoading}
+            className={`form__btn btn${isEditLoading ? " disable" : ""}`}
+            disabled={isEditLoading}
           >
-            {isCreateLoading ? "Создание..." : "Создать"}
+            {isEditLoading ? "Изменение..." : "Изменить"}
           </button>
         </form>
       </div>

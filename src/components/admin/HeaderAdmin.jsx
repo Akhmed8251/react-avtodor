@@ -1,8 +1,17 @@
 import React, { useContext } from 'react'
 import { AdminContext } from '../../context'
+import { useNavigate } from 'react-router-dom'
 
 const HeaderAdmin = () => {
-  const { isOpenSidebar, setIsOpenSidebar } = useContext(AdminContext)
+  const { isOpenSidebar, setIsOpenSidebar, setIsAuth } = useContext(AdminContext)
+  const redirect = useNavigate()
+  
+  const logout = () => {
+    localStorage.clear()
+    setIsAuth(false)
+    redirect('/')
+  }
+
   return (
     <header className="admin-header">
         <div className="admin-header__container container">
@@ -11,6 +20,7 @@ const HeaderAdmin = () => {
                     MfMadi<span>Admin</span>
                 </a>
                 <button className={`admin-header__sidebar-btn ${isOpenSidebar ? "_close" : ""}`} onClick={() => setIsOpenSidebar(prev => !prev)}></button>
+                <button type='button' className='btn logout-btn' onClick={() => logout()}>Выйти</button>
             </div>
         </div>
     </header>

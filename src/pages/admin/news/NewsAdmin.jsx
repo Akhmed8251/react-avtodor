@@ -25,9 +25,16 @@ const NewsAdmin = () => {
     getListNews();
   }, []);
 
+  const onDelete = () => {
+    const isDeleteNews = confirm("Вы уверены, что хотите удалить новость?")
+    if (isDeleteNews) {
+      alert("sdsad")
+    }
+  }
+
   return (
     <section>
-      <Link to={"/admin/news/create"}>Создать новость</Link>
+      <Link to={"/admin/news/create"} className="create btn">Создать</Link>
       {isNewsLoading ? (
         <Loader />
       ) : (
@@ -46,10 +53,10 @@ const NewsAdmin = () => {
                   <td>{formatTime(news.createDate)}</td>
                   <td>{news.content?.title}</td>
                   <td className="actions">
-                    <Link to={"/admin/news/edit"} className="edit" state={news}>
+                    <Link to={"/admin/news/edit"} className="edit btn" state={news}>
                       Изменить
                     </Link>
-                    <button className="delete">Удалить</button>
+                    <button className="delete btn" onClick={onDelete}>Удалить</button>
                   </td>
                 </tr>
               ))

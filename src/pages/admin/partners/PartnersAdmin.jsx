@@ -7,7 +7,7 @@ const PartnersAdmin = () => {
     setCurrentPageName("Партнеры")
   }, [])
 
-  return <section className="admin-login">PartnersAdmin</section>;
+  return <section>PartnersAdmin</section>;
 };
 
 export default PartnersAdmin;

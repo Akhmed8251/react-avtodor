@@ -124,6 +124,7 @@ main {
 }
 
 .btn {
+    width: max-content;
     display: inline-block;
     background-color: #4a27c9;
     border-radius: 7px;
@@ -1307,11 +1308,16 @@ main {
 }
 
 .admin-login {
-    width: 100%;
+    width: 31%;
+    margin: 20px auto;
 }
 
 .admin-login__content {
     max-width: 480px;
+}
+
+.admin-title {
+    margin-bottom: 30px;
 }
 
 .form {
@@ -1319,12 +1325,22 @@ main {
     flex-direction: column;
 }
 
+.form__label {
+    margin-bottom: 12px;
+}
+
+.form__text {
+    margin-bottom: 5px;
+    display: block;
+}
+
 .form__input {
     width: 100%;
     border: 1px solid #e8ebf1;
-    color: #495057;
+    color: #000;
     padding: 6px 12px;
     border-radius: 2px;
+    font-size: 18px;
 }
 
 .error {
