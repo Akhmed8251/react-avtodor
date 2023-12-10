@@ -160,7 +160,7 @@ const Header = () => {
                         :
                             mainMenu.filter(m => m.menuAboveAdvertisingIsVisible === true).map((mainMenuItem, idx) => (
                                 <li key={idx} className={`header-bottom__item ${idx % 2 != 0 ? "header-bottom__item_dark" : ""}`}>
-                                    <Link to={mainMenuItem.link} className="header-bottom__link">
+                                    <Link to={mainMenuItem.link} className="header-bottom__link" target='_blank'>
                                         {mainMenuItem.name}
                                     </Link>
                                 </li>

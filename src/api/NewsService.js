@@ -15,4 +15,9 @@ export default class NewsService {
         })
         return response;
     }
+
+    static async createNews(news) {
+        const response = await axios.post(`${API_URL}/News/CreateNews`, news)
+        return response;
+    }
 }

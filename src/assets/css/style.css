@@ -114,6 +114,10 @@ body.backdrop::after {
     margin: 0 auto;
 }
 
+main {
+    flex: 1 1 auto;
+}
+
 .title {
     font-size: 32px;
     font-weight: 700;
@@ -1300,6 +1304,31 @@ body.backdrop::after {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px 10px;
+}
+
+.admin-login {
+    width: 100%;
+}
+
+.admin-login__content {
+    max-width: 480px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__input {
+    width: 100%;
+    border: 1px solid #e8ebf1;
+    color: #495057;
+    padding: 6px 12px;
+    border-radius: 2px;
+}
+
+.error {
+    border: 1px solid red;
 }
 
 @keyframes spinner {

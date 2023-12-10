@@ -4,7 +4,8 @@ import { useFetching } from "../hooks/useFetching";
 import NewsService from "../api/NewsService";
 import { useParams } from "react-router-dom";
 import Gallery from "../components/ui/Gallery";
-import Loader from '../components/ui/Loader'
+import Loader from "../components/ui/Loader";
+
 
 const NewsPage = () => {
   const urlParams = useParams();
@@ -31,17 +32,24 @@ const NewsPage = () => {
           <Loader />
         ) : (
           <>
-            <h1 className="news-page__title title">{newsInfo?.content.title}</h1>
+            <h1 className="news-page__title title">
+              {newsInfo?.content.title}
+            </h1>
             <Gallery images={newsInfo?.content.fileModels} />
-            <div className="news-page__content" dangerouslySetInnerHTML={{ __html: newsInfo?.content.htmlContent }}></div>
+            <div
+              className="news-page__content"
+              dangerouslySetInnerHTML={{
+                __html: newsInfo?.content.htmlContent,
+              }}
+            ></div>
           </>
         )}
         <div className="news-page__bottom">
           <Link to="/" className="btn">
-              На главную
+            На главную
           </Link>
           <Link to="/news" className="btn">
-              Все новости
+            Все новости
           </Link>
         </div>
       </div>

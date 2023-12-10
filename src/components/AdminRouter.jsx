@@ -1,10 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { publicRoutes } from "../router";
+import { privateRoutes } from "../router";
 
 const AppRouter = () => {
+  require("../assets/css/admin.css");
+
   return (
     <Routes>
-      {publicRoutes.map((route) => (
+      {privateRoutes.map((route) => (
         <Route
           element={route.element}
           path={route.path}
@@ -12,7 +14,7 @@ const AppRouter = () => {
           key={route.path}
         />
       ))}
-      <Route element={<Navigate to="/" />} path="*" exact={true} />
+      <Route element={<Navigate to="/admin" />} path="*" exact={true} />
     </Routes>
   );
 };

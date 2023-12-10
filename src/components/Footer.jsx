@@ -85,7 +85,7 @@ const Footer = () => {
           :
               mainMenu.filter(m => m.menuAboveAdvertisingIsVisible === true).map((mainMenuItem, idx) => (
                   <li key={idx} className={`footer__menu-item ${idx % 2 != 0 ? "footer__menu-item_dark" : ""}`}>
-                      <Link to={mainMenuItem.link} className="footer__menu-link">
+                      <Link to={mainMenuItem.link} className="footer__menu-link" target='_blank'>
                           {mainMenuItem.name}
                       </Link>
                   </li>
