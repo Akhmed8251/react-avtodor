@@ -3,14 +3,29 @@ import NewsService from "../../../api/NewsService";
 import { useFetching } from "../../../hooks/useFetching";
 import { useNavigate } from "react-router-dom";
 import CKEditorUI from "../../../components/ui/CKEditorUI";
+import FileModelService from "../../../api/FileModelService";
 
 const CreateNews = () => {
   const redirect = useNavigate()
 
-  const [createNews, isCreateLoading, createErr] = useFetching(async (news) => {
+  const [createFileModel, isCreateFileModelLoading, createFileModelErr] = useFetching(async (creatingFileModel) => {
+    const response = await FileModelService.createFileModel(creatingFileModel)
+    if (response.status == 200) {
+      alert("Новость успешно создана!")
+      redirect('/admin/news')
+    }
+  })
+
+  const [createNews, isCreateLoading, createErr] = useFetching(async (news, files) => {
     const response = await NewsService.createNews(news)
     if (response.status == 200) {
-      redirect('/admin/news')
+      const formData = new FormData()
+      formData.append("contentId", response.data.content.id)
+      Array.from(files).forEach(file => {
+        formData.append("formFiles", file)
+      })
+
+      createFileModel(formData)
     } else {
       console.log(createErr)
     }
@@ -23,18 +38,18 @@ const CreateNews = () => {
 
 
   const onCreate = (data) => {
-    // const newNews = {
-    //   isDeleted: false,
-    //   content: {
-    //     title: data.title,
-    //     htmlContent: data.htmlContent,
-    //     fileModels: null,
-    //     isDeleted: false,
-    //     contentType: 0,
-    //     parentId: 0
-    //   }
-    //}
-    console.log(data)
+    const newNews = {
+      isDeleted: false,
+      content: {
+        title: data.title,
+        htmlContent: data.htmlContent,
+        fileModels: null,
+        isDeleted: false,
+        contentType: 0,
+        parentId: 0
+      }
+    }
+    createNews(newNews, data.fileModels)
   }
 
   return (
@@ -45,6 +60,7 @@ const CreateNews = () => {
           action="#"
           className="admin-login__form form"
           onSubmit={handleSubmit(onCreate)}
+          encType="multipart/form-data"
         >
           <label className="form__label">
             <span className="form__text">Заголовок</span>
@@ -99,10 +115,10 @@ const CreateNews = () => {
             />
           </label>
           <button
-            className={`form__btn btn${isCreateLoading ? " disable" : ""}`}
-            disabled={isCreateLoading}
+            className={`form__btn btn${(isCreateLoading || isCreateFileModelLoading) ? " disable" : ""}`}
+            disabled={(isCreateLoading || isCreateFileModelLoading) }
           >
-            {isCreateLoading ? "Создание..." : "Создать"}
+            {(isCreateLoading || isCreateFileModelLoading)  ? "Создание..." : "Создать"}
           </button>
         </form>
       </div>

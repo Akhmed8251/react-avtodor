@@ -53,7 +53,7 @@ const MainNews = () => {
                   <div className="news-item">
                     <Link to={`/news/${news.id}`} className="news-item__link">
                       <div className="news-item__image">
-                        <img src={`${FILES_URL}/${news.content?.fileModels[0].name}`} alt="" />
+                        <img src={`${FILES_URL}/${news.content?.fileModels[0]?.name}`} alt="" />
                       </div>
                       <h3 className="news-item__title">{news.mainText}</h3>
                       <time className="news-item__date">{formatTime(news.createDate)}</time>

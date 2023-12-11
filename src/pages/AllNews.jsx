@@ -34,7 +34,7 @@ const AllNews = () => {
                 <Link to={`/news/${news.id}`} className="news-item__link">
                   <div className="news-item__image">
                     <img
-                      src={`${FILES_URL}/${news.content?.fileModels[0].name}`}
+                      src={`${FILES_URL}/${news.content?.fileModels[0]?.name}`}
                       alt=""
                     />
                   </div>

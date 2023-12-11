@@ -1286,8 +1286,8 @@ main {
 }
 
 .loader__spinner {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     background: url('../images/loader.svg') no-repeat center / contain;
     display: block;
     animation: spinner .75s linear infinite;

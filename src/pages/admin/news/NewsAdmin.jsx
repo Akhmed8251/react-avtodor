@@ -5,12 +5,15 @@ import { Link } from "react-router-dom";
 import Loader from "../../../components/ui/Loader";
 import { formatTime } from "../../../utils/time";
 import { AdminContext } from "../../../context";
+import Popup from "../../../components/ui/Popup"
 
 const NewsAdmin = () => {
   const { setCurrentPageName } = useContext(AdminContext);
 
-  const [newsList, setNewsList] = useState([]);
+  const [modalConfirmDeleteActive, setModalConfirmDeleteActive] = useState(false)
 
+  const [newsId, setNewsId] = useState(null)
+  const [newsList, setNewsList] = useState([]);
   const [getListNews, isNewsLoading, newsErr] = useFetching(async () => {
     const response = await NewsService.getNews();
     if (response.status == 200) {
@@ -19,52 +22,86 @@ const NewsAdmin = () => {
       console.log(newsErr);
     }
   });
+  const [deleteNews, isDeleteLoading, deleteErr] = useFetching(async (newsId) => {
+    const response = await NewsService.deleteNews(newsId)
+    if (response.status == 200) {
+      alert("Новость успешно удалена!");
+      closeModalConfirmDelete()
+      deleteNewsFromTable(newsId)
+    } else {
+      console.log(newsErr);
+    }
+  });
+
+  const closeModalConfirmDelete = () => {
+    setNewsId(null); 
+    setModalConfirmDeleteActive(false)
+  }
+
+  const deleteNewsFromTable = (id) => {
+    document.querySelector(`[data-newsid='${id}'`).remove()
+  }
 
   useEffect(() => {
     setCurrentPageName("Новости");
     getListNews();
   }, []);
 
-  const onDelete = () => {
-    const isDeleteNews = confirm("Вы уверены, что хотите удалить новость?")
-    if (isDeleteNews) {
-      alert("sdsad")
-    }
-  }
 
   return (
-    <section>
-      <Link to={"/admin/news/create"} className="create btn">Создать</Link>
-      {isNewsLoading ? (
-        <Loader />
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Дата</th>
-              <th>Заголовок</th>
-              <th>Действия</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              newsList.map((news, idx) => (
-                <tr key={idx}>
+    <>
+      <section>
+        <Link to={"/admin/news/create"} className="create btn">
+          Создать
+        </Link>
+        {isNewsLoading ? (
+          <Loader />
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Дата</th>
+                <th>Заголовок</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              {newsList.map((news, idx) => (
+                <tr data-newsid={news.id} key={idx}>
                   <td>{formatTime(news.createDate)}</td>
                   <td>{news.content?.title}</td>
                   <td className="actions">
-                    <Link to={"/admin/news/edit"} className="edit btn" state={news}>
+                    <Link
+                      to={"/admin/news/edit"}
+                      className="edit btn"
+                      state={news}
+                    >
                       Изменить
                     </Link>
-                    <button className="delete btn" onClick={onDelete}>Удалить</button>
+                    <button className="delete btn" onClick={() => { setNewsId(news.id); setModalConfirmDeleteActive(true) }}>
+                      Удалить
+                    </button>
                   </td>
                 </tr>
-              ))
+              ))}
+            </tbody>
+          </table>
+        )}
+      </section>
+      <Popup active={modalConfirmDeleteActive} setActive={closeModalConfirmDelete}>
+      <h2 className="popup__title title">Вы действительно хотите удалить новость?</h2>
+        <div className="confirm-buttons">
+          <button onClick={() => deleteNews(newsId)} className='confirm-button confirm-button_yes' disabled={isDeleteLoading} >
+            {
+              isDeleteLoading ? <Loader isOnlySpinner/>
+                :
+                <span>Да</span>
             }
-          </tbody>
-        </table>
-      )}
-    </section>
+          </button>
+          <button className="confirm-button confirm-button_no" onClick={closeModalConfirmDelete}>Нет</button>
+        </div>
+      </Popup>
+    </>
   );
 };
 
