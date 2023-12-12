@@ -1,31 +1,16 @@
 import { Controller, useForm } from "react-hook-form";
-import NewsService from "../../../api/NewsService";
+import PartnersService from "../../../api/PartnersService";
 import { useFetching } from "../../../hooks/useFetching";
 import { useNavigate } from "react-router-dom";
-import CKEditorUI from "../../../components/ui/CKEditorUI";
-import FileModelService from "../../../api/FileModelService";
 
-const CreateNews = () => {
+const CreatePartner = () => {
   const redirect = useNavigate()
 
-  const [createFileModel, isCreateFileModelLoading, createFileModelErr] = useFetching(async (creatingFileModel) => {
-    const response = await FileModelService.createFileModel(creatingFileModel)
+  const [createPartner, isCreateLoading, createErr] = useFetching(async (formData) => {
+    const response = await PartnersService.createPartner(formData)
     if (response.status == 200) {
-      alert("Новость успешно создана!")
-      redirect('/admin/news')
-    }
-  })
-
-  const [createNews, isCreateLoading, createErr] = useFetching(async (news, files) => {
-    const response = await NewsService.createNews(news)
-    if (response.status == 200) {
-      const formData = new FormData()
-      formData.append("contentId", response.data.content.id)
-      Array.from(files).forEach(file => {
-        formData.append("formFiles", file)
-      })
-
-      createFileModel(formData)
+        alert("Партнер успешно создан!")
+        redirect('/admin/partners')
     } else {
       console.log(createErr)
     }
@@ -38,18 +23,12 @@ const CreateNews = () => {
 
 
   const onCreate = (data) => {
-    const newNews = {
-      isDeleted: false,
-      content: {
-        title: data.title,
-        htmlContent: data.htmlContent,
-        fileModels: null,
-        isDeleted: false,
-        contentType: 0,
-        parentId: 0
-      }
-    }
-    createNews(newNews, data.fileModels)
+    const formData = new FormData()
+    formData.append("name", data.name)
+    formData.append("link", data.link)
+    formData.append("formFile", data.fileModel[0])
+
+    createPartner(formData)
   }
 
   return (
@@ -63,10 +42,10 @@ const CreateNews = () => {
           encType="multipart/form-data"
         >
           <label className="form__label">
-            <span className="form__text">Заголовок</span>
+            <span className="form__text">Название</span>
             <Controller
               control={control}
-              name="title"
+              name="name"
               rules={{
                 required: true,
               }}
@@ -80,45 +59,45 @@ const CreateNews = () => {
             />
           </label>
           <label className="form__label">
-            <span className="form__text">Изображения</span>
+            <span className="form__text">Ссылка</span>
             <Controller
               control={control}
-              name="fileModels"
+              name="link"
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange }, fieldState: { error } }) => (
+                <input
+                  type="text"
+                  className={`form__input ${error ? " error" : ""}`}
+                  onChange={(newValue) => onChange(newValue)}
+                />
+              )}
+            />
+          </label>
+          <label className="form__label">
+            <span className="form__text">Изображение</span>
+            <Controller
+              control={control}
+              name="fileModel"
               rules={{
                 required: true,
               }}
               render={({ field: { onChange }, fieldState: { error } }) => (
                 <input
                   type="file"
-                  multiple={true}
+                  accept=".jpg, .jpeg,.png, .svg, .webp, .avif"
                   className={`form__input ${error ? " error" : ""}`}
                   onChange={(newValue) => onChange(newValue.target.files)}
                 />
               )}
             />
           </label>
-          <label className="form__label">
-            <span className="form__text">Контент</span>
-            <Controller
-              control={control}
-              name="htmlContent"
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange }, fieldState: { error } }) => (
-                <div className={`${error ? "error" : ""}`}>
-                  <CKEditorUI
-                    onChange={(newValue) => {onChange(newValue.editor.getData())}}
-                  />
-                </div>
-              )}
-            />
-          </label>
           <button
             className={`form__btn btn`}
-            disabled={(isCreateLoading || isCreateFileModelLoading) }
+            disabled={isCreateLoading}
           >
-            {(isCreateLoading || isCreateFileModelLoading)  ? "Создание..." : "Создать"}
+            {isCreateLoading  ? "Создание..." : "Создать"}
           </button>
         </form>
       </div>
@@ -126,4 +105,4 @@ const CreateNews = () => {
   );
 };
 
-export default CreateNews;
+export default CreatePartner;

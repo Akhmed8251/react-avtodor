@@ -38,7 +38,7 @@ const AllNews = () => {
                       alt=""
                     />
                   </div>
-                  <h3 className="news-item__title">{news.mainText}</h3>
+                  <h3 className="news-item__title">{news.content?.title}</h3>
                   <time
                     datetime={formatTime(news.createDate)}
                     className="news-item__date"

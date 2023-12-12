@@ -27,7 +27,7 @@ export default class NewsService {
     }
 
     static async deleteNews(newsId) {
-        const response = await axios.post(`${API_URL}/News/DeleteNews?id=${newsId}`, )
+        const response = await axios.post(`${API_URL}/News/DeleteNews?id=${newsId}`)
         return response;
     }
 }

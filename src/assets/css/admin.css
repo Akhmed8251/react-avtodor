@@ -1,6 +1,5 @@
 .admin-wrapper {
     display: flex;
-    height: 100vh;
 }
 
 .admin-wrapper > section {
@@ -44,11 +43,7 @@
 }
 
 .sidebar {
-    /* position: fixed;
-    top: 65px;
-    left: 0; */
     width: max-content;
-    height: 100%;
     background-color: #fff;
     transform: translateX(-100%);
     transition: transform .3s;
@@ -226,4 +221,39 @@ table, tr, th, td {
 
 .confirm-button_yes.loading::before {
     margin: 0;
+}
+
+.form__images {
+    overflow-x: auto;
+    width: 100%;
+    max-width: 1407px;
+    height: 200px;
+}
+
+.form__images-list {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    height: 100%;
+}
+
+.images-item {
+    position: relative;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+.images-item img {
+    height: 100%;
+}
+
+.images-item__remove {
+    width: 24px;
+    height: 24px;
+    padding: 6px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
 }

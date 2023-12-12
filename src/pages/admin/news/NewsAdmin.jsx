@@ -22,6 +22,7 @@ const NewsAdmin = () => {
       console.log(newsErr);
     }
   });
+
   const [deleteNews, isDeleteLoading, deleteErr] = useFetching(async (newsId) => {
     const response = await NewsService.deleteNews(newsId)
     if (response.status == 200) {
@@ -39,7 +40,7 @@ const NewsAdmin = () => {
   }
 
   const deleteNewsFromTable = (id) => {
-    document.querySelector(`[data-newsid='${id}'`).remove()
+    document.querySelector(`[data-id='${id}'`).remove()
   }
 
   useEffect(() => {
@@ -51,6 +52,7 @@ const NewsAdmin = () => {
   return (
     <>
       <section>
+        <h1 className="admin-title title">Новости</h1>
         <Link to={"/admin/news/create"} className="create btn">
           Создать
         </Link>
@@ -60,14 +62,14 @@ const NewsAdmin = () => {
           <table>
             <thead>
               <tr>
-                <th>Дата</th>
+                <th>Дата создания</th>
                 <th>Заголовок</th>
                 <th>Действия</th>
               </tr>
             </thead>
             <tbody>
               {newsList.map((news, idx) => (
-                <tr data-newsid={news.id} key={idx}>
+                <tr data-id={news.id} key={idx}>
                   <td>{formatTime(news.createDate)}</td>
                   <td>{news.content?.title}</td>
                   <td className="actions">
