@@ -667,6 +667,12 @@ main {
     margin-bottom: 22px;
 }
 
+.contacts-item__values {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 .contacts-item__value {
     font-weight: 500;
     line-height: 1.63;

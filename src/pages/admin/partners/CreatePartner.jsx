@@ -34,7 +34,7 @@ const CreatePartner = () => {
   return (
     <section>
       <div className="container">
-        <h1 className="admin-title title">Создание новости</h1>
+        <h1 className="admin-title title">Создание партнера</h1>
         <form
           action="#"
           className="admin-login__form form"

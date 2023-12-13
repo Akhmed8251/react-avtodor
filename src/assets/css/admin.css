@@ -223,6 +223,21 @@ table, tr, th, td {
     margin: 0;
 }
 
+.form__label_checkbox {
+    display: flex;
+    align-items: center;
+    width: auto;
+    gap: 20px;
+}
+
+.form__label_checkbox .form__text {
+    margin-bottom: 0;
+}
+
+.form__label_checkbox .form__input {
+    width: auto;
+}
+
 .form__images {
     overflow-x: auto;
     width: 100%;
@@ -256,4 +271,80 @@ table, tr, th, td {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.custom-select__control {
+    min-height: 45px !important;
+    background: #fff !important;
+    font-size: 18px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+}
+
+.custom-select__menu {
+    animation: fadeIn .35s ease-in-out;
+    z-index: 99 !important;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.custom-select__menu-list {
+    padding: 20px !important;
+}
+
+.custom-select__value-container {
+    padding: 0 20px !important;
+}
+
+.custom-select__option {
+    display: flex !important;
+    height: 55px;
+    cursor: pointer !important;
+    padding: 0 16px !important;
+    border-radius: 8px;
+    align-items: center;
+    background-color: #fff !important;
+}
+
+.custom-select__option:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+.custom-select__multi-value__remove {
+    background-color: transparent !important;
+    color: #333 !important;
+}
+
+.custom-select__option--is-selected,
+.custom-select__option:hover {
+    background-color: #f2f2f2 !important;
+    color: #333 !important;
+}
+
+.custom-select__dropdown-indicator svg {
+    display: none;
+}
+
+.custom-select__dropdown-indicator::after {
+    content: '';
+    background: url('../images/arrow-down.svg') no-repeat;
+    width: 21px;
+    height: 21px;
+    transform: rotate(0deg);
+    z-index: 10;
+    transition: .5s;
 }

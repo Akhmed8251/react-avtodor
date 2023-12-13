@@ -40,6 +40,16 @@ const Sidebar = () => {
             Партнеры
           </Link>
         </li>
+        <li className="sidebar__item" data-name="Объявления">
+          <Link to={'/admin/advertisings'} className='sidebar__link'>
+            Объявления
+          </Link>
+        </li>
+        <li className="sidebar__item" data-name="Контакты">
+          <Link to={'/admin/contacts'} className='sidebar__link'>
+            Контакты
+          </Link>
+        </li>
       </ul>
     </aside>
   )

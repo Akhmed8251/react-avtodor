@@ -74,7 +74,7 @@ const NewsAdmin = () => {
                   <td>{news.content?.title}</td>
                   <td className="actions">
                     <Link
-                      to={"/admin/news/edit"}
+                      to={`/admin/news/edit`}
                       className="edit btn"
                       state={news}
                     >

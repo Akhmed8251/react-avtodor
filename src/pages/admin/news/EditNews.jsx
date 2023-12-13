@@ -1,24 +1,34 @@
 import { Controller, useForm } from "react-hook-form";
 import NewsService from "../../../api/NewsService";
 import { useFetching } from "../../../hooks/useFetching";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CKEditorUI from "../../../components/ui/CKEditorUI";
 import FileModelService from "../../../api/FileModelService";
 import { FILES_URL } from "../../../api/config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Popup from "../../../components/ui/Popup";
 import Loader from "../../../components/ui/Loader";
-import deleteIcon from '../../../assets/images/menu-close.svg'
+import deleteIcon from "../../../assets/images/menu-close.svg";
 
 const EditNews = () => {
-  const location = useLocation();
-  const editedNews = location.state;
   const redirect = useNavigate();
+  const location = useLocation();
+  const editedNews = location.state
 
-  const [modalConfirmDeleteActive, setModalConfirmDeleteActive] = useState(false)
+  const [modalConfirmDeleteActive, setModalConfirmDeleteActive] =
+    useState(false);
+  const [fileModels, setFileModels] = useState(null);
+  const [getNewsById, isGetNewsLoading, getNewsErr] = useFetching(
+    async (newsId) => {
+      const response = await NewsService.getNewsById(newsId);
+      if (response.status == 200) {
+        setFileModels(response.data.content?.fileModels);
+        console.log(response.data.content?.fileModels)
+      }
+    }
+  );
 
-  
-  const [deletingImageId, setDeletingImageId] = useState(null)
+  const [deletingImageId, setDeletingImageId] = useState(null);
   const [createFileModel, isCreateFileModelLoading, createFileModelErr] =
     useFetching(async (creatingFileModel) => {
       const response = await FileModelService.createFileModel(
@@ -52,31 +62,25 @@ const EditNews = () => {
     }
   );
 
-  const [deleteFileModel, isDeleteLoading, deleteErr] = useFetching(async (fileModelId) => {
-    const response = await FileModelService.deleteFileModel(fileModelId)
-    if (response.status == 200) {
-      alert("Удаление фотографий прошло успешно!")
-      closeModalConfirmDelete()
-      deleteImageFromList(fileModelId)
+  const [deleteFileModel, isDeleteLoading, deleteErr] = useFetching(
+    async (fileModelId) => {
+      const response = await FileModelService.deleteFileModel(fileModelId);
+      if (response.status == 200) {
+        alert("Удаление фотографий прошло успешно!");
+        closeModalConfirmDelete();
+        deleteImageFromList(fileModelId);
+      }
     }
-  })
+  );
 
   const deleteImageFromList = (id) => {
-    document.querySelector(`[data-id='${id}'`).remove()
-  }
+    document.querySelector(`[data-id='${id}'`).remove();
+  };
 
   const closeModalConfirmDelete = () => {
-    setDeletingImageId(null); 
-    setModalConfirmDeleteActive(false)
-  }
-
-  const { control, handleSubmit } = useForm({
-    mode: "onSubmit",
-    defaultValues: {
-      title: editedNews.content?.title,
-      htmlContent: editedNews.content?.htmlContent,
-    },
-  });
+    setDeletingImageId(null);
+    setModalConfirmDeleteActive(false);
+  };
 
   const onEdit = (data) => {
     const news = {
@@ -102,105 +106,127 @@ const EditNews = () => {
     editNews(news, data.fileModels);
   };
 
+  useEffect(() => {
+    getNewsById(editedNews.id)
+  }, [])
+
+  const { control, handleSubmit } = useForm({
+    mode: "onSubmit",
+    defaultValues: {
+      title: editedNews.content?.title,
+      htmlContent: editedNews.content?.htmlContent,
+    },
+  });
+
   return (
     <>
       <section>
         <div className="container">
           <h1 className="admin-title title">Изменение новости</h1>
           <form
-            action="#"
-            className="admin-login__form form"
-            onSubmit={handleSubmit(onEdit)}
-          >
-            <label className="form__label">
-              <span className="form__text">Заголовок</span>
-              <Controller
-                control={control}
-                name="title"
-                rules={{
-                  required: true,
-                }}
-                render={({
-                  field: { value, onChange },
-                  fieldState: { error },
-                }) => (
-                  <input
-                    value={value}
-                    type="text"
-                    className={`form__input ${error ? " error" : ""}`}
-                    onChange={(newValue) => onChange(newValue)}
-                  />
-                )}
-              />
-            </label>
-            <label className="form__label">
-              <span className="form__text">Изображения</span>
-              <Controller
-                control={control}
-                name="fileModels"
-                render={({ field: { onChange }, fieldState: { error } }) => (
-                  <input
-                    type="file"
-                    multiple={true}
-                    className={`form__input ${error ? " error" : ""}`}
-                    onChange={(newValue) => onChange(newValue.target.files)}
-                  />
-                )}
-              />
-              <div className="form__images">
-                <ul className="form__images-list">
-                  {editedNews.content?.fileModels.map((imageFile) => (
-                    <li data-id={imageFile.id} className="form__images-item images-item">
-                      <a
-                        href={`${FILES_URL}/${imageFile.name}`}
-                        target={"_blank"}
-                      >
-                        <img src={`${FILES_URL}/${imageFile.name}`} alt="" />
-                      </a>
-                      <button
-                        type="button"
-                        className="images-item__remove"
-                        onClick={() => { setDeletingImageId(imageFile.id); setModalConfirmDeleteActive(true) }}
-                      >
-                        <img src={deleteIcon} alt="" />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </label>
-            <label className="form__label">
-              <span className="form__text">Контент</span>
-              <Controller
-                control={control}
-                name="htmlContent"
-                rules={{
-                  required: true,
-                }}
-                render={({
-                  field: { value, onChange },
-                  fieldState: { error },
-                }) => (
-                  <div className={`${error ? "error" : ""}`}>
-                    <CKEditorUI
-                      initData={value}
-                      onChange={(newValue) => {
-                        onChange(newValue.editor.getData());
-                      }}
-                    />
-                  </div>
-                )}
-              />
-            </label>
-            <button
-              className={`form__btn btn`}
-              disabled={isEditLoading || isCreateFileModelLoading}
+              action="#"
+              className="admin-login__form form"
+              onSubmit={handleSubmit(onEdit)}
             >
-              {isEditLoading || isCreateFileModelLoading
-                ? "Изменение..."
-                : "Изменить"}
-            </button>
-          </form>
+              <label className="form__label">
+                <span className="form__text">Заголовок</span>
+                <Controller
+                  control={control}
+                  name="title"
+                  rules={{
+                    required: true,
+                  }}
+                  render={({
+                    field: { value, onChange },
+                    fieldState: { error },
+                  }) => (
+                    <input
+                      value={value}
+                      type="text"
+                      className={`form__input ${error ? " error" : ""}`}
+                      onChange={(newValue) => onChange(newValue)}
+                    />
+                  )}
+                />
+              </label>
+              <label className="form__label">
+                <span className="form__text">Изображения</span>
+                <Controller
+                  control={control}
+                  name="fileModels"
+                  render={({ field: { onChange }, fieldState: { error } }) => (
+                    <input
+                      type="file"
+                      multiple={true}
+                      className={`form__input ${error ? " error" : ""}`}
+                      onChange={(newValue) => onChange(newValue.target.files)}
+                    />
+                  )}
+                />
+                <div className="form__images">
+                  <ul className="form__images-list">
+                  {
+                    isGetNewsLoading ? <Loader />
+                      :
+                      fileModels?.map((imageFile, idx) => (
+                        <li key={idx}
+                          data-id={imageFile.id}
+                          className="form__images-item images-item"
+                        >
+                          <a
+                            href={`${FILES_URL}/${imageFile.name}`}
+                            target={"_blank"}
+                          >
+                            <img src={`${FILES_URL}/${imageFile.name}`} alt="" />
+                          </a>
+                          <button
+                            type="button"
+                            className="images-item__remove"
+                            onClick={() => {
+                              setDeletingImageId(imageFile.id);
+                              setModalConfirmDeleteActive(true);
+                            }}
+                          >
+                            <img src={deleteIcon} alt="" />
+                          </button>
+                        </li>
+                      ))
+                  }
+                  </ul>
+                </div>
+              </label>
+              <label className="form__label">
+                <span className="form__text">Контент</span>
+                <Controller
+                  control={control}
+                  name="htmlContent"
+                  rules={{
+                    required: true,
+                  }}
+                  render={({
+                    field: { value, onChange },
+                    fieldState: { error },
+                  }) => (
+                    <div className={`${error ? "error" : ""}`}>
+                      <CKEditorUI
+                        initData={value}
+                        onChange={(newValue) => {
+                          onChange(newValue.editor.getData());
+                        }}
+                      />
+                    </div>
+                  )}
+                />
+              </label>
+              <button
+                className={`form__btn btn`}
+                disabled={isEditLoading || isCreateFileModelLoading}
+              >
+                {isEditLoading || isCreateFileModelLoading
+                  ? "Изменение..."
+                  : "Изменить"}
+              </button>
+            </form>
         </div>
       </section>
       <Popup
