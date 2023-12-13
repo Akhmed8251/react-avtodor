@@ -16,6 +16,8 @@ import CreateAdvertising from "../pages/admin/advertising/CreateAdvertising"
 import ContactsAdmin from "../pages/admin/contacts/ContactsAdmin"
 import CreateContact from "../pages/admin/contacts/CreateContact"
 import EditContact from "../pages/admin/contacts/EditContact"
+import PagesAdmin from "../pages/admin/pageContents/PagesAdmin"
+import CreatePage from "../pages/admin/pageContents/CreatePage"
 
 export const publicRoutes = [
     {path: '/', element: <Main />, exact: true},
@@ -37,5 +39,7 @@ export const privateRoutes = [
     {path: '/admin/advertising/create', element: <CreateAdvertising />, exact: true},
     {path: '/admin/contacts', element: <ContactsAdmin />, exact: true},
     {path: '/admin/contact/create', element: <CreateContact />, exact: true},
-    {path: '/admin/contact/edit', element: <EditContact />, exact: true}
+    {path: '/admin/contact/edit', element: <EditContact />, exact: true},
+    {path: '/admin/pages', element: <PagesAdmin />, exact: true},
+    {path: '/admin/page/create', element: <CreatePage />, exact: true},
 ]

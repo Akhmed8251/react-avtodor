@@ -50,6 +50,11 @@ const Sidebar = () => {
             Контакты
           </Link>
         </li>
+        <li className="sidebar__item" data-name="Страницы">
+          <Link to={'/admin/pages'} className='sidebar__link'>
+            Страницы
+          </Link>
+        </li>
       </ul>
     </aside>
   )
