@@ -17,6 +17,11 @@ export default class AdvertisingService {
         return response;
     }
 
+    static async editAdvertising(advertising) {
+        const response = await axios.post(`${API_URL}/Advertising/UpdateAdvertising`, advertising)
+        return response;
+    }
+
     static async deleteAdvertising(advertisingId) {
         const response = await axios.post(`${API_URL}/Advertising/DeleteAdvertising?id=${advertisingId}`)
         return response;

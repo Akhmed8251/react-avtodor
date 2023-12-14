@@ -29,9 +29,9 @@ const Advertising = () => {
                             ?
                             <Loader />
                             :
-                            advertisings?.map(advertisingItem => (
+                            advertisings.filter(a => a.mainSliderIsVisible == false).map(advertisingItem => (
                                 <Link to={advertisingItem.buttonLink} className="advertising__block advertising-block">
-                                    <img src={`${FILES_URL}/${advertisingItem.avatarFileName}`} alt={advertisingItem.title} />
+                                    <img src={`${FILES_URL}/${advertisingItem.avatarFileName}`} alt='' />
                                 </Link>
                             ))
                     }

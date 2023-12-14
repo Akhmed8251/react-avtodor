@@ -6,6 +6,7 @@ import { formatTime } from "../../../utils/time";
 import { AdminContext } from "../../../context";
 import Popup from "../../../components/ui/Popup"
 import AdvertisingService from "../../../api/AdvertisingService";
+import { FILES_URL } from "../../../api/config";
 
 const AdvertisingsAdmin = () => {
   const { setCurrentPageName } = useContext(AdminContext);
@@ -65,6 +66,8 @@ const AdvertisingsAdmin = () => {
                 <th>Дата создания</th>
                 <th>Заголовок</th>
                 <th>Главный текст</th>
+                <th>Изображение</th>
+                <th>Ссылка</th>
                 <th>В слайдере на главной странице</th>
                 <th>Действия</th>
               </tr>
@@ -73,9 +76,15 @@ const AdvertisingsAdmin = () => {
               {advertisings.map((advertising, idx) => (
                 <tr data-id={advertising.id} key={idx}>
                   <td>{formatTime(advertising.createDate)}</td>
-                  <td>{advertising.content?.title}</td>
-                  <td>{advertising.content?.mainText}</td>
-                  <td>{advertising.content?.mainSliderIsVisible ? "Да" : "Нет"}</td>
+                  <td>{advertising.title}</td>
+                  <td>{advertising.mainText}</td>
+                  <td style={{ width: '400px' }}>
+                    <img src={`${FILES_URL}/${advertising.avatarFileName}`} alt="" />
+                  </td>
+                  <td>
+                    <a href={advertising.buttonLink}>{advertising.buttonLink}</a>
+                  </td>
+                  <td>{advertising.mainSliderIsVisible ? "Да" : "Нет"}</td>
                   <td className="actions">
                     <Link
                       to={"/admin/advertising/edit"}

@@ -1,10 +1,12 @@
 import { Controller, useForm } from "react-hook-form";
 import { useFetching } from "../../../hooks/useFetching";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AdvertisingService from "../../../api/AdvertisingService";
 
-const CreateAdvertising = () => {
+const EditAdvertising = () => {
   const redirect = useNavigate()
+  const location = useLocation()
+  const editedAdvertising = location.state
 
   const [addFileToAdvertising, isAddFileLoading, addFileErr] =
     useFetching(async (formData) => {
@@ -12,21 +14,26 @@ const CreateAdvertising = () => {
         formData
       );
       if (response.status == 200) {
-        alert("Объявление успешно создано!");
+        alert("Объявление успешно обновлено!");
         redirect("/admin/advertisings");
       }
     });
 
-  const [createAdvertising, isCreateLoading, createErr] = useFetching(async (advertising, file) => {
-    const response = await AdvertisingService.createAdvertising(advertising)
+  const [editAdvertising, isEditLoading, editErr] = useFetching(async (advertising, file = null) => {
+    const response = await AdvertisingService.editAdvertising(advertising)
     if (response.status == 200) {
-      const formData = new FormData()
-      formData.append("advertisingId", response.data.id)
-      formData.append("formFile", file)
-      console.log(file)
-      addFileToAdvertising(formData)
+      if (file) {
+        const formData = new FormData()
+        formData.append("advertisingId", advertising.id)
+        formData.append("formFile", file)
+        console.log(file)
+        addFileToAdvertising(formData)
+      } else {
+        alert("Объявление успешно обновлено!");
+        redirect("/admin/advertisings");
+      }
     } else {
-      console.log(createErr)
+      console.log(editErr)
     }
   })
 
@@ -34,16 +41,22 @@ const CreateAdvertising = () => {
   const {control, handleSubmit, watch } = useForm({
     mode: "onSubmit",
     defaultValues: {
-      isInSlider: false
+        title: editedAdvertising.title || "",
+        mainText: editedAdvertising.mainText || "",
+        link: editedAdvertising.buttonLink,
+        isInSlider: editedAdvertising.mainSliderIsVisible
     }
   })
 
-  const watchIsInSlider = watch("isInSlider", false)
+  const watchIsInSlider = watch("isInSlider", editedAdvertising.mainSliderIsVisible)
 
-  const onCreate = (data) => {
+  const onEdit = (data) => {
     const newAdvertising = {
+      id: editedAdvertising.id,
+      createDate: editedAdvertising.createDate,
       buttonLink: data.link,
-      mainSliderIsVisible: data.isInSlider
+      mainSliderIsVisible: data.isInSlider,
+      avatarFileName: editedAdvertising.avatarFileName
     }
 
     if (data.isInSlider) {
@@ -51,17 +64,17 @@ const CreateAdvertising = () => {
       newAdvertising.title = data.title
     }
 
-    createAdvertising(newAdvertising, data.fileModel)
+    editAdvertising(newAdvertising, data.fileModel)
   }
 
   return (
     <section>
       <div className="container">
-        <h1 className="admin-title title">Создание объявления</h1>
+        <h1 className="admin-title title">Изменение объявления</h1>
         <form
           action="#"
           className="admin-login__form form"
-          onSubmit={handleSubmit(onCreate)}
+          onSubmit={handleSubmit(onEdit)}
           encType="multipart/form-data"
         >
           <label className="form__label">
@@ -72,9 +85,10 @@ const CreateAdvertising = () => {
               rules={{
                 required: watchIsInSlider,
               }}
-              render={({ field: { onChange }, fieldState: { error } }) => (
+              render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <input
                   type="text"
+                  value={value}
                   className={`form__input ${error ? " error" : ""}`}
                   onChange={(newValue) => onChange(newValue)}
                 />
@@ -89,9 +103,10 @@ const CreateAdvertising = () => {
               rules={{
                 required: watchIsInSlider,
               }}
-              render={({ field: { onChange }, fieldState: { error } }) => (
+              render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <input
                   type="text"
+                  value={value}
                   className={`form__input ${error ? " error" : ""}`}
                   onChange={(newValue) => onChange(newValue)}
                 />
@@ -106,9 +121,10 @@ const CreateAdvertising = () => {
               rules={{
                 required: true,
               }}
-              render={({ field: { onChange }, fieldState: { error } }) => (
+              render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <input
                   type="text"
+                  value={value}
                   className={`form__input ${error ? " error" : ""}`}
                   onChange={(newValue) => onChange(newValue)}
                 />
@@ -120,9 +136,6 @@ const CreateAdvertising = () => {
             <Controller
               control={control}
               name="fileModel"
-              rules={{
-                required: true,
-              }}
               render={({ field: { onChange }, fieldState: { error } }) => (
                 <input
                   type="file"
@@ -149,9 +162,9 @@ const CreateAdvertising = () => {
           </label>
           <button
             className={`form__btn btn`}
-            disabled={isCreateLoading || isAddFileLoading}
+            disabled={isEditLoading || isAddFileLoading}
           >
-            {isCreateLoading || isAddFileLoading  ? "Создание..." : "Создать"}
+            {isEditLoading || isAddFileLoading  ? "Изменение..." : "Изменить"}
           </button>
         </form>
       </div>
@@ -159,4 +172,4 @@ const CreateAdvertising = () => {
   );
 };
 
-export default CreateAdvertising;
+export default EditAdvertising;
