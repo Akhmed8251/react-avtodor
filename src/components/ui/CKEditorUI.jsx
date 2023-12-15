@@ -10,7 +10,7 @@ const CKEditorUI = ({ onChange, initData = '' }) => {
       }}
       initData={initData}
       onChange={onChange}
-      editorUrl="https://cdn.ckeditor.com/4.18.0/standard-all/ckeditor.js"
+      editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
      />
   )
 }

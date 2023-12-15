@@ -25,7 +25,7 @@ export const publicRoutes = [
     {path: '/news', element: <AllNews />, exact: true},
     {path: '/news/:id', element: <NewsPage />, exact: true},
     {path: '/login', element: <Login />, exact: true},
-    {path: '/:pagename(^(?!.*admin).*$)', element: <PageContent />, exact: true}
+    {path: '/:pagename', element: <PageContent />, exact: true}
 ]
 
 export const privateRoutes = [
