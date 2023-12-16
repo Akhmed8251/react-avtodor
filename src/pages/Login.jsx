@@ -41,6 +41,8 @@ const Login = () => {
     authUser(data.login, data.password);
   };
 
+  document.title = "Авторизация - МФ МАДИ"
+
   return (
     <section className="admin-login">
       <div className="container">

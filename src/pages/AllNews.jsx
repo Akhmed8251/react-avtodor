@@ -18,6 +18,7 @@ const AllNews = () => {
   });
 
   useEffect(() => {
+    document.title = "Все новости - МФ МАДИ"
     getAllNews();
   }, []);
 

@@ -7,6 +7,7 @@ import About from '../components/About'
 import Contacts from '../components/Contacts'
 
 const Main = () => {
+  document.title = "Главная - МФ МАДИ"
   return (
     <>
       <Hero />

@@ -10,12 +10,14 @@ import Loader from "../components/ui/Loader";
 const NewsPage = () => {
   const urlParams = useParams();
   const newsId = urlParams.id;
+  
 
   const [newsInfo, setNewsInfo] = useState(null);
   const [getNewsById, isNewsLoading, newsErr] = useFetching(async (newsId) => {
     const response = await NewsService.getNewsById(newsId);
     if (response.status === 200) {
       setNewsInfo(response.data);
+      document.title = `${response.data.content?.title} - МФ МАДИ`
     } else {
       console.log(newsErr);
     }
