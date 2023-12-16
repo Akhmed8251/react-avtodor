@@ -35,7 +35,7 @@ const NewsPage = () => {
             <h1 className="news-page__title title">
               {newsInfo?.content.title}
             </h1>
-            <Gallery images={newsInfo?.content.fileModels} />
+            <Gallery images={newsInfo?.content.fileModels?.filter(f => f.isDeleted == false)} />
             <div
               className="news-page__content"
               dangerouslySetInnerHTML={{
