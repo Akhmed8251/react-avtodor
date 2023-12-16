@@ -21,16 +21,21 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("isAuth")) {
       setIsAuth(true);
-      setIsAdminViewPublicPage(true)
+      setIsAdminViewPublicPage(localStorage.getItem("isAdminViewPublicPage") == "true")
       setEmployeeName(localStorage.getItem("employeeName"))
+
+      console.log("isAuth = ", localStorage.getItem("isAuth"))
+      console.log("isAdminViewPublicPage = ", localStorage.getItem("isAdminViewPublicPage") == "true")
+      console.log("isAuth && !isAdminViewPublicPage = ", localStorage.getItem("isAuth") && !(localStorage.getItem("isAdminViewPublicPage") == "true"))
     }
+    
     setIsLoading(false);
   }, []);
 
   return (
     !isLoading &&
     (isAuth && !isAdminViewPublicPage ? (
-      <AdminContext.Provider value={{ setIsAuth, isOpenSidebar, setIsOpenSidebar, currentPageName, setCurrentPageName, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName }}>
+      <AdminContext.Provider value={{ isAuth, setIsAuth, isOpenSidebar, setIsOpenSidebar, currentPageName, setCurrentPageName, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName }}>
         <BrowserRouter>
           <div className="page">
             <HeaderAdmin />

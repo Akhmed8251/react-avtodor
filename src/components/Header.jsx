@@ -89,7 +89,7 @@ const Header = () => {
                         isAuth 
                           ?
                             <>
-                                <Link onClick={() => setIsAdminViewPublicPage(false) } to={'/admin'} className="header__admin-name admin-name">{employeeName}</Link>
+                                <Link onClick={() => { localStorage.setItem("isAdminViewPublicPage", "false");  setIsAdminViewPublicPage(false)} } to={'/admin'} className="header__admin-name admin-name">{employeeName}</Link>
                                 <button type='button' className='btn logout-btn' onClick={() => logout()}>Выйти</button>
                             </> 
                           : 

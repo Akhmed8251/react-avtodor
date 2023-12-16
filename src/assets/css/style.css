@@ -201,6 +201,7 @@ main {
     justify-content: flex-end;
     align-items: center;
     gap: 15px;
+    margin-bottom: 32px;
 }
 
 .admin-name {
@@ -280,8 +281,7 @@ main {
 }
 
 .header-bottom__menu-btn {
-    width: 68px;
-    height: 68px;
+    flex: 0 0 68px;
     background-color: #f22518;
     display: flex;
     justify-content: center;
@@ -310,12 +310,13 @@ main {
 
 .header-bottom__container {
     display: flex;
-    align-items: center;
+    align-items: stretch;
 }
 
 .header-bottom__list,
 .footer__menu-list {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
 }
 
@@ -1325,12 +1326,12 @@ main {
 }
 
 .admin-login {
-    width: 31%;
-    margin: 20px auto;
+    margin: 20px 0;
 }
 
 .admin-login__content {
     max-width: 480px;
+    margin: 0 auto;
 }
 
 .admin-title {
@@ -1418,12 +1419,6 @@ main {
     }
 }
 
-@media (max-width: 969px) {
-    .header-bottom__menu-btn {
-        height: 84px;
-    }
-}
-
 @media (max-width: 768px) {
     .title {
         font-size: 24px;
@@ -1489,7 +1484,6 @@ main {
 
     .header-bottom__menu-btn {
         width: 54px;
-        height: 54px;
     }
 
     .header-bottom__list, .footer__menu-list {
@@ -1505,6 +1499,7 @@ main {
     }
 
     .header-menu._active .header-menu__body {
+        width: 100%;
         transform: translateY(54px);
         padding-left: 22px;
     }
