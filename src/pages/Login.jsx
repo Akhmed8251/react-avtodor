@@ -6,7 +6,7 @@ import AuthService from "../api/AuthService";
 import { AdminContext } from "../context";
 
 const Login = () => {
-  const { setIsAuth } = useContext(AdminContext)
+  const { setIsAuth, setEmployeeName } = useContext(AdminContext)
 
   const redirect = useNavigate();
 
@@ -17,6 +17,9 @@ const Login = () => {
         localStorage.setItem("isAuth", "true")
         setIsAuth(true)
 
+        localStorage.setItem("employeeName", response.data.employeeDto.employeeName)
+        setEmployeeName(response.data.employeeDto.employeeName)
+        
         redirect("/admin");
       } else {
         console.log(authErr);

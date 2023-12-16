@@ -196,6 +196,17 @@ main {
     display: block;
 }
 
+.header__admin-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+.admin-name {
+    border-bottom: 1px solid currentColor;
+}
+
 .header-main,
 .footer-top {
     margin-bottom: 57px;

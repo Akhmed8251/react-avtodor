@@ -12,6 +12,8 @@ import Footer from "./components/Footer";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
+  const [employeeName, setEmployeeName] = useState(null);
+  const [isAdminViewPublicPage, setIsAdminViewPublicPage] = useState(false)
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   const [currentPageName, setCurrentPageName] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
@@ -19,14 +21,16 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem("isAuth")) {
       setIsAuth(true);
+      setIsAdminViewPublicPage(true)
+      setEmployeeName(localStorage.getItem("employeeName"))
     }
     setIsLoading(false);
   }, []);
 
   return (
     !isLoading &&
-    (isAuth ? (
-      <AdminContext.Provider value={{ setIsAuth, isOpenSidebar, setIsOpenSidebar, currentPageName, setCurrentPageName }}>
+    (isAuth && !isAdminViewPublicPage ? (
+      <AdminContext.Provider value={{ setIsAuth, isOpenSidebar, setIsOpenSidebar, currentPageName, setCurrentPageName, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName }}>
         <BrowserRouter>
           <div className="page">
             <HeaderAdmin />
@@ -39,8 +43,8 @@ function App() {
           </div>
         </BrowserRouter>
       </AdminContext.Provider>
-    ) : (
-      <AdminContext.Provider value={{ isAuth, setIsAuth }}>
+    ) : (!isAuth || (isAuth && isAdminViewPublicPage)) && (
+      <AdminContext.Provider value={{ isAuth, setIsAuth, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName }}>
         <BrowserRouter>
           <div className="page">
             <Header />

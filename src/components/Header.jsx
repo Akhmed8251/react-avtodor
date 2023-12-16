@@ -1,13 +1,16 @@
 import logo from '../assets/images/logo.svg'
 import { Link } from 'react-router-dom'
 import { DynamicAdapt } from '../utils/dynamicAdapt'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useFetching } from '../hooks/useFetching'
 import MainMenuService from '../api/MainMenuService'
 import Loader from './ui/Loader'
+import { AdminContext } from '../context'
 
 
 const Header = () => {
+  const { isAuth, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName } = useContext(AdminContext)
+
   const [isOpenSideMenu, setIsOpenSideMenu] = useState(false)
 
   const [mainMenu, setMainMenu] = useState([])
@@ -31,6 +34,13 @@ const Header = () => {
 
     getMainMenu()
   }, [])
+
+  const logout = () => {
+    localStorage.clear()
+    setIsAuth(false)
+    setIsAdminViewPublicPage(false)
+    setEmployeeName(null)
+  }
 
   const toggleSideMenu = () => {
     setIsOpenSideMenu(prev => !prev);
@@ -69,6 +79,22 @@ const Header = () => {
                 </div>
                 <div className="header-top__vision">
                     <a href="/" className="header-top__vision-btn"></a>
+                </div>
+            </div>
+        </div>
+        <div className='header__admin'>
+            <div className="container">
+                <div className="header__admin-content">
+                    {
+                        isAuth 
+                          ?
+                            <>
+                                <Link onClick={() => setIsAdminViewPublicPage(false) } to={'/admin'} className="header__admin-name admin-name">{employeeName}</Link>
+                                <button type='button' className='btn logout-btn' onClick={() => logout()}>Выйти</button>
+                            </> 
+                          : 
+                            <Link to={'/login'} className='header__admin-btn btn'>Вход</Link>
+                    }
                 </div>
             </div>
         </div>
