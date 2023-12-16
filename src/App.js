@@ -23,10 +23,6 @@ function App() {
       setIsAuth(true);
       setIsAdminViewPublicPage(localStorage.getItem("isAdminViewPublicPage") == "true")
       setEmployeeName(localStorage.getItem("employeeName"))
-
-      console.log("isAuth = ", localStorage.getItem("isAuth"))
-      console.log("isAdminViewPublicPage = ", localStorage.getItem("isAdminViewPublicPage") == "true")
-      console.log("isAuth && !isAdminViewPublicPage = ", localStorage.getItem("isAuth") && !(localStorage.getItem("isAdminViewPublicPage") == "true"))
     }
     
     setIsLoading(false);

@@ -71,6 +71,7 @@
 
 .sidebar__item._active .sidebar__link {
     border-left: 3px solid #727cf5;
+    color: #727cf5;
 }
 
 section {
