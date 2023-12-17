@@ -2,8 +2,8 @@ import axios from "axios";
 import { API_URL } from "./config";
 
 export default class NewsService {
-    static async getNews() {
-        const response = await axios.get(`${API_URL}/News/GetNews`)
+    static async getNews(skip = null, take = null) {
+        const response = await axios.get(`${API_URL}/News/GetNews${(skip != null && take != null) ? `?skip=${skip}&take=${take}` : ""}`)
         return response;
     }
 

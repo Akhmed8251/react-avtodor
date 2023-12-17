@@ -7,10 +7,13 @@ import { useFetching } from "../hooks/useFetching";
 import NewsService from "../api/NewsService";
 import Loader from './ui/Loader'
 
+const NEWS_VISIBLE_COUNT = 3
+const SKIP_NEWS = 0
+
 const MainNews = () => {
   const [mainNews, setMainNews] = useState([])
   const [getMainNews, isMainNewsLoading, mainNewsErr] = useFetching(async () => {
-    const response = await NewsService.getNews()
+    const response = await NewsService.getNews(SKIP_NEWS, NEWS_VISIBLE_COUNT)
     if (response.status === 200) {
       setMainNews(response.data)
     } else {

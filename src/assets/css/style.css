@@ -1325,6 +1325,21 @@ main {
     gap: 30px 10px;
 }
 
+.all-news__more {
+    width: 100%;
+    background-color: #ddd;
+    color: #555;
+    margin-top: 32px;
+}
+
+.all-news__more .loader__spinner {
+    margin: 0 auto;
+}
+
+.all-news__more:hover {
+    background-color: #ccc;
+}
+
 .admin-login {
     margin: 20px 0;
 }
