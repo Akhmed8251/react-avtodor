@@ -9,6 +9,7 @@ import { AdminContext } from "./context";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { Helmet } from "react-helmet";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -47,6 +48,10 @@ function App() {
     ) : (!isAuth || (isAuth && isAdminViewPublicPage)) && (
       <AdminContext.Provider value={{ isAuth, setIsAuth, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName }}>
         <BrowserRouter>
+        <Helmet>
+          <script src="https://lidrekon.ru/slep/js/jquery.js"></script>
+          <script src="https://lidrekon.ru/slep/js/uhpv-hover-full.min.js"></script>
+        </Helmet>
           <div className="page">
             <Header />
             <main>

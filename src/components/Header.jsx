@@ -6,10 +6,11 @@ import { useFetching } from '../hooks/useFetching'
 import MainMenuService from '../api/MainMenuService'
 import Loader from './ui/Loader'
 import { AdminContext } from '../context'
+import specialVision from '../assets/images/special-vision.svg'
 
 
 const Header = () => {
-  const { isAuth, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName } = useContext(AdminContext)
+  const {setSpecialEnable, isAuth, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName } = useContext(AdminContext)
 
   const [isOpenSideMenu, setIsOpenSideMenu] = useState(false)
 
@@ -78,7 +79,7 @@ const Header = () => {
                     
                 </div>
                 <div className="header-top__vision">
-                    <a href="/" className="header-top__vision-btn"></a>
+                    <img src={specialVision} id='specialButton' className="header-top__vision-btn"/>
                 </div>
             </div>
         </div>

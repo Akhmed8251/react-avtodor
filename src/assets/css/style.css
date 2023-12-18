@@ -185,12 +185,13 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px;
+    cursor: pointer;
 }
 
 .header-top__vision-btn::after,
 .footer__vision-btn::after {
     content: '';
-    background: url('../images/special-vision.svg') no-repeat;
     width: 31px;
     height: 31px;
     display: block;
@@ -729,6 +730,7 @@ main {
 .footer {
     background-color: #393642;
     padding-bottom: 57px;
+    padding-top: 40px;
 }
 
 .footer__vision {
