@@ -7,10 +7,11 @@ import CKEditorUI from "../../../components/ui/CKEditorUI";
 const CreatePage = () => {
   const redirect = useNavigate()
 
-  const [createPage, isCreateLoading, createErr] = useFetching(async (content, files) => {
+  const [createPage, isCreateLoading, createErr] = useFetching(async (content) => {
     const response = await ContentService.createContent(content)
     if (response.status == 200) {
-
+      alert("Страница успешно создана!")
+      redirect("/admin/pages")
     } else {
       console.log(createErr)
     }
@@ -23,6 +24,14 @@ const CreatePage = () => {
 
 
   const onCreate = (data) => {
+    const pageContent = {
+      title: data.title,
+      htmlContent: data.htmlContent,
+      contentType: 0,
+      isDeleted: false
+    }
+
+    createPage(pageContent)
   }
 
   return (
