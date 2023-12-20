@@ -19,6 +19,8 @@ import EditContact from "../pages/admin/contacts/EditContact"
 import PagesAdmin from "../pages/admin/pageContents/PagesAdmin"
 import CreatePage from "../pages/admin/pageContents/CreatePage"
 import EditAdvertising from "../pages/admin/advertising/EditAdvertising"
+import AboutAdmin from "../pages/admin/about/AboutAdmin"
+import EditAbout from "../pages/admin/about/EditAbout"
 
 export const publicRoutes = [
     {path: '/', element: <Main />, exact: true},
@@ -44,4 +46,6 @@ export const privateRoutes = [
     {path: '/admin/contact/edit', element: <EditContact />, exact: true},
     {path: '/admin/pages', element: <PagesAdmin />, exact: true},
     {path: '/admin/page/create', element: <CreatePage />, exact: true},
+    {path: '/admin/about', element: <AboutAdmin />, exact: true},
+    {path: '/admin/about/edit', element: <EditAbout />, exact: true},
 ]

@@ -9,7 +9,6 @@ import { useContext } from 'react'
 import { AdminContext } from '../context'
 
 const Main = () => {
-  const { specialEnable } = useContext(AdminContext)
   document.title = "Главная - МФ МАДИ"
   return (
     <>

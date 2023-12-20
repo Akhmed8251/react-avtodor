@@ -1,19 +1,23 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { publicRoutes } from "../router";
+import SpecialVersion from "./SpecialVersion";
 
 const AppRouter = () => {
   return (
-    <Routes>
-      {publicRoutes.map((route) => (
-        <Route
-          element={route.element}
-          path={route.path}
-          exact={route.exact}
-          key={route.path}
-        />
-      ))}
-      <Route element={<Navigate to="/" />} path="*" exact={true} />
-    </Routes>
+    <>
+      <SpecialVersion />
+      <Routes>
+        {publicRoutes.map((route) => (
+          <Route
+            element={route.element}
+            path={route.path}
+            exact={route.exact}
+            key={route.path}
+          />
+        ))}
+        <Route element={<Navigate to="/" />} path="*" exact={true} />
+      </Routes>
+    </>
   );
 };
 

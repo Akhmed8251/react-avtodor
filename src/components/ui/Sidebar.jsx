@@ -55,6 +55,11 @@ const Sidebar = () => {
             Страницы
           </Link>
         </li>
+        <li className="sidebar__item" data-name="ОбМАДИ">
+          <Link to={'/admin/about'} className='sidebar__link'>
+            Об МАДИ
+          </Link>
+        </li>
       </ul>
     </aside>
   )

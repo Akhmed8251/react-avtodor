@@ -594,13 +594,19 @@ main {
     flex: 1 1 50%;
 }
 
-.about__image::after {
+.about__image img {
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+}
+
+/* .about__image::after {
     content: '';
     background: url('../images/about.jpg') no-repeat center / cover;
     width: 100%;
     height: 100%;
     display: block;
-}
+} */
 
 .about__content {
     flex: 1 0 50%;

@@ -10,7 +10,7 @@ import specialVision from '../assets/images/special-vision.svg'
 
 
 const Header = () => {
-  const {setSpecialEnable, isAuth, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName } = useContext(AdminContext)
+  const {isAuth, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName } = useContext(AdminContext)
 
   const [isOpenSideMenu, setIsOpenSideMenu] = useState(false)
 

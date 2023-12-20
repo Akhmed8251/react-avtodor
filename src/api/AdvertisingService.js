@@ -12,6 +12,11 @@ export default class AdvertisingService {
         return response;
     }
 
+    static async getMainPageDownAdvertising() {
+        const response = await axios.get(`${API_URL}/Advertising/GetMainPageDownAdvertising`)
+        return response
+    }
+
     static async createAdvertising(advertising) {
         const response = await axios.post(`${API_URL}/Advertising/CreateAdvertising`, advertising)
         return response;
