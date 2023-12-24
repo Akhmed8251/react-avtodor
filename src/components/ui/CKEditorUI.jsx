@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { CKEditor } from 'ckeditor4-react'
 
-const CKEditorUI = ({ onChange, initData = '' }) => {
+const CKEditorUI = ({ onChange, initData = '', allowUploadImage = false }) => {
 
   return (
     <CKEditor
       config={{
-        removePlugins: "image"
+        removePlugins: !allowUploadImage ? "image" : "",
       }}
       initData={initData}
       onChange={onChange}

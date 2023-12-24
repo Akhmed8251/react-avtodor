@@ -28,11 +28,16 @@ const CreatePage = () => {
       title: data.title,
       htmlContent: data.htmlContent,
       contentType: 0,
-      isDeleted: false
+      isDeleted: false,
+      parentContentId: null,
+      parentContent: null,
+      newsId: null,
+      advertisingId: null
     }
 
     createPage(pageContent)
   }
+
 
   return (
     <section>
@@ -72,6 +77,7 @@ const CreatePage = () => {
               render={({ field: { onChange }, fieldState: { error } }) => (
                 <div className={`${error ? "error" : ""}`}>
                   <CKEditorUI
+                    allowUploadImage
                     onChange={(newValue) => {onChange(newValue.editor.getData())}}
                   />
                 </div>

@@ -5,7 +5,6 @@ import { DynamicAdapt } from "../utils/dynamicAdapt";
 import { useFetching } from "../hooks/useFetching";
 import MainMenuService from "../api/MainMenuService";
 import Loader from './ui/Loader'
-import specialVision from '../assets/images/special-vision.svg'
 
 const Footer = () => {
   const [mainMenu, setMainMenu] = useState([])

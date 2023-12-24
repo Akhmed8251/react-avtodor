@@ -60,6 +60,11 @@ const Sidebar = () => {
             Об МАДИ
           </Link>
         </li>
+        <li className="sidebar__item" data-name="Меню">
+          <Link to={'/admin/all-menu'} className='sidebar__link'>
+            Меню
+          </Link>
+        </li>
       </ul>
     </aside>
   )

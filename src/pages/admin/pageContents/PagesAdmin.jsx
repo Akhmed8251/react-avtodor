@@ -68,7 +68,7 @@ const PagesAdmin = () => {
               </tr>
             </thead>
             <tbody>
-              {pages.filter(p => p.contentType == 1).map((page, idx) => (
+              {pages.filter(p => p.newsId == null).map((page, idx) => (
                 <tr data-id={page.id} key={idx}>
                   <td>{formatTime(page.createDate)}</td>
                   <td>{page.title}</td>
