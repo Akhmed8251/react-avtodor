@@ -40,7 +40,7 @@ const PageContent = () => {
     } else {
       getContentById(id);
     } 
-  }, []);
+  }, [window.location.pathname]);
 
   return (
     <>

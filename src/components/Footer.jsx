@@ -63,7 +63,7 @@ const Footer = () => {
                 <Loader />
                 :
                 mainMenu
-                  .filter((m) => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false)
+                  .filter((m) => m.topMainPageIsVisible === true)
                   .map((mainMenuItem, idx) => (
                     <li key={idx} className="footer-top__item">
                       <Link to={mainMenuItem.link} className="footer-top__link">
@@ -97,13 +97,13 @@ const Footer = () => {
                 <Loader />
                 :
                 mainMenu
-                  .filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === null)
+                  .filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === false && m.menuAboveAdvertisingIsVisible === false && m.childMenu && m.childMenu.length > 0)
                   .map((mainMenuItem) => (
                     <li className="footer-bottom__item footer-item">
-                      <h3 className="footer-item__title">{mainMenuItem.name}</h3>
+                      <a href={mainMenu.link} className="footer-item__title">{mainMenuItem.name}</a>
                       <ul className="footer-item__elements">
                         {
-                          mainMenuItem.childMenu.map(childMenuItem => (
+                          mainMenuItem.childMenu?.map(childMenuItem => (
                             <li className="footer-item__element">
                               <Link to={childMenuItem.link} className="footer-item__link">
                                 {childMenuItem.name}
@@ -123,7 +123,7 @@ const Footer = () => {
                 <Loader />
                 :
                 mainMenu
-                  .filter((m) => m.topMainPageIsVisible === false)
+                  .filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === false && m.menuAboveAdvertisingIsVisible === false && m.childMenu.length == 0)
                   .map((mainMenuItem) => (
                     <Link to={mainMenuItem.link} className="footer-bottom__link">
                       {mainMenuItem.name}

@@ -122,7 +122,7 @@ const Header = () => {
                             ?
                                 <Loader />
                             :
-                                mainMenu.filter(m => m.topMainPageIsVisible === true && m.sideMenuIsVisible === false).map((mainMenuItem, idx) => (
+                                mainMenu.filter(m => m.topMainPageIsVisible === true).map((mainMenuItem, idx) => (
                                     <li key={idx} className="header-main__item">
                                         <Link to={mainMenuItem.link} className="header-main__link">
                                             {mainMenuItem.name}
@@ -149,17 +149,19 @@ const Header = () => {
                                         <Loader />
                                     :
                                         mainMenu.filter(m => m.sideMenuIsVisible === true).map((mainMenuItem, idx) => (
-                                            (mainMenu.childMenu && mainMenuItem.childMenu.length > 0)
+                                            (mainMenuItem.childMenu && mainMenuItem.childMenu.length > 0)
                                                 ?
                                                     <li key={idx} className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
-                                                        <button className="header-menu__submenu-btn submenu-btn">
-                                                            <span className="submenu-btn__text">{mainMenuItem.name}</span>
-                                                            <div className="submenu-btn__icon">
-                                                                <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
-                                                                </svg> 
-                                                            </div>
-                                                        </button>
+                                                        <div className="header-menu__submenu-wrapper submenu-wrapper">
+                                                            <Link to={mainMenuItem.link} className="submenu-wrapper__link">{mainMenuItem.name}</Link>
+                                                            <button className="submenu-wrapper__btn submenu-btn">
+                                                                <div className="submenu-btn__icon">
+                                                                    <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
+                                                                    </svg> 
+                                                                </div>
+                                                            </button>
+                                                        </div>
                                                         <div className="submenu">
                                                             <ul className="submenu__list">
                                                                 {
