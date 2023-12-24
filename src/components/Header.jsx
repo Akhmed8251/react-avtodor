@@ -45,9 +45,7 @@ const Header = () => {
 
   const toggleSideMenu = () => {
     setIsOpenSideMenu(prev => !prev);
-
     document.body.classList.toggle("no-scroll")
-    document.body.classList.toggle("backdrop")
   }
 
   const openSubMenu = (menuWithSubmenu) => {
@@ -137,6 +135,7 @@ const Header = () => {
             <div className="header-bottom__container container">
                 <button onClick={() => toggleSideMenu() } type="button" className={`header-bottom__menu-btn ${isOpenSideMenu ? "_close": ""}`} data-da=".header-top__container, 768, first"></button>
                 <div className={`header-bottom__menu header-menu ${isOpenSideMenu ? "_active" : ""}`}>
+                    <div className="header-menu__area" onClick={() => toggleSideMenu() }></div>
                     <div className="header-menu__body">
                         <div className="header-menu__top">
                             <span className="header-menu__top-item header-menu__top-item_main">МАДИ</span>

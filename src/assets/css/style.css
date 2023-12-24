@@ -85,25 +85,6 @@ body {
     overflow-x: hidden;
 }
 
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 12;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, .7);
-    opacity: 0;
-    visibility: hidden;
-    transition: .3s;
-}
-
-body.backdrop::after {
-    opacity: 1;
-    visibility: visible;
-}
-
 .no-scroll {
     overflow-y: hidden;
 }
@@ -887,6 +868,27 @@ main {
     padding-left: 128px;
     padding-right: 30px;
     margin-left: max(15px, calc((100% - 1747px) / 2));
+    opacity: 1;
+    visibility: visible;
+}
+
+.header-menu__area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 12;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.header-menu._active .header-menu__area {
     opacity: 1;
     visibility: visible;
 }
