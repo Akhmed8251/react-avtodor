@@ -958,11 +958,13 @@ main {
     max-width: 1200px;
 }
 
-.news-page {
+.news-page,
+.content-page {
     margin: 60px 0;
 }
 
 .news-page__title,
+.content-page__title,
 .news-page__content,
 .gallery {
     margin-bottom: 40px;
@@ -1638,7 +1640,8 @@ main {
         margin-bottom: 41px;
     }
 
-    .news-page {
+    .news-page,
+    .content-page {
         margin: 50px 0;
     }
 
@@ -1752,6 +1755,8 @@ main {
     }
 
     .news-page__title,
+    .content-page__title,
+    .content-page__content,
     .news-page__content {
         margin-bottom: 25px;
     }
@@ -1955,7 +1960,8 @@ main {
         margin-bottom: 28px;
     }
 
-    .news-page {
+    .news-page,
+    .content-page {
         margin: 40px 0;
     }
 

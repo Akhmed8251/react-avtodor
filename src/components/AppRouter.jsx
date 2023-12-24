@@ -1,6 +1,7 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { publicRoutes } from "../router";
 import SpecialVersion from "./SpecialVersion";
+import PageContent from "../pages/PageContent";
 
 const AppRouter = () => {
   return (
@@ -15,7 +16,7 @@ const AppRouter = () => {
             key={route.path}
           />
         ))}
-        <Route element={<Navigate to="/" />} path="*" exact={true} />
+        <Route element={<PageContent />} path="*" exact={true} />
       </Routes>
     </>
   );
