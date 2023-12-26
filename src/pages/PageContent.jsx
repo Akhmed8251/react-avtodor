@@ -30,6 +30,20 @@ const PageContent = () => {
     }
   );
 
+  const accordion = (controlElem) => {
+    if (controlElem.classList.contains("accordeon__control")) {
+      const itemAccordeon = controlElem.closest("li");
+      itemAccordeon.classList.toggle("_active");
+
+      let accordeonContent = itemAccordeon.querySelector(".accordeon__content");
+      if (itemAccordeon.classList.contains("_active")) {
+        accordeonContent.style.maxHeight = accordeonContent.scrollHeight + "px";
+      } else {
+        accordeonContent.style.maxHeight = null;
+      }
+    }
+  }
+
   useEffect(() => {
     const pathName = window.location.pathname;
     const pathNameArr = pathName.split("/");
@@ -54,7 +68,7 @@ const PageContent = () => {
               className="content-page__content"
               dangerouslySetInnerHTML={{
                 __html: contentInfo?.htmlContent,
-              }}
+              }} onClick={(evt) => accordion(evt.target)}
             ></div>
           </div>
         </section>

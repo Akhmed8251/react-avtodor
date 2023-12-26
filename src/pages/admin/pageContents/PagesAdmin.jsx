@@ -62,6 +62,7 @@ const PagesAdmin = () => {
           <table>
             <thead>
               <tr>
+                <th>Id</th>
                 <th>Дата создания</th>
                 <th>Заголовок</th>
                 <th>Действия</th>
@@ -70,6 +71,7 @@ const PagesAdmin = () => {
             <tbody>
               {pages.filter(p => p.newsId == null).map((page, idx) => (
                 <tr data-id={page.id} key={idx}>
+                  <td>{page.id}</td>
                   <td>{formatTime(page.createDate)}</td>
                   <td>{page.title}</td>
                   <td className="actions">
