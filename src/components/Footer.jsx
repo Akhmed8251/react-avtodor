@@ -98,13 +98,13 @@ const Footer = () => {
                 :
                 mainMenu
                   .filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === false && m.menuAboveAdvertisingIsVisible === false && m.childMenu && m.childMenu.length > 0)
-                  .map((mainMenuItem) => (
-                    <li className="footer-bottom__item footer-item">
+                  .map((mainMenuItem, idx) => (
+                    <li key={idx} className="footer-bottom__item footer-item">
                       <a href={mainMenu.link} className="footer-item__title">{mainMenuItem.name}</a>
                       <ul className="footer-item__elements">
                         {
-                          mainMenuItem.childMenu?.map(childMenuItem => (
-                            <li className="footer-item__element">
+                          mainMenuItem.childMenu?.map((childMenuItem, idx) => (
+                            <li key={idx} className="footer-item__element">
                               <Link to={childMenuItem.link} className="footer-item__link">
                                 {childMenuItem.name}
                               </Link>
@@ -124,8 +124,8 @@ const Footer = () => {
                 :
                 mainMenu
                   .filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === false && m.menuAboveAdvertisingIsVisible === false && m.childMenu.length == 0)
-                  .map((mainMenuItem) => (
-                    <Link to={mainMenuItem.link} className="footer-bottom__link">
+                  .map((mainMenuItem, idx) => (
+                    <Link key={idx} to={mainMenuItem.link} className="footer-bottom__link">
                       {mainMenuItem.name}
                     </Link>
                   ))

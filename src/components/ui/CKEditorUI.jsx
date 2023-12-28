@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CKEditor } from 'ckeditor4-react'
 
-const CKEditorUI = ({ onChange, initData = '', allowUploadImage = false }) => {
+const CKEditorUI = ({ onChange, initData = '', name = 'editor1', allowUploadImage = false }) => {
 
   return (
     <CKEditor
@@ -9,6 +9,7 @@ const CKEditorUI = ({ onChange, initData = '', allowUploadImage = false }) => {
         removePlugins: !allowUploadImage ? "image" : "",
       }}
       initData={initData}
+      name={name}
       onChange={onChange}
       editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
      />

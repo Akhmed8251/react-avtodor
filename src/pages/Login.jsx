@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetching } from "../hooks/useFetching";
 import { Controller, useForm } from "react-hook-form";
@@ -27,8 +27,6 @@ const Login = () => {
         setEmployeeName(response.data.employeeDto.employeeName);
 
         redirect("/admin");
-      } else {
-        console.log(authErr);
       }
     }
   );
@@ -40,7 +38,7 @@ const Login = () => {
   const login = (data) => {
     authUser(data.login, data.password);
   };
-
+  
   document.title = "Авторизация - МФ МАДИ"
 
   return (
