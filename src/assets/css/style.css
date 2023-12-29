@@ -149,7 +149,12 @@ main {
 .header-top__wrapper {
     display: flex;
     align-items: center;
-    gap: 42px;
+    flex-wrap: wrap;
+    gap: 15px 42px;
+}
+
+.header-top__wrapper-item {
+    word-break: break-word;
 }
 
 .header-top__link {
@@ -158,8 +163,11 @@ main {
     color: #fff;
 }
 
-.header-top__vision-btn,
-.footer__vision-btn {
+.header-top__vision {
+    flex-shrink: 0;
+}
+
+.header-top__vision-btn {
     width: 54px;
     height: 54px;
     background-color: #1f1b29;
@@ -1454,8 +1462,6 @@ main {
     }
 
     .header-top__container {
-        padding-top: 0;
-        padding-bottom: 0;
         flex-wrap: nowrap;
     }
 
@@ -1756,10 +1762,6 @@ main {
 
     .btn {
         font-size: 14px;
-    }
-
-    .header-top__container {
-        padding: 0;
     }
 
     .header-top__link {

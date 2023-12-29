@@ -20,7 +20,7 @@ const EditMainMenu = () => {
   })
 
   
-  const {control, handleSubmit, watch } = useForm({
+  const {control, handleSubmit } = useForm({
     mode: "onSubmit",
     defaultValues: {
       title: editedMainMenu.name,
@@ -30,10 +30,6 @@ const EditMainMenu = () => {
       menuAboveAdvertisingIsVisible: editedMainMenu.menuAboveAdvertisingIsVisible,
     }
   })
-
-  const watchTopMainPageIsVisible = watch("topMainPageIsVisible", editedMainMenu.topMainPageIsVisible)
-  const watchSideMenuIsVisible = watch("sideMenuIsVisible", editedMainMenu.sideMenuIsVisible)
-  const watchMenuAboveAdvertisingIsVisible = watch("menuAboveAdvertisingIsVisible", editedMainMenu.menuAboveAdvertisingIsVisible)
 
   const onEdit = (data) => {
     const newMainMenu = {

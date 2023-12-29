@@ -81,6 +81,26 @@ const AllMenuAdmin = () => {
     return " - "
   }
 
+  const getPosition = (menu) => {
+    const resPositions = []
+
+    if (!menu.topMainPageIsVisible && !menu.sideMenuIsVisible && !menu.menuAboveAdvertisingIsVisible) {
+      return "В подвале сайта"
+    }
+
+    if (menu.topMainPageIsVisible) {
+      resPositions.push("В шапке и подвале сайта (напротив логотипа)")
+    }
+    if (menu.sideMenuIsVisible) {
+      resPositions.push("Боковое меню")
+    }
+    if (menu.menuAboveAdvertisingIsVisible) {
+      resPositions.push("Над слайдером объявления")
+    }
+    
+    return resPositions.join("; ")
+  }
+
   useEffect(() => {
     setCurrentPageName("Меню")
     getMainMenuList()
@@ -107,6 +127,7 @@ const AllMenuAdmin = () => {
                 <th>Название</th>
                 <th>Ссылка</th>
                 <th>Родительское меню</th>
+                <th>Расположение</th>
                 <th>Действия</th>
               </tr>
             </thead>
@@ -119,6 +140,7 @@ const AllMenuAdmin = () => {
                     <a href={menu.link}>{menu.link}</a>
                   </td>
                   <td>-</td>
+                  <td>{getPosition(menu)}</td>
                   <td className="actions">
                     <Link
                       to={"/admin/main-menu/edit"}
@@ -141,6 +163,7 @@ const AllMenuAdmin = () => {
                     <a href={menu.link}>{menu.link}</a>
                   </td>
                   <td>{getParentMenuName(menu.mainMenuId)}</td>
+                  <td>-</td>
                   <td className="actions">
                     <Link
                       to={"/admin/menu/edit"}

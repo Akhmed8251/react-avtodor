@@ -23,7 +23,7 @@ const CreateAdvertising = () => {
       const formData = new FormData()
       formData.append("advertisingId", response.data.id)
       formData.append("formFile", file)
-      console.log(file)
+
       addFileToAdvertising(formData)
     } else {
       console.log(createErr)

@@ -7,6 +7,7 @@ import MainMenuService from '../api/MainMenuService'
 import Loader from './ui/Loader'
 import { AdminContext } from '../context'
 import specialVision from '../assets/images/special-vision.svg'
+import ContactsService from '../api/ContactsService'
 
 
 const Header = () => {
@@ -24,6 +25,20 @@ const Header = () => {
     }
   });
 
+  const [contacts, setContacts] = useState([]);
+  const [getContacts, isContactsLoading, contactsErr] = useFetching(
+    async () => {
+      const response = await ContactsService.getContacts();
+      if (response.status === 200) {
+        setContacts(
+          response.data.filter(c => c.isTopMainPageVisible == true)
+        );
+      } else {
+        console.log(contactsErr);
+      }
+    }
+  );
+
   useEffect(() => {
     const headerBottomList = document.querySelector(".header-bottom__list")
     if (window.location.pathname === "/") {
@@ -34,6 +49,7 @@ const Header = () => {
     da.init()
 
     getMainMenu()
+    getContacts()
   }, [])
 
   const logout = () => {
@@ -67,13 +83,13 @@ const Header = () => {
                     ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ
                 </span>
                 <div className="header-top__wrapper">
-                    <a className="header-top__link" href="tel:+8352634763">
-                        (8352) 63-47-63
-                    </a>
-                    <a className="header-top__link" href="mailto:mfmadi@mail.ru">
-                        mfmadi@mail.ru
-                    </a>
-                    <time className="header-top__worktime">пн - пт 8:30 - 17:00</time>
+                    {
+                        isContactsLoading ? <Loader isOnlySpinner/>
+                        :
+                            contacts.map((contact, idx) => (
+                                <span key={idx} className='header-top__wrapper-item'>{contact.value}</span>
+                            ))
+                    }
                     
                 </div>
                 <div className="header-top__vision">

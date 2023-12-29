@@ -26,7 +26,7 @@ const EditAdvertising = () => {
         const formData = new FormData()
         formData.append("advertisingId", advertising.id)
         formData.append("formFile", file)
-        console.log(file)
+
         addFileToAdvertising(formData)
       } else {
         alert("Объявление успешно обновлено!");
@@ -53,6 +53,8 @@ const EditAdvertising = () => {
   const onEdit = (data) => {
     const newAdvertising = {
       id: editedAdvertising.id,
+      title: data.title,
+      mainText: data.mainText,
       createDate: editedAdvertising.createDate,
       buttonLink: data.link,
       mainSliderIsVisible: data.isInSlider,
@@ -151,8 +153,9 @@ const EditAdvertising = () => {
             <Controller
               control={control}
               name="isInSlider"
-              render={({ field: { onChange }, fieldState: { error } }) => (
+              render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <input
+                  checked={value}
                   type="checkbox"
                   className={`form__input ${error ? " error" : ""}`}
                   onChange={(newValue) => onChange(newValue.target.checked)}

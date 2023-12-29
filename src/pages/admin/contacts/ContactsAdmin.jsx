@@ -73,6 +73,7 @@ const ContactsAdmin = () => {
                 <th>Тип контакта</th>
                 <th>Название</th>
                 <th>Значение</th>
+                <th>Отображается в верху страницы</th>
                 <th>Действия</th>
               </tr>
             </thead>
@@ -83,6 +84,7 @@ const ContactsAdmin = () => {
                   <td>{contactTypes[contact.contactType]}</td>
                   <td>{contact.name}</td>
                   <td>{contact.value}</td>
+                  <td>{contact.isTopMainPageVisible ? "Да": "Нет"}</td>
                   <td className="actions">
                     <Link
                       to={`/admin/contact/edit`}

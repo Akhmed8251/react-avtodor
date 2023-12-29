@@ -29,6 +29,7 @@ const CreateContact = () => {
         name: data.name || contactTypes.find(c => c.value == data.contactType).label,
         value: data.value,
         contactType: data.contactType,
+        isTopMainPageVisible: data.isTopMainPageVisible,
         isDeleted: false,
     }
 
@@ -116,7 +117,20 @@ const CreateContact = () => {
               )}
             />
           </label>
-         
+          <label className="form__label form__label_checkbox">
+            <span className="form__text">Отобразить в верху страницы? </span>
+            <Controller
+              control={control}
+              name="isTopMainPageVisible"
+              render={({ field: { onChange }, fieldState: { error } }) => (
+                <input
+                  type="checkbox"
+                  className={`form__input ${error ? " error" : ""}`}
+                  onChange={(newValue) => onChange(newValue.target.checked)}
+                />
+              )}
+            />
+          </label>
           <button
             className={`form__btn btn`}
             disabled={isCreateLoading}

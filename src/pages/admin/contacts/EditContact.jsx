@@ -25,7 +25,8 @@ const EditContact = () => {
     defaultValues: {
         contactType: editedContact.contactType,
         name: editedContact.name,
-        value: editedContact.value
+        value: editedContact.value,
+        isTopMainPageVisible: editedContact.isTopMainPageVisible,
     }
   })
 
@@ -37,11 +38,12 @@ const EditContact = () => {
         name: data.contactType == 3 ? data.name : contactTypes.find(c => c.value == data.contactType).label,
         value: data.value,
         contactType: data.contactType,
+        isTopMainPageVisible: data.isTopMainPageVisible,
         isDeleted: false,
         createDate: editedContact.createDate,
         updateDate: editedContact.updateDate
     }
-    console.log(editableContact)
+    
     editContact(editableContact)
   }
 
@@ -129,7 +131,21 @@ const EditContact = () => {
               )}
             />
           </label>
-         
+          <label className="form__label form__label_checkbox">
+            <span className="form__text">Отобразить в верху страницы? </span>
+            <Controller
+              control={control}
+              name="isTopMainPageVisible"
+              render={({ field: { value, onChange }, fieldState: { error } }) => (
+                <input
+                  checked={value}
+                  type="checkbox"
+                  className={`form__input ${error ? " error" : ""}`}
+                  onChange={(newValue) => onChange(newValue.target.checked)}
+                />
+              )}
+            />
+          </label>
           <button
             className={`form__btn btn`}
             disabled={isEditLoading}
