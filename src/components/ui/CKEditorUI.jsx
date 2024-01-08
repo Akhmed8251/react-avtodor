@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { CKEditor } from 'ckeditor4-react'
 
 const CKEditorUI = ({ onChange, initData = '', name = 'editor1', allowUploadImage = false }) => {
@@ -7,6 +6,7 @@ const CKEditorUI = ({ onChange, initData = '', name = 'editor1', allowUploadImag
     <CKEditor
       config={{
         removePlugins: !allowUploadImage ? "image" : "",
+        allowedContent: true
       }}
       initData={initData}
       name={name}
