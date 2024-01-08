@@ -251,7 +251,15 @@ table, tr, th, td {
     overflow-x: auto;
     width: 100%;
     max-width: 1407px;
-    height: 200px;
+}
+
+.form__images {
+  height: 200px;
+}
+
+.form__files {
+    height: 100%;
+    max-height: 200px;
 }
 
 .form__images-list,
