@@ -69,7 +69,7 @@ const PageContent = () => {
     const id = parseInt(pathNameArr[pathNameArr.length - 1]);
 
     if (isNaN(id)) {
-      redirect('/')
+      redirect('/404')
     } else {
       getContentById(id);
     } 

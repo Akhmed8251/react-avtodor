@@ -29,12 +29,14 @@ import EditMainMenu from "../pages/admin/menu/main-menu/EditMainMenu"
 import CreateMenu from "../pages/admin/menu/CreateMenu"
 import EditMenu from "../pages/admin/menu/EditMenu"
 import EditPage from "../pages/admin/pageContents/EditPage"
+import NotFound from "../pages/NotFound"
 
 export const publicRoutes = [
     {path: '/', element: <Main />, exact: true},
     {path: '/news', element: <AllNews />, exact: true},
     {path: '/news/:id', element: <NewsPage />, exact: true},
     {path: '/login', element: <Login />, exact: true},
+    {path: '/404', element: <NotFound />, exact: true}
 ]
 
 export const privateRoutes = [

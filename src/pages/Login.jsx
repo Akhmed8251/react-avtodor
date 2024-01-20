@@ -24,7 +24,7 @@ const Login = () => {
           "employeeName",
           response.data.employeeDto.employeeName
         );
-        setEmployeeName(response.data.employeeDto.employeeName);
+        setEmployeeName(`${response.data.employeeDto.employeeName}`);
 
         redirect("/admin");
       }

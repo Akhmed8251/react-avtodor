@@ -1,73 +1,77 @@
-import React, { useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { AdminContext } from '../../context'
+import React, { useContext, useEffect } from "react";
+import { AdminContext } from "../../context";
 
-const Sidebar = () => {  
-  const { isOpenSidebar, currentPageName } = useContext(AdminContext)
+const pages = [
+  {
+    label: "Новости",
+    value: "news",
+  },
+  {
+    label: "Партнеры",
+    value: "partners",
+  },
+  {
+    label: "Объявления",
+    value: "advertisings",
+  },
+  {
+    label: "Контакты",
+    value: "contacts",
+  },
+  {
+    label: "Страницы",
+    value: "pages",
+  },
+  {
+    label: "ОбМАДИ",
+    value: "about",
+  },
+  {
+    label: "Меню",
+    value: "all-menu",
+  },
+];
+
+const Sidebar = () => {
+  const { isOpenSidebar, currentPageName } = useContext(AdminContext);
 
   const clearLinks = () => {
-    const links = document.querySelectorAll(".sidebar__item")
-    links.forEach(link => {
+    const links = document.querySelectorAll(".sidebar__item");
+    links.forEach((link) => {
       if (link.classList.contains("_active")) {
-        link.classList.remove("_active")
+        link.classList.remove("_active");
       }
-    })
-  }
+    });
+  };
 
   const setActiveLinkByName = (activeSideBarLinkName) => {
-    clearLinks()
+    clearLinks();
 
-    const linkActive = document.querySelector(`[data-name=${activeSideBarLinkName}]`)
-    linkActive.classList.add("_active")
-  }
+    const linkActive = document.querySelector(
+      `[data-name=${activeSideBarLinkName}]`
+    );
+    linkActive.classList.add("_active");
+  };
 
   useEffect(() => {
     if (currentPageName) {
-      setActiveLinkByName(currentPageName)
+      setActiveLinkByName(currentPageName);
     }
-  }, [currentPageName])
+  }, [currentPageName]);
 
   return (
     <aside className={`sidebar ${isOpenSidebar ? "_open" : ""}`}>
       <ul className="sidebar__list">
-        <li className="sidebar__item" data-name="Новости">
-          <Link to={'/admin/news'} className='sidebar__link'>
-            Новости
-          </Link>
-        </li>
-        <li className="sidebar__item" data-name="Партнеры">
-          <Link to={'/admin/partners'} className='sidebar__link'>
-            Партнеры
-          </Link>
-        </li>
-        <li className="sidebar__item" data-name="Объявления">
-          <Link to={'/admin/advertisings'} className='sidebar__link'>
-            Объявления
-          </Link>
-        </li>
-        <li className="sidebar__item" data-name="Контакты">
-          <Link to={'/admin/contacts'} className='sidebar__link'>
-            Контакты
-          </Link>
-        </li>
-        <li className="sidebar__item" data-name="Страницы">
-          <Link to={'/admin/pages'} className='sidebar__link'>
-            Страницы
-          </Link>
-        </li>
-        <li className="sidebar__item" data-name="ОбМАДИ">
-          <Link to={'/admin/about'} className='sidebar__link'>
-            Об МАДИ
-          </Link>
-        </li>
-        <li className="sidebar__item" data-name="Меню">
-          <Link to={'/admin/all-menu'} className='sidebar__link'>
-            Меню
-          </Link>
-        </li>
+        {pages.map((page, idx) => (
+          <li key={idx} className="sidebar__item" data-name={page.label}>
+            <a href={`/admin/${page.value}`} className="sidebar__link">
+              {page.label}
+            </a>
+          </li>
+        ))}
       </ul>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
