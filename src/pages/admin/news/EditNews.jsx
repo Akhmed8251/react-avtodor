@@ -1,7 +1,7 @@
 import { Controller, useForm } from "react-hook-form";
 import NewsService from "../../../api/NewsService";
 import { useFetching } from "../../../hooks/useFetching";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CKEditorUI from "../../../components/ui/CKEditorUI";
 import FileModelService from "../../../api/FileModelService";
 import { FILES_URL } from "../../../api/config";

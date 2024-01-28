@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FILES_URL } from "../api/config";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules"
 import { formatTime } from "../utils/time";
 import { useFetching } from "../hooks/useFetching";
 import NewsService from "../api/NewsService";
@@ -35,9 +36,10 @@ const MainNews = () => {
               <Loader />
             :
             <Swiper
+              modules={[Pagination]}
               autoHeight
-              spaceBetween={30}
               pagination
+              spaceBetween={30}
               breakpoints={{
                   320: {
                       slidesPerView: 1,
@@ -64,12 +66,8 @@ const MainNews = () => {
                   </div>
                 </SwiperSlide>
               ))}
-              <div className="swiper-pagination"></div>
             </Swiper>
         }
-        <div>
-          
-        </div>
         <div className="news__more">
           <Link to="/news" className="news__btn btn">
             Все новости

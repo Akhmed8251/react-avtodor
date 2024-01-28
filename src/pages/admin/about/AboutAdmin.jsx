@@ -2,9 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useFetching } from "../../../hooks/useFetching";
 import { Link } from "react-router-dom";
 import Loader from "../../../components/ui/Loader";
-import { formatTime } from "../../../utils/time";
 import { AdminContext } from "../../../context";
-import Popup from "../../../components/ui/Popup";
 import AdvertisingService from "../../../api/AdvertisingService";
 import { FILES_URL } from "../../../api/config";
 

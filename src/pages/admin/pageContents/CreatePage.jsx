@@ -306,7 +306,7 @@ const CreatePage = () => {
               </>
             ))}
             <button className="btn" type="button" onClick={() => appendAccordion({ title: "", accordionHtmlContent: "" })}>Добавить</button>
-            <button className="btn">Создать</button>
+            <button className="btn" style={{ marginTop: 30 }}>Создать</button>
           </form>
         </div>
       </Popup>
@@ -371,7 +371,7 @@ const CreatePage = () => {
               </>
             ))}
             <button className="btn" type="button" onClick={() => append({ title: "", tabHtmlContent: "" })}>Добавить</button>
-            <button className="btn">Создать</button>
+            <button className="btn" style={{ marginTop: 30 }}>Создать</button>
           </form>
         </div>
       </Popup>

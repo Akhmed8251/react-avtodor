@@ -61,7 +61,26 @@ const Header = () => {
 
   const toggleSideMenu = () => {
     setIsOpenSideMenu(prev => !prev);
+    const headerMenu = document.querySelector(".header-menu")
+    headerMenu.classList.toggle("_active")
+
     document.body.classList.toggle("no-scroll")
+
+    const headerMenuBody = document.querySelector(".header-menu__body")
+    if (headerMenu.classList.contains("_active")) {
+        const headerTopContainer = document.querySelector(".header-top__container")
+        if (window.matchMedia("(min-width: 769px)").matches) {
+            headerMenuBody.style.transform = `translateY(0px)`
+        } else {
+            headerMenuBody.style.transform = `translateY(${headerTopContainer.scrollHeight}px)`
+        }
+    } else {
+        if (window.matchMedia("(min-width: 769px)").matches) {
+            headerMenuBody.style.transform = `translateX(-100%)`
+        } else {
+            headerMenuBody.style.transform = `translateY(-100%)`
+        }
+    }
   }
 
   const openSubMenu = (menuWithSubmenu) => {
@@ -150,7 +169,7 @@ const Header = () => {
         <div className="header__bottom header-bottom">
             <div className="header-bottom__container container">
                 <button onClick={() => toggleSideMenu() } type="button" className={`header-bottom__menu-btn ${isOpenSideMenu ? "_close": ""}`} data-da=".header-top__container, 768, first"></button>
-                <div className={`header-bottom__menu header-menu ${isOpenSideMenu ? "_active" : ""}`}>
+                <div className={`header-bottom__menu header-menu`}>
                     <div className="header-menu__area" onClick={() => toggleSideMenu() }></div>
                     <div className="header-menu__body">
                         <div className="header-menu__top">

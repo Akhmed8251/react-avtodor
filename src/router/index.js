@@ -1,9 +1,6 @@
-import React from "react"
-
 import Main from "../pages/Main"
 import AllNews from "../pages/AllNews"
 import NewsPage from "../pages/NewsPage"
-import PageContent from "../pages/PageContent"
 import Login from "../pages/Login"
 
 import AdminMain from "../pages/admin/AdminMain"

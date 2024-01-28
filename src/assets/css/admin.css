@@ -270,6 +270,10 @@ table, tr, th, td {
     height: 100%;
 }
 
+.form__item:not(:last-child) {
+    margin-bottom: 15px;
+}
+
 .images-item,
 .files-item {
     position: relative;
