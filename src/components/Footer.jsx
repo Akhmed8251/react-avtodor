@@ -66,9 +66,9 @@ const Footer = () => {
                   .filter((m) => m.topMainPageIsVisible === true)
                   .map((mainMenuItem, idx) => (
                     <li key={idx} className="footer-top__item">
-                      <Link to={mainMenuItem.link} className="footer-top__link">
+                      <a href={mainMenuItem.link} className="footer-top__link">
                         {mainMenuItem.name}
-                      </Link>
+                      </a>
                     </li>
                   ))
             }
@@ -81,9 +81,9 @@ const Footer = () => {
             :
             mainMenu.filter(m => m.menuAboveAdvertisingIsVisible === true).map((mainMenuItem, idx) => (
               <li key={idx} className={`footer__menu-item ${idx % 2 != 0 ? "footer__menu-item_dark" : ""}`}>
-                <Link to={mainMenuItem.link} className="footer__menu-link" target='_blank'>
+                <a href={mainMenuItem.link} className="footer__menu-link" target='_blank'>
                   {mainMenuItem.name}
-                </Link>
+                </a>
               </li>
             ))
         }
@@ -105,9 +105,9 @@ const Footer = () => {
                         {
                           mainMenuItem.childMenu?.map((childMenuItem, idx) => (
                             <li key={idx} className="footer-item__element">
-                              <Link to={childMenuItem.link} className="footer-item__link">
+                              <a href={childMenuItem.link} className="footer-item__link">
                                 {childMenuItem.name}
-                              </Link>
+                              </a>
                             </li>
                           ))
                         }
@@ -125,9 +125,9 @@ const Footer = () => {
                 mainMenu
                   .filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === false && m.menuAboveAdvertisingIsVisible === false && m.childMenu.length == 0)
                   .map((mainMenuItem, idx) => (
-                    <Link key={idx} to={mainMenuItem.link} className="footer-bottom__link">
+                    <a key={idx} href={mainMenuItem.link} className="footer-bottom__link">
                       {mainMenuItem.name}
-                    </Link>
+                    </a>
                   ))
             }
           </div>

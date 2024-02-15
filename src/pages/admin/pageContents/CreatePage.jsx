@@ -134,6 +134,7 @@ const CreatePage = () => {
   const onCreate = (data) => {
     const pageContent = {
       title: data.title,
+      link: data.link,
       htmlContent: parsingCKEditorData(data.htmlContent),
       contentType: 0,
       isDeleted: false,
@@ -162,6 +163,23 @@ const CreatePage = () => {
               <Controller
                 control={control}
                 name="title"
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange }, fieldState: { error } }) => (
+                  <input
+                    type="text"
+                    className={`form__input ${error ? " error" : ""}`}
+                    onChange={(newValue) => onChange(newValue)}
+                  />
+                )}
+              />
+            </label>
+            <label className="form__label">
+              <span className="form__text">Ссылка</span>
+              <Controller
+                control={control}
+                name="link"
                 rules={{
                   required: true,
                 }}

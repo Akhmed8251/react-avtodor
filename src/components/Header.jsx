@@ -123,11 +123,11 @@ const Header = () => {
                         isAuth 
                           ?
                             <>
-                                <Link onClick={() => { localStorage.setItem("isAdminViewPublicPage", "false");  setIsAdminViewPublicPage(false)} } to={'/admin'} className="header__admin-name admin-name">{employeeName}</Link>
+                                <a onClick={() => { localStorage.setItem("isAdminViewPublicPage", "false");  setIsAdminViewPublicPage(false)} } href={'/admin'} className="header__admin-name admin-name">{employeeName}</a>
                                 <button type='button' className='btn logout-btn' onClick={() => logout()}>Выйти</button>
                             </> 
                           : 
-                            <Link to={'/login'} className='header__admin-btn btn'>Вход</Link>
+                            <a href={'/login'} className='header__admin-btn btn'>Вход</a>
                     }
                 </div>
             </div>
@@ -136,9 +136,9 @@ const Header = () => {
             <div className="header-main__container container">
                 <div className="header-main__logo-wrapper">
                     <div className="header-main__logo logo">
-                        <Link to="/" className="logo__img">
+                        <a href="/" className="logo__img">
                             <img src={logo} alt="Логотип МАДИ" />
-                        </Link>
+                        </a>
                         <div className="logo__text logo-text">
                             <div className="logo-text__wrapper">
                                 <span className="logo-text__wrapper-item logo-text__wrapper-item_main">МАДИ</span>
@@ -157,9 +157,9 @@ const Header = () => {
                             :
                                 mainMenu.filter(m => m.topMainPageIsVisible === true).map((mainMenuItem, idx) => (
                                     <li key={idx} className="header-main__item">
-                                        <Link to={mainMenuItem.link} className="header-main__link">
+                                        <a href={mainMenuItem.link} className="header-main__link">
                                             {mainMenuItem.name}
-                                        </Link>
+                                        </a>
                                     </li>
                                 ))
                     }
@@ -187,7 +187,7 @@ const Header = () => {
                                                 ?
                                                     <li key={idx} className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
                                                         <div className="header-menu__submenu-wrapper submenu-wrapper">
-                                                            <Link to={mainMenuItem.link} className="submenu-wrapper__link">{mainMenuItem.name}</Link>
+                                                            <a href={mainMenuItem.link} className="submenu-wrapper__link">{mainMenuItem.name}</a>
                                                             <button className="submenu-wrapper__btn submenu-btn">
                                                                 <div className="submenu-btn__icon">
                                                                     <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -201,7 +201,7 @@ const Header = () => {
                                                                 {
                                                                     mainMenuItem.childMenu.map((childMenuItem, idx) => (
                                                                         <li key={idx} className="submenu__item">
-                                                                            <Link to={childMenuItem.link} className="submenu__link">{childMenuItem.name}</Link>
+                                                                            <a href={childMenuItem.link} className="submenu__link">{childMenuItem.name}</a>
                                                                         </li>
                                                                     ))
                                                                 }
@@ -210,7 +210,7 @@ const Header = () => {
                                                     </li>
                                                 :
                                                     <li key={idx} className="header-menu__item">
-                                                        <Link to={mainMenuItem.link} className="header-menu__link">{mainMenuItem.name}</Link>
+                                                        <a href={mainMenuItem.link} className="header-menu__link">{mainMenuItem.name}</a>
                                                     </li>
                                         ))
                             }
@@ -223,9 +223,9 @@ const Header = () => {
                         :
                             mainMenu.filter(m => m.menuAboveAdvertisingIsVisible === true).map((mainMenuItem, idx) => (
                                 <li key={idx} className={`header-bottom__item ${idx % 2 != 0 ? "header-bottom__item_dark" : ""}`}>
-                                    <Link to={mainMenuItem.link} className="header-bottom__link" target='_blank'>
+                                    <a href={mainMenuItem.link} className="header-bottom__link" target='_blank'>
                                         {mainMenuItem.name}
-                                    </Link>
+                                    </a>
                                 </li>
                             ))
                     }

@@ -47,12 +47,12 @@ const NewsPage = () => {
           </>
         )}
         <div className="news-page__bottom">
-          <Link to="/" className="btn">
+          <a href="/" className="btn">
             На главную
-          </Link>
-          <Link to="/news" className="btn">
+          </a>
+          <a href="/news" className="btn">
             Все новости
-          </Link>
+          </a>
         </div>
       </div>
     </section>

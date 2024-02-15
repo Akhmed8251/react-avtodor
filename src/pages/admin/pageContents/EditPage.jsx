@@ -90,6 +90,7 @@ const EditPage = () => {
     defaultValues: {
       title: editedPage.title,
       htmlContent: editedPage.htmlContent,
+      link: editedPage.link
     },
   });
 
@@ -188,6 +189,7 @@ const EditPage = () => {
     const pageContent = {
       id: editedPage.id,
       title: data.title,
+      link: data.link,
       htmlContent: parsingCKEditorData(data.htmlContent),
       contentType: 0,
       createDate: editedPage.createDate,
@@ -221,6 +223,27 @@ const EditPage = () => {
               <Controller
                 control={control}
                 name="title"
+                rules={{
+                  required: true,
+                }}
+                render={({
+                  field: { value, onChange },
+                  fieldState: { error },
+                }) => (
+                  <input
+                    value={value}
+                    type="text"
+                    className={`form__input ${error ? " error" : ""}`}
+                    onChange={(newValue) => onChange(newValue)}
+                  />
+                )}
+              />
+            </label>
+            <label className="form__label">
+              <span className="form__text">Ссылка</span>
+              <Controller
+                control={control}
+                name="link"
                 rules={{
                   required: true,
                 }}

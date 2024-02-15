@@ -15,9 +15,9 @@ const NotFound = () => {
           </div>
           <img src={notFoundGif} alt="" />
           <div className="not-found__btns">
-            <Link to={"/"} className="btn">
+            <a href={"/"} className="btn">
               Вернуться на главную
-            </Link>
+            </a>
           </div>
         </div>
       </div>

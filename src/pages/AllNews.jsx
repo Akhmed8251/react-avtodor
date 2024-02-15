@@ -40,7 +40,7 @@ const AllNews = () => {
         <ul className="all-news__list">
           {allNews.map((news, idx) => (
             <li key={idx} className="all-news__item news-item">
-              <Link to={`/news/${news.id}`} className="news-item__link">
+              <a href={`/news/${news.id}`} className="news-item__link">
                 <div className="news-item__image">
                   <img
                     src={`${FILES_URL}/${news.content?.fileModels[0]?.name}`}
@@ -54,7 +54,7 @@ const AllNews = () => {
                 >
                   {formatTime(news.createDate)}
                 </time>
-              </Link>
+              </a>
             </li>
           ))}
           {newsCount == 0 && <Loader/>}
