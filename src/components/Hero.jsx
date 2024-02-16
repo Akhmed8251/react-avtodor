@@ -22,12 +22,14 @@ const Hero = () => {
     getAdvertisings()
   }, [])
   return (
-    <section className="hero">
+    <section className={`hero ${advertisings.filter(a => a.mainSliderIsVisible == true).length > 0 && "hero_no-empty"}`}>
       <div className="hero__container container">
         <div className="hero__slider-container">
           {
             isAdvertisingsLoading ? <Loader />
               :
+              advertisings.filter(a => a.mainSliderIsVisible == true).length > 0
+              &&
               <Swiper 
               modules={[Navigation, Pagination]} 
               pagination

@@ -22,7 +22,7 @@ const HeaderAdmin = () => {
                     MfMadi<span>Admin</span>
                 </a>
                 <button className={`admin-header__sidebar-btn ${isOpenSidebar ? "_close" : ""}`} onClick={() => setIsOpenSidebar(prev => !prev)}></button>
-                <Link to={'/'} className='admin-name' onClick={() => { localStorage.setItem("isAdminViewPublicPage", "true"); setIsAdminViewPublicPage(true) }}>{employeeName}</Link>
+                <a href="/" className='admin-name' onClick={() => { localStorage.setItem("isAdminViewPublicPage", "true"); setIsAdminViewPublicPage(true) }}>{employeeName}</a>
                 <button type='button' className='btn logout-btn' onClick={() => logout()}>Выйти</button>
             </div>
         </div>
