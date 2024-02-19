@@ -54,8 +54,15 @@ const Hero = () => {
               } 
             </Swiper>
           }
-          <div className="swiper-button-prev"></div>
-          <div className="swiper-button-next"></div>
+          {
+            advertisings.filter(a => a.mainSliderIsVisible == true).length > 0
+            &&
+            <>
+              <div className="swiper-button-prev"></div>
+              <div className="swiper-button-next"></div>
+            </>
+          }
+          
         </div>
       </div>
     </section>
