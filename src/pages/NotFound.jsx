@@ -1,6 +1,3 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
 import notFoundGif from "../assets/images/404.gif";
 
 const NotFound = () => {

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import NewsService from "../api/NewsService";
 import { formatTime } from "../utils/time";
 import { FILES_URL } from "../api/config";
-import { Link } from "react-router-dom";
 import { useFetching } from "../hooks/useFetching";
 import Loader from "../components/ui/Loader";
 
