@@ -22,7 +22,7 @@ const Hero = () => {
     getAdvertisings()
   }, [])
   return (
-    <section className={`hero ${advertisings.filter(a => a.mainSliderIsVisible == true).length > 0 && "hero_no-empty"}`}>
+    <section className={`hero ${advertisings.filter(a => a.mainSliderIsVisible == true).length > 0 ? "hero_no-empty" : ""}`}>
       <div className="hero__container container">
         <div className="hero__slider-container">
           {
@@ -54,8 +54,15 @@ const Hero = () => {
               } 
             </Swiper>
           }
-          <div className="swiper-button-prev"></div>
-          <div className="swiper-button-next"></div>
+          {
+            advertisings.filter(a => a.mainSliderIsVisible == true).length > 0
+            &&
+            <>
+              <div className="swiper-button-prev"></div>
+              <div className="swiper-button-next"></div>
+            </>
+          }
+          
         </div>
       </div>
     </section>
