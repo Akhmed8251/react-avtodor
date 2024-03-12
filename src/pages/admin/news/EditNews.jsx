@@ -23,7 +23,6 @@ const EditNews = () => {
       const response = await NewsService.getNewsById(newsId);
       if (response.status == 200) {
         setFileModels(response.data.content?.fileModels.filter(f => f.isDeleted == false));
-        console.log(response.data.content?.fileModels)
       }
     }
   );

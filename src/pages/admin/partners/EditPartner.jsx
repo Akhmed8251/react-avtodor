@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 const EditPartner = () => {
   const location = useLocation()
   const editedPartner = location.state
-  console.log(editedPartner)
   const redirect = useNavigate()
 
   const [editPartner, isEditLoading, createErr] = useFetching(async (formData) => {

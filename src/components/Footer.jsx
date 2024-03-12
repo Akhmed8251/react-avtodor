@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import logo from "../assets/images/logo.svg";
-import { Link } from "react-router-dom";
 import { DynamicAdapt } from "../utils/dynamicAdapt";
 import { useFetching } from "../hooks/useFetching";
 import MainMenuService from "../api/MainMenuService";

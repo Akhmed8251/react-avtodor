@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { AdminContext } from '../../context'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const HeaderAdmin = () => {
   const { isOpenSidebar, setIsOpenSidebar, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName } = useContext(AdminContext)

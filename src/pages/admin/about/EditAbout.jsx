@@ -26,7 +26,6 @@ const EditAbout = () => {
         const formData = new FormData()
         formData.append("advertisingId", advertising.id)
         formData.append("formFile", file)
-        console.log(file)
         addFileToAdvertising(formData)
       } else {
         alert("Информация об МАДИ успешно обновлена!");

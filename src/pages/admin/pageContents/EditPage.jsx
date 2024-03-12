@@ -40,7 +40,6 @@ const EditPage = () => {
   const [editPage, isEditLoading, editErr] = useFetching(
     async (content, files = null) => {
       const response = await ContentService.editContent(content);
-      console.log(response.status)
       if (response.status == 200) {
         if (files != null) {
           const formData = new FormData();

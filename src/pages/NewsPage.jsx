@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useFetching } from "../hooks/useFetching";
 import NewsService from "../api/NewsService";
 import { useParams } from "react-router-dom";

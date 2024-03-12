@@ -1,5 +1,4 @@
 import logo from '../assets/images/logo.svg'
-import { Link } from 'react-router-dom'
 import { DynamicAdapt } from '../utils/dynamicAdapt'
 import { useState, useEffect, useContext } from 'react'
 import { useFetching } from '../hooks/useFetching'

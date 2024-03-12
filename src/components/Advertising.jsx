@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import AdvertisingService from '../api/AdvertisingService'
 import { FILES_URL } from '../api/config'
 import { useFetching } from '../hooks/useFetching'
-import { Link } from 'react-router-dom'
 import Loader from './ui/Loader'
 
 const Advertising = () => {
