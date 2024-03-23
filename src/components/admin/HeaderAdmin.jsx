@@ -11,7 +11,6 @@ const HeaderAdmin = () => {
     setIsAuth(false)
     setIsAdminViewPublicPage(false)
     setEmployeeName(null)
-    redirect('/')
   }
 
   return (
@@ -23,7 +22,7 @@ const HeaderAdmin = () => {
                 </a>
                 <button className={`admin-header__sidebar-btn ${isOpenSidebar ? "_close" : ""}`} onClick={() => setIsOpenSidebar(prev => !prev)}></button>
                 <a href="/" className='admin-name' onClick={() => { localStorage.setItem("isAdminViewPublicPage", "true"); setIsAdminViewPublicPage(true) }}>{employeeName}</a>
-                <button type='button' className='btn logout-btn' onClick={() => logout()}>Выйти</button>
+                <a href='/' className='btn logout-btn' onClick={() => logout()}>Выйти</a>
             </div>
         </div>
     </header>
