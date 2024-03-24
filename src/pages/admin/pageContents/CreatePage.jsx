@@ -245,6 +245,7 @@ const CreatePage = () => {
                     </button>
                     <div className={`${error ? "error" : ""}`}>
                       <CKEditorUI
+                        allowUploadImage
                         onChange={(newValue) => {
                           onChange(newValue.editor.getData());
                         }}

@@ -352,6 +352,7 @@ const EditPage = () => {
                     </button>
                     <div className={`${error ? "error" : ""}`}>
                       <CKEditorUI
+                        allowUploadImage
                         initData={value}
                         onChange={(newValue) => {
                           onChange(newValue.editor.getData());
