@@ -184,6 +184,14 @@ table, tr, th, td {
     margin-bottom: 75px;
 }
 
+.popup__checkbox-label {
+    display: flex;
+    gap: 15px;
+    margin: 0 auto 20px;
+    max-width: 250px;
+    cursor: pointer;
+}
+
 .confirm-buttons {
     display: flex;
     justify-content: center;
@@ -230,6 +238,7 @@ table, tr, th, td {
     align-items: center;
     width: auto;
     gap: 20px;
+    max-width: 295px;
 }
 
 .form__label_checkbox .form__text {

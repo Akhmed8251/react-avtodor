@@ -82,7 +82,7 @@ const CreatePage = () => {
       const accItemHtml = `
         <li>
           <div class="accordeon__control">
-            <p>${accEl.title}</p>
+            <p class="accordeon__title">${accEl.title}</p>
             <div class="accordeon__icon"></div>
           </div>
           <div class="accordeon__content">

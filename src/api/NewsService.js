@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "./config";
+import { API_URL, getAuthToken } from "./config";
 
 export default class NewsService {
     static async getNews(skip = null, take = null) {
@@ -17,17 +17,29 @@ export default class NewsService {
     }
 
     static async createNews(news) {
-        const response = await axios.post(`${API_URL}/News/CreateNews`, news)
+        const response = await axios.post(`${API_URL}/News/CreateNews`, news, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 
     static async updateNews(news) {
-        const response = await axios.post(`${API_URL}/News/UpdateNews`, news)
+        const response = await axios.post(`${API_URL}/News/UpdateNews`, news, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 
     static async deleteNews(newsId) {
-        const response = await axios.post(`${API_URL}/News/DeleteNews?id=${newsId}`)
+        const response = await axios.post(`${API_URL}/News/DeleteNews?id=${newsId}`, null, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 }

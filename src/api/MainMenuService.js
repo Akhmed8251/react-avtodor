@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "./config";
+import { API_URL, getAuthToken } from "./config";
 
 export default class MainMenuService {
     static async getMainMenu() {
@@ -8,17 +8,29 @@ export default class MainMenuService {
     }
 
     static async createMainMenu(mainMenu) {
-        const response = await axios.post(`${API_URL}/MainMenu/CreateMainMenu`, mainMenu)
+        const response = await axios.post(`${API_URL}/MainMenu/CreateMainMenu`, mainMenu, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 
     static async editMainMenu(mainMenu) {
-        const response = await axios.post(`${API_URL}/MainMenu/UpdateMainMenu`, mainMenu)
+        const response = await axios.post(`${API_URL}/MainMenu/UpdateMainMenu`, mainMenu, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 
     static async deleteMainMenu(id) {
-        const response = await axios.post(`${API_URL}/MainMenu/DeleteMainMenu?id=${id}`)
+        const response = await axios.post(`${API_URL}/MainMenu/DeleteMainMenu?id=${id}`, null, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 }

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ContentService from "../../../api/ContentService";
 import CKEditorUI from "../../../components/ui/CKEditorUI";
 import Popup from "../../../components/ui/Popup";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { parsingCKEditorData } from "../../../utils/accordion";
 import faq from "../../../assets/images/faq.svg";
 import tabsIcon from "../../../assets/images/tabs.svg";
@@ -19,14 +19,20 @@ const EditPage = () => {
   const redirect = useNavigate();
 
   const location = useLocation();
-  const editedPage = location.state;
+  const editedPageState = location.state;
 
+  const deleteFileOnServerCheckboxRef = useRef(null);
+
+  const [editedPage, setEditedPage] = useState(editedPageState)
   const [fileModels, setFileModels] = useState(null);
   const [getContentById, isGetPageLoading, pageErr] = useFetching(
     async (contentId) => {
       const response = await ContentService.getContentById(contentId);
       if (response.status == 200) {
-        setFileModels(response.data.fileModels.filter(f => f.isDeleted == false));
+        setEditedPage(response.data)
+        setFileModels(
+          response.data.fileModels.filter((f) => f.isDeleted == false)
+        );
       } else {
         console.log(pageErr);
       }
@@ -68,28 +74,40 @@ const EditPage = () => {
         redirect("/admin/pages");
       }
     });
-  const [deletingImageId, setDeletingImageId] = useState(null);
-  const [deleteFileModel, isDeleteLoading, deleteErr] = useFetching(
+
+  const [deleteFileOnServer, isDeleteFileLoading, deleteFileErr] = useFetching(
     async (fileModelId) => {
-      const response = await FileModelService.deleteFileModel(fileModelId);
+      const response = await FileModelService.deleteFileOnServer(fileModelId);
       if (response.status == 200) {
         alert("Удаление файла прошло успешно!");
         closeModalConfirmDelete();
-        deleteImageFromList(fileModelId);
+        getContentById(editedPage.id)
       }
     }
   );
 
-  const deleteImageFromList = (id) => {
-    document.querySelector(`[data-id='${id}'`).remove();
-  };
+  const [deletingImageId, setDeletingImageId] = useState(null);
+  const [deleteFileModel, isDeleteLoading, deleteErr] = useFetching(
+    async (fileModelId, isDeleteOnServer) => {
+      const response = await FileModelService.deleteFileModel(fileModelId);
+      if (response.status == 200) {
+        if (isDeleteOnServer) {
+          deleteFileOnServer(fileModelId)
+        } else {
+          alert("Удаление файла прошло успешно!");
+          closeModalConfirmDelete();
+          getContentById(editedPage.id)
+        }
+      }
+    }
+  );
 
   const { control, handleSubmit } = useForm({
     mode: "onSubmit",
     defaultValues: {
       title: editedPage.title,
       htmlContent: editedPage.htmlContent,
-      link: editedPage.link
+      link: editedPage.link,
     },
   });
 
@@ -134,7 +152,7 @@ const EditPage = () => {
       const accItemHtml = `
         <li>
           <div class="accordeon__control">
-            <p>${accEl.title}</p>
+            <p class="accordeon__title">${accEl.title}</p>
             <div class="accordeon__icon"></div>
           </div>
           <div class="accordeon__content">
@@ -260,7 +278,7 @@ const EditPage = () => {
               />
             </label>
             <label className="form__label">
-              <span className="form__text">Файлы (Документы) к странице</span>
+              <span className="form__text">Файлы к странице</span>
               <Controller
                 control={control}
                 name="fileModels"
@@ -379,15 +397,24 @@ const EditPage = () => {
         setActive={closeModalConfirmDelete}
       >
         <h2 className="popup__title title">
-          Вы действительно хотите удалить фотографию из новости?
+          Вы действительно хотите удалить файл?
         </h2>
+        <label className="popup__checkbox-label">
+          <span>Удалить файл на сервере</span>
+          <input type="checkbox" ref={deleteFileOnServerCheckboxRef} />
+        </label>
         <div className="confirm-buttons">
           <button
-            onClick={() => deleteFileModel(deletingImageId)}
+            onClick={() =>
+              deleteFileModel(
+                deletingImageId,
+                deleteFileOnServerCheckboxRef.current.checked
+              )
+            }
             className="confirm-button confirm-button_yes"
-            disabled={isDeleteLoading}
+            disabled={isDeleteLoading || isDeleteFileLoading}
           >
-            {isDeleteLoading ? <Loader isOnlySpinner /> : <span>Да</span>}
+            {(isDeleteLoading || isDeleteFileLoading) ? <Loader isOnlySpinner /> : <span>Да</span>}
           </button>
           <button
             className="confirm-button confirm-button_no"
@@ -406,7 +433,7 @@ const EditPage = () => {
           >
             {fieldsAccordion.map((field, idx) => (
               <>
-                <div className="form__item" data-key={idx}>
+                <div className="form__item" key={idx} data-key={idx}>
                   <label className="form__label">
                     <span className="form__text">Заголовок</span>
                     <Controller
@@ -474,7 +501,9 @@ const EditPage = () => {
             >
               Добавить
             </button>
-            <button className="btn">Создать</button>
+            <button className="btn" style={{ marginTop: 30 }}>
+              Создать
+            </button>
           </form>
         </div>
       </Popup>
@@ -549,7 +578,9 @@ const EditPage = () => {
             >
               Добавить
             </button>
-            <button className="btn">Создать</button>
+            <button className="btn" style={{ marginTop: 30 }}>
+              Создать
+            </button>
           </form>
         </div>
       </Popup>

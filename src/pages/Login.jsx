@@ -17,6 +17,8 @@ const Login = () => {
         localStorage.setItem("isAuth", "true");
         setIsAuth(true);
 
+        localStorage.setItem("access_token", response.data.access_token);
+
         localStorage.setItem("isAdminViewPublicPage", "false")
         setIsAdminViewPublicPage(false)
 

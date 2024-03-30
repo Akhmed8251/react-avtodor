@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "./config";
+import { API_URL, getAuthToken } from "./config";
 
 export default class AdvertisingService {
     static async getLastAdvertisings() {
@@ -18,22 +18,38 @@ export default class AdvertisingService {
     }
 
     static async createAdvertising(advertising) {
-        const response = await axios.post(`${API_URL}/Advertising/CreateAdvertising`, advertising)
+        const response = await axios.post(`${API_URL}/Advertising/CreateAdvertising`, advertising, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 
     static async editAdvertising(advertising) {
-        const response = await axios.post(`${API_URL}/Advertising/UpdateAdvertising`, advertising)
+        const response = await axios.post(`${API_URL}/Advertising/UpdateAdvertising`, advertising, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 
     static async deleteAdvertising(advertisingId) {
-        const response = await axios.post(`${API_URL}/Advertising/DeleteAdvertising?id=${advertisingId}`)
+        const response = await axios.post(`${API_URL}/Advertising/DeleteAdvertising?id=${advertisingId}`, null, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 
     static async addFileToAdvertising(formData) {
-        const response = await axios.post(`${API_URL}/Advertising/AddFileToAdvertising?advertisingId=${formData.get("advertisingId")}`, formData)
+        const response = await axios.post(`${API_URL}/Advertising/AddFileToAdvertising?advertisingId=${formData.get("advertisingId")}`, formData, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 }

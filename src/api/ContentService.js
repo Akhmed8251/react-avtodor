@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "./config";
+import { API_URL, getAuthToken } from "./config";
 
 export default class ContentService {
     static async getContents() {
@@ -13,17 +13,29 @@ export default class ContentService {
     }
 
     static async createContent(content) {
-        const response = await axios.post(`${API_URL}/Content/CreateContent`, content)
+        const response = await axios.post(`${API_URL}/Content/CreateContent`, content, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 
     static async editContent(content) {
-        const response = await axios.post(`${API_URL}/Content/UpdateContent`, content)
+        const response = await axios.post(`${API_URL}/Content/UpdateContent`, content, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 
     static async deleteContent(contentId) {
-        const response = await axios.post(`${API_URL}/Content/DeleteContent?id=${contentId}`)
+        const response = await axios.post(`${API_URL}/Content/DeleteContent?id=${contentId}`, null, {
+            headers: {
+                "Authorization": `Bearer ${getAuthToken()}`
+            }
+        })
         return response;
     }
 }

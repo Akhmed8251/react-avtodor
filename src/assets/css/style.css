@@ -995,6 +995,7 @@ main {
   max-width: 1200px;
 }
 
+
 .news-page,
 .content-page {
   margin: 60px 0;
@@ -1005,6 +1006,30 @@ main {
 .news-page__content,
 .gallery {
   margin-bottom: 40px;
+}
+
+.news-page__content ul li:not(:last-child),
+.news-page__content ol li:not(:last-child) {
+    list-style: inherit;
+	  margin-bottom: 16px;
+}
+
+.news-page__content ul,
+.news-page__content ol {
+  padding-left: 18px;
+}
+
+table, tr, th, td {
+  border: 1px solid #d5d8ea;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+}
+
+th {
+  background-color: #eceefc;
 }
 
 .content-page__content a:not(.tab) {
