@@ -7,7 +7,6 @@ const EditMainMenu = () => {
   const redirect = useNavigate()
   const location = useLocation()
   const editedMainMenu = location.state
-  console.log(editedMainMenu)
 
   const [editMainMenu, isEditLoading, createErr] = useFetching(async (mainMenu) => {
     const response = await MainMenuService.editMainMenu(mainMenu)
