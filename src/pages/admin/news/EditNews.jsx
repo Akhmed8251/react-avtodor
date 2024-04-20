@@ -85,16 +85,12 @@ const EditNews = () => {
   );
 
   const [deleteFileModel, isDeleteLoading, deleteErr] = useFetching(
-    async (fileModelId, isDeleteOnServer) => {
+    async (fileModelId) => {
       const response = await FileModelService.deleteFileModel(fileModelId);
       if (response.status == 200) {
-        if (isDeleteOnServer) {
-          deleteFileOnServer(fileModelId);
-        } else {
-          alert("Удаление фотографий прошло успешно!");
-          closeModalConfirmDelete();
-          getNewsById(editedNews.id);
-        }
+        alert("Удаление фотографий прошло успешно!");
+        closeModalConfirmDelete();
+        getNewsById(editedNews.id);
       } else if (response.status == 401) {
         alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
@@ -272,7 +268,13 @@ const EditNews = () => {
         </label>
         <div className="confirm-buttons">
           <button
-            onClick={() => deleteFileModel(deletingImageId, deleteFileOnServerCheckboxRef.current.checked)}
+            onClick={() => {
+              if (deleteFileOnServerCheckboxRef.current.checked) {
+                deleteFileOnServer(deletingImageId)
+              } else {
+                deleteFileModel(deletingImageId)
+              }
+            }}
             className="confirm-button confirm-button_yes"
             disabled={isDeleteLoading || isDeleteFileLoading}
           >

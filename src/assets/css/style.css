@@ -1008,9 +1008,13 @@ main {
   margin-bottom: 40px;
 }
 
+.news-page__content ul li, 
+.news-page__content ol li {
+  list-style: inherit;
+}
+
 .news-page__content ul li:not(:last-child),
 .news-page__content ol li:not(:last-child) {
-    list-style: inherit;
 	  margin-bottom: 16px;
 }
 
