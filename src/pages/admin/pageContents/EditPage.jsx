@@ -5,7 +5,7 @@ import ContentService from "../../../api/ContentService";
 import CKEditorUI from "../../../components/ui/CKEditorUI";
 import Popup from "../../../components/ui/Popup";
 import { useEffect, useRef, useState } from "react";
-import { parsingCKEditorData } from "../../../utils/accordion";
+import { parsingCKEditorData } from "../../../utils/parsingDataFromCKEditor";
 import faq from "../../../assets/images/faq.svg";
 import tabsIcon from "../../../assets/images/tabs.svg";
 import { v4 } from "uuid";
@@ -33,8 +33,8 @@ const EditPage = () => {
         setFileModels(
           response.data.fileModels.filter((f) => f.isDeleted == false)
         );
-      } else {
-        console.log(pageErr);
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     }
   );
@@ -58,9 +58,10 @@ const EditPage = () => {
           alert("Страница успешно изменена!");
           redirect("/admin/pages");
         }
-      } else {
-        console.log(editErr);
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
+      
     }
   );
 
@@ -70,8 +71,10 @@ const EditPage = () => {
         creatingFileModel
       );
       if (response.status == 200) {
-        alert("Страница успешно изменена!");
+        alert("Страница успешно изменена и добавлены файлы к ней!");
         redirect("/admin/pages");
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     });
 
@@ -82,6 +85,8 @@ const EditPage = () => {
         alert("Удаление файла прошло успешно!");
         closeModalConfirmDelete();
         getContentById(editedPage.id)
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     }
   );
@@ -98,6 +103,8 @@ const EditPage = () => {
           closeModalConfirmDelete();
           getContentById(editedPage.id)
         }
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     }
   );
@@ -257,12 +264,13 @@ const EditPage = () => {
               />
             </label>
             <label className="form__label">
-              <span className="form__text">Ссылка</span>
+              <span className="form__text">Ссылка (не должна быть равна: bvi, fonts, Files, images, js)</span>
               <Controller
                 control={control}
                 name="link"
                 rules={{
                   required: true,
+                  pattern: /^(?!bvi$|\/bvi$|bvi\/$|\/bvi\/$|Files$|\/Files$|Files\/$|\/Files\/$|fonts$|\/fonts$|fonts\/$|\/fonts\/$|images$|\/images$|images\/$|\/images\/$|js$|\/js$|js\/$|\/js\/$).*$/
                 }}
                 render={({
                   field: { value, onChange },

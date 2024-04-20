@@ -17,11 +17,13 @@ export default class AdvertisingService {
         return response
     }
 
-    static async createAdvertising(advertising) {
-        const response = await axios.post(`${API_URL}/Advertising/CreateAdvertising`, advertising, {
+    static async createAdvertising(formData) {
+        const response = await axios.post(`${API_URL}/Advertising/CreateAdvertising`, formData, {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }
@@ -31,6 +33,8 @@ export default class AdvertisingService {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }
@@ -40,15 +44,19 @@ export default class AdvertisingService {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }
 
     static async addFileToAdvertising(formData) {
-        const response = await axios.post(`${API_URL}/Advertising/AddFileToAdvertising?advertisingId=${formData.get("advertisingId")}`, formData, {
+        const response = await axios.post(`${API_URL}/Advertising/AddFileToAdvertising?advertisingId=${formData.get("advertisingId")}&isDeleteOldFile=${formData.get("isDeleteOldFile")}`, formData, {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }

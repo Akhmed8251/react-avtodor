@@ -14,8 +14,8 @@ const EditContact = () => {
     if (response.status == 200) {
         alert("Контакт успешно обновлен!")
         redirect("/admin/contacts")
-    } else {
-      console.log(editErr)
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   })
 

@@ -19,8 +19,8 @@ const PartnersAdmin = () => {
       const response = await PartnersService.getPartners()
       if (response.status === 200) {
           setPartners(response.data)
-      } else {
-          console.log(partnersErr)
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
   })
 
@@ -30,8 +30,8 @@ const PartnersAdmin = () => {
       alert("Партнер успешно удален!");
       closeModalConfirmDelete()
       deletePartnersFromTable(partnerId)
-    } else {
-      console.log(deletePartnersErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 

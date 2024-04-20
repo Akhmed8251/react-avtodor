@@ -4,6 +4,7 @@ import { formatTime } from "../utils/time";
 import { FILES_URL } from "../api/config";
 import { useFetching } from "../hooks/useFetching";
 import Loader from "../components/ui/Loader"; 
+import { Link } from "react-router-dom";
 
 const NEWS_VISIBLE_COUNT = 6;
 
@@ -39,9 +40,10 @@ const AllNews = () => {
         <ul className="all-news__list">
           {allNews.map((news, idx) => (
             <li key={idx} className="all-news__item news-item">
-              <a href={`/news/${news.id}`} className="news-item__link">
+              <Link to={`/news/${news.id}`} className="news-item__link">
                 <div className="news-item__image">
                   <img
+                    className="bvi-img"
                     src={`${FILES_URL}/${news.content?.fileModels[0]?.name}`}
                     alt=""
                   />
@@ -53,7 +55,7 @@ const AllNews = () => {
                 >
                   {formatTime(news.createDate)}
                 </time>
-              </a>
+              </Link>
             </li>
           ))}
           {newsCount == 0 && <Loader/>}

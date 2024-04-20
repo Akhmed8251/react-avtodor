@@ -15,8 +15,8 @@ const AdvertisingsAdmin = () => {
       const response = await AdvertisingService.getMainPageDownAdvertising();
       if (response.status == 200) {
         setAdvertising(response.data);
-      } else {
-        console.log(advertisingsErr);
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     });
 

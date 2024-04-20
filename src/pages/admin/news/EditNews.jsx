@@ -29,6 +29,8 @@ const EditNews = () => {
         setFileModels(
           response.data.content?.fileModels.filter((f) => f.isDeleted == false)
         );
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     }
   );
@@ -40,8 +42,10 @@ const EditNews = () => {
         creatingFileModel
       );
       if (response.status == 200) {
-        alert("Новость успешно обновлена!");
+        alert("Новость успешно обновлена и добавлены файлы!");
         redirect("/admin/news");
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     });
 
@@ -52,6 +56,8 @@ const EditNews = () => {
         alert("Удаление фотографий прошло успешно!");
         closeModalConfirmDelete();
         getNewsById(editedNews.id);
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     }
   );
@@ -72,8 +78,8 @@ const EditNews = () => {
           alert("Новость успешно обновлена!");
           redirect("/admin/news");
         }
-      } else {
-        console.log(editErr);
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     }
   );
@@ -89,6 +95,8 @@ const EditNews = () => {
           closeModalConfirmDelete();
           getNewsById(editedNews.id);
         }
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     }
   );

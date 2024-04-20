@@ -12,6 +12,8 @@ export default class ContactsService {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }
@@ -21,6 +23,8 @@ export default class ContactsService {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }
@@ -30,6 +34,8 @@ export default class ContactsService {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }

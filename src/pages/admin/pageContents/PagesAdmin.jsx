@@ -18,8 +18,8 @@ const PagesAdmin = () => {
     const response = await ContentService.getContents();
     if (response.status == 200) {
       setPages(response.data);
-    } else {
-      console.log(pagesErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 
@@ -29,8 +29,8 @@ const PagesAdmin = () => {
       alert("Страница успешно удалена!");
       closeModalConfirmDelete()
       deletePageFromTable(contentId)
-    } else {
-      console.log(deleteErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 

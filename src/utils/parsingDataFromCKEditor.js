@@ -11,6 +11,11 @@ export const parsingCKEditorData = (ckeditorData) => {
   
   }
 
+  const images = divEl.querySelectorAll("img")
+  images.forEach(image => {
+    image.classList.add("bvi-img")
+  })
+
   const resHTML = divEl.innerHTML
   return resHTML
 }

@@ -4,6 +4,7 @@ import { DynamicAdapt } from "../utils/dynamicAdapt";
 import { useFetching } from "../hooks/useFetching";
 import MainMenuService from "../api/MainMenuService";
 import Loader from './ui/Loader'
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const [mainMenu, setMainMenu] = useState([])
@@ -29,9 +30,9 @@ const Footer = () => {
         <div className="footer-top__container container">
           <div className="footer-top__logo-wrapper">
             <div className="footer-top__logo logo">
-              <a href="/" className="logo__img">
-                <img src={logo} alt="Логотип МАДИ" />
-              </a>
+              <Link to="/" className="logo__img">
+                <img src={logo} alt="Логотип МАДИ" className="bvi-img" />
+              </Link>
               <div className="logo__text logo-text">
                 <div className="logo-text__wrapper">
                   <span className="logo-text__wrapper-item logo-text__wrapper-item_main">

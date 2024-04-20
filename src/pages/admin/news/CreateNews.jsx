@@ -11,8 +11,10 @@ const CreateNews = () => {
   const [createFileModel, isCreateFileModelLoading, createFileModelErr] = useFetching(async (creatingFileModel) => {
     const response = await FileModelService.createFileModel(creatingFileModel)
     if (response.status == 200) {
-      alert("Новость успешно создана!")
+      alert("Новость успешно создана и добавлены файлы!")
       redirect('/admin/news')
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   })
 
@@ -26,8 +28,8 @@ const CreateNews = () => {
       })
 
       createFileModel(formData)
-    } else {
-      console.log(createErr)
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   })
 

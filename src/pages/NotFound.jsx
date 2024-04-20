@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import notFoundGif from "../assets/images/404.gif";
 
 const NotFound = () => {
@@ -10,11 +11,11 @@ const NotFound = () => {
             <p>Страница не найдена</p>
             <p>Рекомендуем проверить правильность написания URL</p>
           </div>
-          <img src={notFoundGif} alt="" />
+          <img className="bvi-img" src={notFoundGif} alt="" />
           <div className="not-found__btns">
-            <a href={"/"} className="btn">
+            <Link to={"/"} className="btn">
               Вернуться на главную
-            </a>
+            </Link>
           </div>
         </div>
       </div>

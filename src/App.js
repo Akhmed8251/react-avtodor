@@ -9,6 +9,7 @@ import { AdminContext } from "./context";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import SpecialVersion from "./components/SpecialVersion";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -17,6 +18,7 @@ function App() {
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   const [currentPageName, setCurrentPageName] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     if (localStorage.getItem("isAuth")) {
@@ -48,6 +50,7 @@ function App() {
     ) : (!isAuth || (isAuth && isAdminViewPublicPage)) && (
       <AdminContext.Provider value={{ isAuth, setIsAuth, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName }}>
         <BrowserRouter>
+          <SpecialVersion />
           <div className="page">
             <Header />
             <main>

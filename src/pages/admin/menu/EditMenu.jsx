@@ -16,8 +16,8 @@ const EditMenu = () => {
     if (response.status == 200) {
       alert("Дочернее меню успешно изменено!")
       redirect("/admin/all-menu")
-    } else {
-      console.log(createErr)
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   })
 
@@ -33,8 +33,8 @@ const EditMenu = () => {
             })
         })
         setMainMenuList(dataArr)
-      } else {
-          console.log(mainMenuErr)
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
   })
 
@@ -116,12 +116,13 @@ const EditMenu = () => {
             />
           </label>
           <label className="form__label">
-            <span className="form__text">Ссылка</span>
+            <span className="form__text">Ссылка (не должна быть равна: bvi, fonts, Files, images, js)</span>
             <Controller
               control={control}
               name="link"
               rules={{
                 required: true,
+                pattern: /^(?!bvi$|\/bvi$|bvi\/$|\/bvi\/$|Files$|\/Files$|Files\/$|\/Files\/$|fonts$|\/fonts$|fonts\/$|\/fonts\/$|images$|\/images$|images\/$|\/images\/$|js$|\/js$|js\/$|\/js\/$).*$/
               }}
               render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <input

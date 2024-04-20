@@ -56,13 +56,13 @@ const MainNews = () => {
               {mainNews.map((news, idx) => (
                 <SwiperSlide key={idx}>
                   <div className="news-item">
-                    <a href={`/news/${news.id}`} className="news-item__link">
+                    <Link to={`/news/${news.id}`} className="news-item__link">
                       <div className="news-item__image">
-                        <img src={`${FILES_URL}/${news.content?.fileModels[0]?.name}`} alt="" />
+                        <img src={`${FILES_URL}/${news.content?.fileModels[0]?.name}`} alt="" className="bvi-img" />
                       </div>
                       <h3 className="news-item__title">{news.content?.title}</h3>
                       <time className="news-item__date">{formatTime(news.createDate)}</time>
-                    </a>
+                    </Link>
                   </div>
                 </SwiperSlide>
               ))}

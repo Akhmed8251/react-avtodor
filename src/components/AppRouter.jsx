@@ -1,11 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { publicRoutes } from "../router";
-import SpecialVersion from "./SpecialVersion";
 
 const AppRouter = () => {
   return (
     <>
-      <SpecialVersion />
       <Routes>
         {publicRoutes.map((route) => (
           <Route

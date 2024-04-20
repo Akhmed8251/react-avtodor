@@ -18,8 +18,8 @@ const NewsAdmin = () => {
     const response = await NewsService.getNews();
     if (response.status == 200) {
       setNewsList(response.data);
-    } else {
-      console.log(newsErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 
@@ -29,8 +29,8 @@ const NewsAdmin = () => {
       alert("Новость успешно удалена!");
       closeModalConfirmDelete()
       deleteNewsFromTable(newsId)
-    } else {
-      console.log(newsErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 

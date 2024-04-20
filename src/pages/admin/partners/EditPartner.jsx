@@ -13,19 +13,22 @@ const EditPartner = () => {
     if (response.status == 200) {
         alert("Партнер успешно обновлен!")
         redirect('/admin/partners')
-    } else {
-      console.log(createErr)
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   })
 
   
-  const {control, handleSubmit} = useForm({
+  const {control, handleSubmit, watch} = useForm({
     mode: "onSubmit",
     defaultValues: {
       name: editedPartner.name,
-      link: editedPartner.link
+      link: editedPartner.link,
+      isDeleteFileOnServer: false
     }
   })
+
+  const watchFileModel = watch("fileModel", null)
 
 
   const onEdit = (data) => {
@@ -33,6 +36,7 @@ const EditPartner = () => {
     formData.append("partnerId", editedPartner.id)
     formData.append("name", data.name)
     formData.append("link", data.link)
+    formData.append("isDeleteOldFile", data.isDeleteFileOnServer)
     
     if (data.fileModel) {
       formData.append("formFile", data.fileModel[0])
@@ -70,12 +74,13 @@ const EditPartner = () => {
             />
           </label>
           <label className="form__label">
-            <span className="form__text">Ссылка</span>
+            <span className="form__text">Ссылка (не должна быть равна: bvi, fonts, Files, images, js)</span>
             <Controller
               control={control}
               name="link"
               rules={{
-                required: true
+                required: true,
+                pattern: /^(?!bvi$|\/bvi$|bvi\/$|\/bvi\/$|Files$|\/Files$|Files\/$|\/Files\/$|fonts$|\/fonts$|fonts\/$|\/fonts\/$|images$|\/images$|images\/$|\/images\/$|js$|\/js$|js\/$|\/js\/$).*$/
               }}
               render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <input
@@ -102,6 +107,24 @@ const EditPartner = () => {
               )}
             />
           </label>
+          {
+            watchFileModel
+              &&
+              <label className="form__label form__label_checkbox">
+                <span className="form__text">Удалить текущее изображение с сервера</span>
+                <Controller
+                  control={control}
+                  name="isDeleteFileOnServer"
+                  render={({ field: { onChange }, fieldState: { error } }) => (
+                    <input
+                      type="checkbox"
+                      className={`form__input ${error ? " error" : ""}`}
+                      onChange={(newValue) => onChange(newValue.target.checked)}
+                    />
+                  )}
+                />
+              </label>
+          }
           <button
             className={`form__btn btn`}
             disabled={isEditLoading}

@@ -56,7 +56,7 @@ const Partners = () => {
                                     partners.map((partner, idx) => (
                                         <SwiperSlide key={idx}>
                                             <a href={partner.link} className="partners-slide">
-                                                <img src={`${FILES_URL}/${partner.imageFileName}`} alt={partner.name} />
+                                                <img src={`${FILES_URL}/${partner.imageFileName}`} alt={partner.name} className='bvi-img' />
                                             </a>
                                         </SwiperSlide>
                                     ))

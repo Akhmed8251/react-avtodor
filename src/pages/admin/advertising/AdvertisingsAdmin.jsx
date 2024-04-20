@@ -19,8 +19,8 @@ const AdvertisingsAdmin = () => {
     const response = await AdvertisingService.getAdvertisings();
     if (response.status == 200) {
       setAdvertisings(response.data);
-    } else {
-      console.log(advertisingsErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 
@@ -30,8 +30,8 @@ const AdvertisingsAdmin = () => {
       alert("Реклама успешно удалена!");
       closeModalConfirmDelete()
       deleteAdvertisingFromTable(advertisingId)
-    } else {
-      console.log(deleteErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 

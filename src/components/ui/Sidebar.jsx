@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { AdminContext } from "../../context";
+import { Link } from "react-router-dom";
 
 const pages = [
   {
@@ -64,9 +65,9 @@ const Sidebar = () => {
       <ul className="sidebar__list">
         {pages.map((page, idx) => (
           <li key={idx} className="sidebar__item" data-name={page.label}>
-            <a href={`/admin/${page.value}`} className="sidebar__link">
+            <Link to={`/admin/${page.value}`} className="sidebar__link">
               {page.label}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

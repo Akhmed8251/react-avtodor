@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useFetching } from "../hooks/useFetching";
 import NewsService from "../api/NewsService";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Gallery from "../components/ui/Gallery";
 import Loader from "../components/ui/Loader";
 
@@ -46,12 +46,12 @@ const NewsPage = () => {
           </>
         )}
         <div className="news-page__bottom">
-          <a href="/" className="btn">
+          <Link to="/" className="btn">
             На главную
-          </a>
-          <a href="/news" className="btn">
+          </Link>
+          <Link to="/news" className="btn">
             Все новости
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -30,7 +30,7 @@ const Advertising = () => {
                             :
                             advertisings.filter(a => a.mainSliderIsVisible == false).map((advertisingItem, idx)=> (
                                 <a key={idx} href={advertisingItem.buttonLink} className="advertising__block advertising-block">
-                                    <img src={`${FILES_URL}/${advertisingItem.avatarFileName}`} alt='' />
+                                    <img src={`${FILES_URL}/${advertisingItem.avatarFileName}`} alt='' className='bvi-img' />
                                 </a>
                             ))
                     }

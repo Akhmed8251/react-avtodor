@@ -13,6 +13,7 @@ const Login = () => {
   const [authUser, isAuthLoading, authErr] = useFetching(
     async (login, password) => {
       const response = await AuthService.login(login, password);
+      console.log(response)
       if (response.status == 200) {
         localStorage.setItem("isAuth", "true");
         setIsAuth(true);
@@ -29,6 +30,8 @@ const Login = () => {
         setEmployeeName(`${response.data.employeeDto.employeeName}`);
 
         redirect("/admin");
+      } else if (response.status == 400) {
+        alert(response.data)
       }
     }
   );

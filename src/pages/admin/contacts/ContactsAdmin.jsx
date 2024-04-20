@@ -18,8 +18,8 @@ const ContactsAdmin = () => {
     const response = await ContactsService.getContacts();
     if (response.status == 200) {
       setContacts(response.data);
-    } else {
-      console.log(contactsErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 
@@ -29,8 +29,8 @@ const ContactsAdmin = () => {
       alert("Контакт успешно удален!");
       closeModalConfirmDelete()
       deleteContactFromTable(contactId)
-    } else {
-      console.log(deleteErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 

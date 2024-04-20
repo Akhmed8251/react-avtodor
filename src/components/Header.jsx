@@ -7,6 +7,7 @@ import Loader from './ui/Loader'
 import { AdminContext } from '../context'
 import specialVision from '../assets/images/special-vision.svg'
 import ContactsService from '../api/ContactsService'
+import { Link } from 'react-router-dom'
 
 
 const Header = () => {
@@ -110,9 +111,9 @@ const Header = () => {
                     }
                     
                 </div>
-                <div className="header-top__vision">
+                <button type='button' title="Версия сайта для слабовидящих" className="header-top__vision">
                     <img src={specialVision} id='specialButton' className="header-top__vision-btn"/>
-                </div>
+                </button>
             </div>
         </div>
         <div className='header__admin'>
@@ -122,11 +123,11 @@ const Header = () => {
                         isAuth 
                           ?
                             <>
-                                <a onClick={() => { localStorage.setItem("isAdminViewPublicPage", "false");  setIsAdminViewPublicPage(false)} } href={'/admin'} className="header__admin-name admin-name">{employeeName}</a>
+                                <Link onClick={() => { localStorage.setItem("isAdminViewPublicPage", "false");  setIsAdminViewPublicPage(false)} } to={'/admin'} className="header__admin-name admin-name">{employeeName}</Link>
                                 <button type='button' className='btn logout-btn' onClick={() => logout()}>Выйти</button>
                             </> 
                           : 
-                            <a href={'/login'} className='header__admin-btn btn'>Вход</a>
+                            <Link to={'/login'} className='header__admin-btn btn'>Вход</Link>
                     }
                 </div>
             </div>
@@ -135,9 +136,9 @@ const Header = () => {
             <div className="header-main__container container">
                 <div className="header-main__logo-wrapper">
                     <div className="header-main__logo logo">
-                        <a href="/" className="logo__img">
-                            <img src={logo} alt="Логотип МАДИ" />
-                        </a>
+                        <Link to="/" className="logo__img">
+                            <img src={logo} alt="Логотип МАДИ" className='bvi-img' />
+                        </Link>
                         <div className="logo__text logo-text">
                             <div className="logo-text__wrapper">
                                 <span className="logo-text__wrapper-item logo-text__wrapper-item_main">МАДИ</span>

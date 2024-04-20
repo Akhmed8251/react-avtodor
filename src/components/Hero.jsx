@@ -40,9 +40,9 @@ const Hero = () => {
               {
                 advertisings.filter(a => a.mainSliderIsVisible == true).map((advertising, idx) => (
                   <SwiperSlide key={idx}>
-                    <a 
+                    <a
                       href={advertising.buttonLink} 
-                      className="hero-slide" 
+                      className="hero-slide bvi-background-image" 
                       style={{ background: `linear-gradient(359deg, rgba(0, 0, 0, 0.80) 0.87%, rgba(0, 0, 0, 0.30) 99.42%), url('${FILES_URL}/${advertising.avatarFileName}') no-repeat center / cover, lightgray 50% / cover no-repeat` }}>
                         <div className="hero-slide__content">
                           <h1 className="hero-slide__title title">{advertising.title}</h1>

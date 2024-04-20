@@ -12,8 +12,8 @@ const CreateContact = () => {
     if (response.status == 200) {
         alert("Контакт успешно создан!")
         redirect("/admin/contacts")
-    } else {
-      console.log(createErr)
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   })
 

@@ -21,8 +21,8 @@ const AllMenuAdmin = () => {
       const response = await MainMenuService.getMainMenu()
       if (response.status === 200) {
           setMainMenuList(response.data)
-      } else {
-          console.log(mainMenuErr)
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
   })
 
@@ -31,8 +31,8 @@ const AllMenuAdmin = () => {
       const response = await MenuService.getMenu()
       if (response.status === 200) {
           setMenuList(response.data)
-      } else {
-          console.log(menuErr)
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
   })
 
@@ -42,8 +42,8 @@ const AllMenuAdmin = () => {
       alert("Меню успешно удалено!");
       closeModalConfirmDeleteMainMenu()
       deleteMenuFromTable(menuId)
-    } else {
-      console.log(deleteMainMenuErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 
@@ -53,8 +53,8 @@ const AllMenuAdmin = () => {
       alert("Меню успешно удалено!");
       closeModalConfirmDeleteMenu()
       deleteMenuFromTable(menuId)
-    } else {
-      console.log(deleteMenuErr);
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
 

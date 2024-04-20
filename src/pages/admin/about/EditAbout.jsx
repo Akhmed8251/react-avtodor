@@ -14,8 +14,10 @@ const EditAbout = () => {
         formData
       );
       if (response.status == 200) {
-        alert("Информация об МАДИ успешно обновлена!");
+        alert("Информация об МАДИ успешно обновлена и изменен файл!");
         redirect("/admin/about");
+      } else if (response.status == 401) {
+        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
     });
 
@@ -31,8 +33,8 @@ const EditAbout = () => {
         alert("Информация об МАДИ успешно обновлена!");
         redirect("/admin/about");
       }
-    } else {
-      console.log(editErr)
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   })
 
@@ -130,12 +132,13 @@ const EditAbout = () => {
             />
           </label>
           <label className="form__label">
-            <span className="form__text">Ссылка</span>
+            <span className="form__text">Ссылка (не должна быть равна: bvi, fonts, Files, images, js)</span>
             <Controller
               control={control}
               name="link"
               rules={{
                 required: true,
+                pattern: /^(?!bvi$|\/bvi$|bvi\/$|\/bvi\/$|Files$|\/Files$|Files\/$|\/Files\/$|fonts$|\/fonts$|fonts\/$|\/fonts\/$|images$|\/images$|images\/$|\/images\/$|js$|\/js$|js\/$|\/js\/$).*$/
               }}
               render={({ field: { value, onChange }, fieldState: { error } }) => (
                 <input

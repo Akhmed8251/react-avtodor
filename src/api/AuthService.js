@@ -11,6 +11,8 @@ export default class AuthService {
                 "Content-Type": "application/json"
             },
             withCredentials: true
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }

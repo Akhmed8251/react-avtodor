@@ -33,7 +33,7 @@ const About = () => {
                             <a href={aboutInfo?.buttonLink} className="about__btn btn btn_darker">{aboutInfo?.buttonText}</a>
                         </div>
                         <div className="about__image">
-                            <img src={`${FILES_URL}/${aboutInfo?.avatarFileName}`} alt="" />
+                            <img src={`${FILES_URL}/${aboutInfo?.avatarFileName}`} alt="" className='bvi-img' />
                         </div>
                       </>
                 }

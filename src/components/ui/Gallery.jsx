@@ -41,7 +41,7 @@ const Gallery = ({ images }) => {
                 images?.map((fileModel, idx) => (
                   <SwiperSlide key={idx}>
                     <div className="gallery__images-slide">
-                      <img src={`${FILES_URL}/${fileModel.name}`} alt="" />
+                      <img src={`${FILES_URL}/${fileModel.name}`} alt="" className="bvi-img" />
                     </div>
                   </SwiperSlide>
                 ))}

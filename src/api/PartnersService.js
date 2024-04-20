@@ -12,15 +12,19 @@ export default class PartnersService {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }
 
     static async editPartner(formData) {
-        const response = await axios.post(`${API_URL}/Partner/UpdatePartner?partnerId=${formData.get("partnerId")}&name=${formData.get("name")}&link=${formData.get("link")}`, formData, {
+        const response = await axios.post(`${API_URL}/Partner/UpdatePartner?partnerId=${formData.get("partnerId")}&name=${formData.get("name")}&link=${formData.get("link")}&isDeleteOldFile=${formData.get("isDeleteOldFile")}`, formData, {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }
@@ -30,6 +34,8 @@ export default class PartnersService {
             headers: {
                 "Authorization": `Bearer ${getAuthToken()}`
             }
+        }).catch((error) => {
+            return error.response
         })
         return response;
     }
