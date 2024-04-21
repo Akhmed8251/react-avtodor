@@ -60,7 +60,7 @@ const CreateNews = () => {
         <h1 className="admin-title title">Создание новости</h1>
         <form
           action="#"
-          className="admin-login__form form"
+          className="form"
           onSubmit={handleSubmit(onCreate)}
           encType="multipart/form-data"
         >

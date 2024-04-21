@@ -73,7 +73,7 @@ const EditAbout = () => {
         <h1 className="admin-title title">Изменение информации об МАДИ</h1>
         <form
           action="#"
-          className="admin-login__form form"
+          className="form"
           onSubmit={handleSubmit(onEdit)}
           encType="multipart/form-data"
         >

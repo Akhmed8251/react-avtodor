@@ -61,7 +61,7 @@ const CreateContact = () => {
         <h1 className="admin-title title">Создание контакта</h1>
         <form
           action="#"
-          className="admin-login__form form"
+          className="form"
           onSubmit={handleSubmit(onCreate)}
         >
           <label className="form__label">

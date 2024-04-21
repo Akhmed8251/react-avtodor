@@ -51,7 +51,7 @@ const EditPartner = () => {
         <h1 className="admin-title title">Изменение партнера</h1>
         <form
           action="#"
-          className="admin-login__form form"
+          className="form"
           onSubmit={handleSubmit(onEdit)}
           encType="multipart/form-data"
         >

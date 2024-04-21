@@ -239,6 +239,7 @@ table, tr, th, td {
     width: auto;
     gap: 20px;
     max-width: 295px;
+    cursor: pointer;
 }
 
 .form__label_checkbox .form__text {

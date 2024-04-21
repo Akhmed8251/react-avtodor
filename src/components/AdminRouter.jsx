@@ -1,22 +1,35 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { privateRoutes } from "../router";
+import { privateRoutes, privateAdminRoutes } from "../router";
 
-const AppRouter = () => {
+const AdminRouter = ({role}) => {
   require("../assets/css/admin.css");
 
   return (
     <Routes>
-      {privateRoutes.map((route) => (
-        <Route
-          element={route.element}
-          path={route.path}
-          exact={route.exact}
-          key={route.path}
-        />
-      ))}
+      {
+        role == "admin"
+          ?
+          privateAdminRoutes.map((route) => (
+            <Route
+              element={route.element}
+              path={route.path}
+              exact={route.exact}
+              key={route.path}
+            />
+          ))
+          :
+          privateRoutes.map((route) => (
+            <Route
+              element={route.element}
+              path={route.path}
+              exact={route.exact}
+              key={route.path}
+            />
+          ))
+      }
       <Route element={<Navigate to="/admin" />} path="*" exact={true} />
     </Routes>
   );
 };
 
-export default AppRouter;
+export default AdminRouter;

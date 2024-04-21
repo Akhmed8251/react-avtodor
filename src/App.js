@@ -17,6 +17,7 @@ function App() {
   const [isAdminViewPublicPage, setIsAdminViewPublicPage] = useState(false)
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
   const [currentPageName, setCurrentPageName] = useState(null)
+  const [employeeRole, setEmployeeRole] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
 
 
@@ -25,6 +26,7 @@ function App() {
       setIsAuth(true);
       setIsAdminViewPublicPage(localStorage.getItem("isAdminViewPublicPage") == "true")
       setEmployeeName(localStorage.getItem("employeeName"))
+      setEmployeeRole(localStorage.getItem("employeeRole"))
     }
 
     
@@ -34,21 +36,21 @@ function App() {
   return (
     !isLoading &&
     (isAuth && !isAdminViewPublicPage ? (
-      <AdminContext.Provider value={{ isAuth, setIsAuth, isOpenSidebar, setIsOpenSidebar, currentPageName, setCurrentPageName, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName }}>
+      <AdminContext.Provider value={{ isAuth, setIsAuth, isOpenSidebar, setIsOpenSidebar, currentPageName, setCurrentPageName, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName, employeeRole, setEmployeeRole }}>
         <BrowserRouter>
           <div className="page">
             <HeaderAdmin />
             <main style={{ backgroundColor: "#f9fbfb" }}>
               <div className="admin-wrapper">
                 <Sidebar />
-                <AdminRouter />
+                <AdminRouter role={employeeRole} />
               </div>
             </main>
           </div>
         </BrowserRouter>
       </AdminContext.Provider>
     ) : (!isAuth || (isAuth && isAdminViewPublicPage)) && (
-      <AdminContext.Provider value={{ isAuth, setIsAuth, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName }}>
+      <AdminContext.Provider value={{ isAuth, setIsAuth, isAdminViewPublicPage, setIsAdminViewPublicPage, employeeName, setEmployeeName, employeeRole, setEmployeeRole }}>
         <BrowserRouter>
           <SpecialVersion />
           <div className="page">

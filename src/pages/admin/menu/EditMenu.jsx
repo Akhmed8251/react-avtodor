@@ -71,7 +71,7 @@ const EditMenu = () => {
         <h1 className="admin-title title">Изменение дочернего меню</h1>
         <form
           action="#"
-          className="admin-login__form form"
+          className="form"
           onSubmit={handleSubmit(onEdit)}
           encType="multipart/form-data"
         >

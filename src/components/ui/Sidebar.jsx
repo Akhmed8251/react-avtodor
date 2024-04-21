@@ -34,7 +34,7 @@ const pages = [
 ];
 
 const Sidebar = () => {
-  const { isOpenSidebar, currentPageName } = useContext(AdminContext);
+  const { isOpenSidebar, currentPageName, employeeRole } = useContext(AdminContext);
 
   const clearLinks = () => {
     const links = document.querySelectorAll(".sidebar__item");
@@ -70,6 +70,15 @@ const Sidebar = () => {
             </Link>
           </li>
         ))}
+        {
+          employeeRole == "admin"
+          &&
+          <li key={pages.length} className="sidebar__item" data-name="Пользователи">
+            <Link to={`/admin/users`} className="sidebar__link">
+              Пользователи
+            </Link>
+          </li>
+        }
       </ul>
     </aside>
   );

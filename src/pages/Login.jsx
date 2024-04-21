@@ -6,14 +6,13 @@ import AuthService from "../api/AuthService";
 import { AdminContext } from "../context";
 
 const Login = () => {
-  const { setIsAuth, setEmployeeName, setIsAdminViewPublicPage } = useContext(AdminContext);
+  const { setIsAuth, setEmployeeName, setIsAdminViewPublicPage, setEmployeeRole } = useContext(AdminContext);
 
   const redirect = useNavigate();
 
   const [authUser, isAuthLoading, authErr] = useFetching(
     async (login, password) => {
       const response = await AuthService.login(login, password);
-      console.log(response)
       if (response.status == 200) {
         localStorage.setItem("isAuth", "true");
         setIsAuth(true);
@@ -28,6 +27,9 @@ const Login = () => {
           response.data.employeeDto.employeeName
         );
         setEmployeeName(`${response.data.employeeDto.employeeName}`);
+
+        localStorage.setItem("employeeRole", response.data.employeeDto.role.name)
+        setEmployeeRole(`${response.data.employeeDto.role.name}`);
 
         redirect("/admin");
       } else if (response.status == 400) {
@@ -53,7 +55,7 @@ const Login = () => {
           <h1 className="admin-title title">Авторизация</h1>
           <form
             action="#"
-            className="admin-login__form form"
+            className="form"
             onSubmit={handleSubmit(login)}
           >
             <label className="form__label">

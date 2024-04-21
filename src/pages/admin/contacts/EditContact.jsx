@@ -72,7 +72,7 @@ const EditContact = () => {
         <h1 className="admin-title title">Изменение контакта</h1>
         <form
           action="#"
-          className="admin-login__form form"
+          className="form"
           onSubmit={handleSubmit(onEdit)}
         >
           <label className="form__label">

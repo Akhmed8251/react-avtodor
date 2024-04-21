@@ -27,6 +27,9 @@ import CreateMenu from "../pages/admin/menu/CreateMenu"
 import EditMenu from "../pages/admin/menu/EditMenu"
 import EditPage from "../pages/admin/pageContents/EditPage"
 import NotFound from "../pages/NotFound"
+import UsersAdmin from "../pages/admin/users/UsersAdmin"
+import CreateUser from "../pages/admin/users/CreateUser"
+import EditUser from "../pages/admin/users/EditUser"
 
 export const publicRoutes = [
     {path: '/', element: <Main />, exact: true},
@@ -60,5 +63,11 @@ export const privateRoutes = [
     {path: '/admin/main-menu/edit', element: <EditMainMenu />, exact: true},
     {path: '/admin/menu/create', element: <CreateMenu />, exact: true},
     {path: '/admin/menu/edit', element: <EditMenu />, exact: true},
+]
 
+export const privateAdminRoutes = [
+    ...privateRoutes,
+    {path: '/admin/users', element: <UsersAdmin />, exact: true},
+    {path: '/admin/user/create', element: <CreateUser />, exact: true},
+    {path: '/admin/user/edit', element: <EditUser />, exact: true},
 ]
