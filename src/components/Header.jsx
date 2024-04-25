@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 
 
 const Header = () => {
-  const {isAuth, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName } = useContext(AdminContext)
+  const {isAuth, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName, setEmployeeRole } = useContext(AdminContext)
 
   const [isOpenSideMenu, setIsOpenSideMenu] = useState(false)
 
@@ -57,6 +57,7 @@ const Header = () => {
     setIsAuth(false)
     setIsAdminViewPublicPage(false)
     setEmployeeName(null)
+    setEmployeeRole(null)
   }
 
   const toggleSideMenu = () => {
