@@ -74,7 +74,7 @@ const PartnersAdmin = () => {
                 <tr data-id={partner.id} key={idx}>
                   <td>{formatTime(partner.createDate)}</td>
                   <td>{partner.name}</td>
-                  <td>
+                  <td style={{ width: "400px" }}>
                     <img src={`${FILES_URL}/${partner.imageFileName}`} alt="" />
                   </td>
                   <td>

@@ -21,13 +21,15 @@ const EditAbout = () => {
       }
     });
 
-  const [editAdvertising, isEditLoading, editErr] = useFetching(async (advertising, file = null) => {
+  const [editAdvertising, isEditLoading, editErr] = useFetching(async (advertising, file = null, isDeleteFileOnServer) => {
     const response = await AdvertisingService.editAdvertising(advertising)
     if (response.status == 200) {
       if (file) {
         const formData = new FormData()
         formData.append("advertisingId", advertising.id)
         formData.append("formFile", file)
+        formData.append("isDeleteOldFile", isDeleteFileOnServer)
+
         addFileToAdvertising(formData)
       } else {
         alert("Информация об МАДИ успешно обновлена!");
@@ -39,15 +41,18 @@ const EditAbout = () => {
   })
 
   
-  const {control, handleSubmit } = useForm({
+  const {control, handleSubmit, watch } = useForm({
     mode: "onSubmit",
     defaultValues: {
         title: editedAbout.title || "",
         mainText: editedAbout.mainText || "",
         link: editedAbout.buttonLink,
         buttonText: editedAbout.buttonText,
+        isDeleteFileOnServer: false
     }
   })
+
+  const watchFileModel = watch("fileModel", null)
 
   const onEdit = (data) => {
     const newAdvertising = {
@@ -63,8 +68,8 @@ const EditAbout = () => {
       isDeleted: false,
       content: null
     }
-
-    editAdvertising(newAdvertising, data.fileModel)
+    
+    editAdvertising(newAdvertising, data.fileModel, data.isDeleteFileOnServer)
   }
 
   return (
@@ -165,6 +170,24 @@ const EditAbout = () => {
               )}
             />
           </label>
+          {
+            watchFileModel
+              &&
+              <label className="form__label form__label_checkbox">
+                <span className="form__text">Удалить текущее изображение с сервера</span>
+                <Controller
+                  control={control}
+                  name="isDeleteFileOnServer"
+                  render={({ field: { onChange }, fieldState: { error } }) => (
+                    <input
+                      type="checkbox"
+                      className={`form__input ${error ? " error" : ""}`}
+                      onChange={(newValue) => onChange(newValue.target.checked)}
+                    />
+                  )}
+                />
+              </label>
+          }
           <button
             className={`form__btn btn`}
             disabled={isEditLoading || isAddFileLoading}

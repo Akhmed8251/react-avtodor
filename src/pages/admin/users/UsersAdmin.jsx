@@ -93,7 +93,13 @@ const UsersAdmin = () => {
       <Popup active={modalConfirmDeleteActive} setActive={closeModalConfirmDelete}>
       <h2 className="popup__title title">Вы действительно хотите удалить пользователя?</h2>
         <div className="confirm-buttons">
-          <button onClick={() => deleteUser(userId)} className='confirm-button confirm-button_yes' disabled={isDeleteUserLoading} >
+          <button onClick={() => {
+            if (users.length > 1) {
+              deleteUser(userId)
+            } else {
+              alert("Нельзя удалить единственного пользователя системы")
+            }
+          }} className='confirm-button confirm-button_yes' disabled={isDeleteUserLoading} >
             {
               isDeleteUserLoading ? <Loader isOnlySpinner/>
                 :
