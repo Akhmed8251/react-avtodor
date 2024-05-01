@@ -8,7 +8,63 @@ import { AdminContext } from '../context'
 import specialVision from '../assets/images/special-vision.svg'
 import ContactsService from '../api/ContactsService'
 import { Link } from 'react-router-dom'
+import Tree from './ui/Tree'
 
+const treeData = [
+    {
+      key: "0",
+      label: "Факультет автомобильных дорог и транспорта",
+      children: [
+        {
+          key: "0-0",
+          label: "Факультет автомобильных дорог и транспорта",
+          children: [
+            {
+              key: "0-0-1",
+              label: "Факультет автомобильных дорог и транспорта",
+            },
+            {
+              key: "0-0-2",
+              label: "Факультет автомобильных дорог и транспорта",
+            },
+            {
+              key: "0-0-3",
+              label: "Document-0-3.doc",
+              children: [
+                {
+                    key: "0-0-0-1",
+                    label: "Факультет автомобильных дорог и транспорта",
+                },
+                {
+                    key: "0-0-0-2",
+                    label: "Document-0-3-2.doc",
+                },
+              ]
+            },
+          ],
+        },
+      ],
+    },
+    {
+      key: "1",
+      label: "Desktop",
+      children: [
+        {
+          key: "1-0",
+          label: "document1.doc",
+        },
+        {
+          key: "1-1",
+          label: "documennt-2.doc",
+        },
+      ],
+    },
+    {
+      key: "2",
+      label: "Downloads",
+      children: [],
+    },
+  ];
 
 const Header = () => {
   const {isAuth, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName, setEmployeeRole } = useContext(AdminContext)
@@ -90,8 +146,21 @@ const Header = () => {
     const submenu = menuWithSubmenu.querySelector(".submenu");
     if (menuWithSubmenu.classList.contains("_open")) {
         submenu.style.maxHeight = submenu.scrollHeight + "px";
+
+        if (submenu.closest(".submenu__list")) {
+            recalcParentSubmenuHeight(submenu)
+        }
     } else {
         submenu.style.maxHeight = null;
+    }
+  }
+
+  const recalcParentSubmenuHeight = (submenu) => {
+    const parentSubmenu = submenu.closest(".submenu__list").closest(".submenu")
+    parentSubmenu.style.maxHeight = (parentSubmenu.scrollHeight + submenu.scrollHeight) + "px";
+
+    if (parentSubmenu.closest(".submenu__list")) {
+        recalcParentSubmenuHeight(parentSubmenu)
     }
   }
   
@@ -216,6 +285,7 @@ const Header = () => {
                                         ))
                             }
                         </ul>
+                        <Tree treeData={treeData} isMainMenu openFn={(evt) => openSubMenu(evt.target.closest(".has-submenu"))} />
                     </div>
                 </div>
                 <ul className="header-bottom__list">

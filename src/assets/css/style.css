@@ -923,6 +923,7 @@ main {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  gap: 75px;
 }
 
 .submenu-btn {
@@ -975,6 +976,7 @@ main {
 }
 
 .submenu {
+  height: 100%;
   max-height: 0;
   overflow: hidden;
   opacity: 0;
@@ -987,7 +989,7 @@ main {
   opacity: 1;
 }
 
-.has-submenu._open .submenu-btn__icon {
+.has-submenu._open > .submenu-wrapper .submenu-btn__icon {
   transform: rotate(180deg);
 }
 
@@ -1568,6 +1570,8 @@ th {
 .not-found__btn_back {
   margin-right: 20px;
 }
+
+
 
 @media (max-width: 1827px) {
   .hero__container {
