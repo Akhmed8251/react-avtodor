@@ -59,13 +59,13 @@ const CreatePartner = () => {
             />
           </label>
           <label className="form__label">
-            <span className="form__text">Ссылка (не должна быть равна: bvi, fonts, Files, images, js)</span>
+            <span className="form__text">Ссылка (не должна быть равна названию одной из зарезервированных папок: bvi, fonts, Files, images, js, ckeditor)</span>
             <Controller
               control={control}
               name="link"
               rules={{
                 required: true,
-                pattern: /^(?!bvi$|\/bvi$|bvi\/$|\/bvi\/$|Files$|\/Files$|Files\/$|\/Files\/$|fonts$|\/fonts$|fonts\/$|\/fonts\/$|images$|\/images$|images\/$|\/images\/$|js$|\/js$|js\/$|\/js\/$).*$/
+                pattern: /^(?!bvi$|\/bvi$|bvi\/$|\/bvi\/$|Files$|\/Files$|Files\/$|\/Files\/$|fonts$|\/fonts$|fonts\/$|\/fonts\/$|images$|\/images$|images\/$|\/images\/$|js$|\/js$|js\/$|\/js\/$|ckeditor$|\/ckeditor$|ckeditor\/$|\/ckeditor\/$).*$/i
               }}
               render={({ field: { onChange }, fieldState: { error } }) => (
                 <input

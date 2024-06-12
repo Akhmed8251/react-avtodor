@@ -2,28 +2,19 @@ import {useState} from "react";
 import Tree from "./Tree";
 
 const TreeNode = ({ node }) => {
-  const { children, label } = node;
-
   const [showChildren, setShowChildren] = useState(false);
 
   const handleClick = () => {
     setShowChildren(!showChildren);
   };
   return (
-    
     <>
-      {/* <div onClick={handleClick} style={{ marginBottom: "10px" }}>
-        <span>{label}</span>
-      </div>
-      <ul style={{ paddingLeft: "10px", borderLeft: "1px solid black" }}>
-        {showChildren && <Tree treeData={children} />}
-      </ul> */}
-      <div className="header-menu__submenu-wrapper submenu-wrapper" onClick={handleClick}>
-          <a href={label} className="submenu-wrapper__link">
-            {label}
+      <div className="menu-wrapper" onClick={handleClick}>
+          <a href={node.link} className="menu-wrapper__link">
+            {node.name}
           </a>
-          <button className="submenu-wrapper__btn submenu-btn">
-            <div className="submenu-btn__icon">
+          <button className="menu-wrapper__btn menu-wrapper-btn">
+            <div className="menu-wrapper-btn__icon">
               <svg
                 width="18"
                 height="11"
@@ -37,16 +28,7 @@ const TreeNode = ({ node }) => {
           </button>
         </div>
         <div className="submenu">
-          <ul className="submenu__list">
-            {/* {mainMenuItem.childMenu.map((childMenuItem, idx) => (
-              <li key={idx} className="submenu__item">
-                <a href={childMenuItem.link} className="submenu__link">
-                  {childMenuItem.name}
-                </a>
-              </li>
-            ))} */}
-            <Tree treeData={children} />
-          </ul>
+          <Tree treeData={node.childMenu ? node.childMenu : node.childMenus} />
         </div>
     </>
   );

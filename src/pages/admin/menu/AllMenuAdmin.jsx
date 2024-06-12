@@ -5,198 +5,186 @@ import MainMenuService from "../../../api/MainMenuService";
 import MenuService from "../../../api/MenuService";
 import { useFetching } from "../../../hooks/useFetching";
 import Loader from "../../../components/ui/Loader";
-import { formatTime } from "../../../utils/time";
 import Popup from "../../../components/ui/Popup";
+import TreeForTableMenu from "../../../components/admin/TreeForTableMenu"
+import { TreeTable } from 'primereact/treetable';
+import { Column } from 'primereact/column';
+import { formatTime } from "../../../utils/time";
 
 const AllMenuAdmin = () => {
   const { setCurrentPageName } = useContext(AdminContext)
 
-  const [modalConfirmDeleteMainMenuActive, setModalConfirmDeleteMainMenuActive] = useState(false)
   const [modalConfirmDeleteMenuActive, setModalConfirmDeleteMenuActive] = useState(false)
 
   const [menuId, setMenuId] = useState(null)
 
-  const [mainMenuList, setMainMenuList] = useState([])
-  const [getMainMenuList, isMainMenuLoading, mainMenuErr] = useFetching(async () => {
-      const response = await MainMenuService.getMainMenu()
+  const [mainMenuHierarchicalList, setMainMenuHierarchicalList] = useState([])
+
+  const [getMainMenuHierarchical, isMenuLoading, menuErr] = useFetching(async () => {
+      const response = await MainMenuService.getMainMenuHierarchical()
       if (response.status === 200) {
-          setMainMenuList(response.data)
+        setMainMenuHierarchicalList(getDataForTreeTable(response.data.filter(x => x.childMenu.length > 0)))
       } else if (response.status == 401) {
         alert("Срок действия текущей сессии истек. Попробуйте войти заново")
       }
   })
-
-  const [menuList, setMenuList] = useState([])
-  const [getMenuList, isMenuLoading, menuErr] = useFetching(async () => {
-      const response = await MenuService.getMenu()
-      if (response.status === 200) {
-          setMenuList(response.data)
-      } else if (response.status == 401) {
-        alert("Срок действия текущей сессии истек. Попробуйте войти заново")
-      }
-  })
-
-  const [deleteMainMenu, isDeleteMainMenuLoading, deleteMainMenuErr] = useFetching(async (menuId) => {
-    const response = await MainMenuService.deleteMainMenu(menuId)
-    if (response.status == 200) {
-      alert("Меню успешно удалено!");
-      closeModalConfirmDeleteMainMenu()
-      deleteMenuFromTable(menuId)
-    } else if (response.status == 401) {
-      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
-    }
-  });
 
   const [deleteMenu, isDeleteMenuLoading, deleteMenuErr] = useFetching(async (menuId) => {
     const response = await MenuService.deleteMenu(menuId)
     if (response.status == 200) {
       alert("Меню успешно удалено!");
       closeModalConfirmDeleteMenu()
-      deleteMenuFromTable(menuId)
+      //deleteMenuFromTable(menuId)
+      getMainMenuHierarchical()
     } else if (response.status == 401) {
       alert("Срок действия текущей сессии истек. Попробуйте войти заново")
     }
   });
-
-  const closeModalConfirmDeleteMainMenu = () => {
-    setMenuId(null); 
-    setModalConfirmDeleteMainMenuActive(false)
-  }
 
   const closeModalConfirmDeleteMenu = () => {
     setMenuId(null); 
     setModalConfirmDeleteMenuActive(false)
   }
 
-  const deleteMenuFromTable = (id) => {
-    document.querySelector(`[data-id='${id}'`).remove()
+  const getDataForTreeTable = (mainMenuList) => {
+    const res = []
+    for (let mainMenu of mainMenuList) {
+        res.push(getTreeDataForMenu(mainMenu.childMenu, mainMenu.name))
+    }
+    console.log(res.flat())
+    return res.flat()
   }
 
-  const getParentMenuName = (menuId) => {
-    const mainMenu = mainMenuList.find(m => m.id == menuId)
-    if (mainMenu != null) {
-      return mainMenu.name
-    }
-      
-    return " - "
+  const getTreeDataForMenu = (menuList, mainMenuName = " - ") => {
+  const res = []
+
+  for (let i = 0; i < menuList.length; i++) {
+      const el = {
+          key: menuList[i].id,
+          data: {
+              id: menuList[i].id,
+              name: menuList[i].name,
+              link: menuList[i].link,
+              mainMenuName: mainMenuName,
+              createDate: formatTime(menuList[i].createDate),
+              menuEntity: menuList[i]
+          },
+          children: (menuList[i].childMenus && menuList[i].childMenus?.length > 0) ? getTreeDataForMenu(menuList[i].childMenus) : null
+      }
+      el.children == null && delete el.children
+      res.push(el)
   }
 
-  const getPosition = (menu) => {
-    const resPositions = []
-
-    if (!menu.topMainPageIsVisible && !menu.sideMenuIsVisible && !menu.menuAboveAdvertisingIsVisible) {
-      return "В подвале сайта"
-    }
-
-    if (menu.topMainPageIsVisible) {
-      resPositions.push("В шапке и подвале сайта (напротив логотипа)")
-    }
-    if (menu.sideMenuIsVisible) {
-      resPositions.push("Боковое меню")
-    }
-    if (menu.menuAboveAdvertisingIsVisible) {
-      resPositions.push("Над слайдером объявления")
-    }
-    
-    return resPositions.join("; ")
+  return res
   }
+
+  const actionTemplate = (node) => {
+    return (
+      <div className="actions">
+        <Link
+            to={"/admin/menu/create"}
+            className={`create btn`}
+            state={node.data.id}
+        >
+            Создать дочернее меню
+        </Link>
+        <Link
+            to={`/admin/menu/edit`}
+            className="edit btn"
+            state={node.data.menuEntity}
+        >
+            Изменить
+        </Link>
+        <button className="delete btn" onClick={() => { setMenuId(node.data.id); setModalConfirmDeleteMenuActive(true) }}>
+            Удалить
+        </button>
+      </div> 
+    )
+  }
+
+  const linkTemplate = (node) => {
+    return (
+      <a href={node.data.link}>{node.data.link}</a>
+    )
+  }
+
+  // const deleteMenuFromTable = (id) => {
+  //   document.querySelector(`[data-id='${id}'`).remove()
+  // }
+
+  // const checkMenuOnDeepLevel = () => {
+  //   const menus = mainMenuHierarchicalList.map(x => x.childMenu)
+  //   const disabedMenuIds = []
+  //   menus.forEach(menu => {
+  //     if (menu.childMenus) {
+  //       const childMenuElements = menu.childMenus
+  //       childMenuElements.forEach(childMenuEl => {
+  //         if (childMenuEl.childMenus) {
+  //           childMenuEl.childMenus.forEach(childMenuChildEl => {
+  //             disabedMenuIds.push(childMenuChildEl.id)
+  //           })
+  //         }
+  //       })
+  //     }
+  //   })
+
+  //   if (disabedMenuIds.length > 0) {
+  //     disabedMenuIds.forEach(disabledMenuId => {
+  //       const disabledMenuEl = document.querySelector(`tr[data-id='${disabledMenuId}']`)
+  //       const createChildBtn = disabledMenuEl.querySelector(".create")
+  //       createChildBtn.classList.add("disabled")
+  //     })
+  //   } else {
+  //     console.log(menus)
+  //   }
+  // }
 
   useEffect(() => {
     setCurrentPageName("Меню")
-    getMainMenuList()
-    getMenuList()
+    getMainMenuHierarchical()
+    // !isMenuLoading && checkMenuOnDeepLevel()
   }, [])
 
   return (
     <>
       <section>
         <h1 className="admin-title title">Меню</h1>
-        <Link to={"/admin/main-menu/create"} className="create btn">
-          Создать меню
-        </Link>
         <Link to={"/admin/menu/create"} className="create btn">
-          Создать дочернее меню
+          Создать дочернее меню для главного меню
         </Link>
-        {isMainMenuLoading && isMenuLoading ? (
+        {isMenuLoading ? (
           <Loader />
         ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>Дата создания</th>
-                <th>Название</th>
-                <th>Ссылка</th>
-                <th>Родительское меню</th>
-                <th>Расположение</th>
-                <th>Действия</th>
-              </tr>
-            </thead>
-            <tbody>
-              {mainMenuList.map((menu, idx) => (
-                <tr data-id={menu.id} key={idx}>
-                  <td>{formatTime(menu.createDate)}</td>
-                  <td>{menu.name}</td>
-                  <td>
-                    <a href={menu.link}>{menu.link}</a>
-                  </td>
-                  <td>-</td>
-                  <td>{getPosition(menu)}</td>
-                  <td className="actions">
-                    <Link
-                      to={"/admin/main-menu/edit"}
-                      className="edit btn"
-                      state={menu}
-                    >
-                      Изменить
-                    </Link>
-                    <button className="delete btn" onClick={() => { setMenuId(menu.id); setModalConfirmDeleteMainMenuActive(true) }}>
-                      Удалить
-                    </button>
-                  </td>
-                </tr>
-              ))}
-              {menuList.map((menu, idx) => (
-                <tr data-id={menu.id} key={idx}>
-                  <td>{formatTime(menu.createDate)}</td>
-                  <td>{menu.name}</td>
-                  <td>
-                    <a href={menu.link}>{menu.link}</a>
-                  </td>
-                  <td>{getParentMenuName(menu.mainMenuId)}</td>
-                  <td>-</td>
-                  <td className="actions">
-                    <Link
-                      to={"/admin/menu/edit"}
-                      className="edit btn"
-                      state={menu}
-                    >
-                      Изменить
-                    </Link>
-                    <button className="delete btn" onClick={() => { setMenuId(menu.id); setModalConfirmDeleteMenuActive(true) }}>
-                      Удалить
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          // <table>
+          //   <thead>
+          //     <tr>
+          //       <th>Дата создания</th>
+          //       <th>Название</th>
+          //       <th>Ссылка</th>
+          //       <th>Родительское главное меню</th>
+          //       <th>Родительское меню</th>
+          //       <th>Действия</th>
+          //     </tr>
+          //   </thead>
+          //   <tbody>
+          //     {
+          //       mainMenuHierarchicalList.map((menu) => (
+          //         <TreeForTableMenu isMainMenuChild={true} treeData={menu.childMenu} deleteFn={(nodeId) => { setMenuId(nodeId); setModalConfirmDeleteMenuActive(true) }} parentMenuName={menu.name}  />
+          //       ))
+          //     }
+          //   </tbody>
+          // </table>
+          <TreeTable value={mainMenuHierarchicalList} tableStyle={{ minWidth: '50rem' }}>
+            <Column field="name" header="Название" expander></Column>
+            <Column field="link" header="Ссылка" body={linkTemplate}></Column>
+            <Column field="mainMenuName" header="Родительское главное меню"></Column>
+            <Column field="createDate" header="Дата создания"></Column>
+            <Column body={actionTemplate}></Column>
+          </TreeTable>
         )}
       </section>
-      <Popup active={modalConfirmDeleteMainMenuActive} setActive={closeModalConfirmDeleteMainMenu}>
-      <h2 className="popup__title title">Вы действительно хотите удалить меню?</h2>
-        <div className="confirm-buttons">
-          <button onClick={() => deleteMainMenu(menuId)} className='confirm-button confirm-button_yes' disabled={isDeleteMainMenuLoading} >
-            {
-              isDeleteMainMenuLoading ? <Loader isOnlySpinner/>
-                :
-                <span>Да</span>
-            }
-          </button>
-          <button className="confirm-button confirm-button_no" onClick={closeModalConfirmDeleteMainMenu}>Нет</button>
-        </div>
-      </Popup>
       <Popup active={modalConfirmDeleteMenuActive} setActive={closeModalConfirmDeleteMenu}>
-      <h2 className="popup__title title">Вы действительно хотите удалить дочернее меню?</h2>
+      <h2 className="popup__title title">Вы действительно хотите удалить меню?</h2>
         <div className="confirm-buttons">
           <button onClick={() => deleteMenu(menuId)} className='confirm-button confirm-button_yes' disabled={isDeleteMenuLoading} >
             {

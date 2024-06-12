@@ -7,6 +7,20 @@ export default class MainMenuService {
         return response;
     }
 
+    static async getMainMenById(id) {
+        const response = await axios.get(`${API_URL}/MainMenu/GetMainMenuById`, {
+            params: {
+                mainMenuId: id
+            }
+        })
+        return response;
+    }
+
+    static async getMainMenuHierarchical() {
+        const response = await axios.get(`${API_URL}/MainMenu/GetMainMenuHierarchical`)
+        return response;
+    }
+
     static async createMainMenu(mainMenu) {
         const response = await axios.post(`${API_URL}/MainMenu/CreateMainMenu`, mainMenu, {
             headers: {

@@ -11,7 +11,8 @@ const CKEditorUI = ({ onChange, initData = '', name = 'editor1', allowUploadImag
       initData={initData}
       name={name}
       onChange={onChange}
-      editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
+      //editorUrl="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"
+      editorUrl="/ckeditor/ckeditor.js"
      />
   )
 }

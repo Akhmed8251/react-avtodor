@@ -7,6 +7,11 @@ export default class MenuService {
         return response;
     }
 
+    static async getMenuHierarchical() {
+        const response = await axios.get(`${API_URL}/Menu/GetMenuHierarchical`)
+        return response;
+    }
+
     static async createMenu(menu) {
         const response = await axios.post(`${API_URL}/Menu/CreateMenu`, menu, {
             headers: {

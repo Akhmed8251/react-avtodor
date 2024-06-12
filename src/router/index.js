@@ -20,9 +20,10 @@ import CreatePage from "../pages/admin/pageContents/CreatePage"
 import EditAdvertising from "../pages/admin/advertising/EditAdvertising"
 import AboutAdmin from "../pages/admin/about/AboutAdmin"
 import EditAbout from "../pages/admin/about/EditAbout"
+import AllMainMenuAdmin from "../pages/admin/main-menu/AllMainMenuAdmin"
+import CreateMainMenu from "../pages/admin/main-menu/CreateMainMenu"
+import EditMainMenu from "../pages/admin/main-menu/EditMainMenu"
 import AllMenuAdmin from "../pages/admin/menu/AllMenuAdmin"
-import CreateMainMenu from "../pages/admin/menu/main-menu/CreateMainMenu"
-import EditMainMenu from "../pages/admin/menu/main-menu/EditMainMenu"
 import CreateMenu from "../pages/admin/menu/CreateMenu"
 import EditMenu from "../pages/admin/menu/EditMenu"
 import EditPage from "../pages/admin/pageContents/EditPage"
@@ -58,9 +59,10 @@ export const privateRoutes = [
     {path: '/admin/page/edit', element: <EditPage />, exact: true},
     {path: '/admin/about', element: <AboutAdmin />, exact: true},
     {path: '/admin/about/edit', element: <EditAbout />, exact: true},
-    {path: '/admin/all-menu', element: <AllMenuAdmin />, exact: true},
+    {path: '/admin/all-main-menu', element: <AllMainMenuAdmin />, exact: true},
     {path: '/admin/main-menu/create', element: <CreateMainMenu />, exact: true},
     {path: '/admin/main-menu/edit', element: <EditMainMenu />, exact: true},
+    {path: '/admin/all-menu', element: <AllMenuAdmin />, exact: true},
     {path: '/admin/menu/create', element: <CreateMenu />, exact: true},
     {path: '/admin/menu/edit', element: <EditMenu />, exact: true},
 ]

@@ -109,6 +109,19 @@ table, tr, th, td {
     margin-bottom: 14px;
 }
 
+.disabled {
+    pointer-events: none;
+}
+
+.create.disabled {
+    background-color: #a399c7;
+}
+
+table .create {
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
 .edit {
     background-color: #10cf50;   
 }
@@ -389,4 +402,31 @@ table, tr, th, td {
     transform: rotate(0deg);
     z-index: 10;
     transition: .5s;
+}
+
+.p-treetable-toggler {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    position: relative;
+}
+
+.p-treetable .p-treetable-tbody > tr > td .p-treetable-toggler {
+    width: 2rem;
+    height: 2rem;
+    color: #6b7280;
+    border: 0 none;
+    background: transparent;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    margin-right: 0.5rem;
+}
+
+.p-treetable .p-treetable-tbody > tr > td .p-treetable-toggler:enabled:hover {
+    color: #374151;
+    border-color: transparent;
+    background: #f3f4f6;
 }

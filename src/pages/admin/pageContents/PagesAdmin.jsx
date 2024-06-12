@@ -65,6 +65,7 @@ const PagesAdmin = () => {
                 <th>Дата создания</th>
                 <th>Заголовок</th>
                 <th>Ссылка</th>
+                <th>Тип контента</th>
                 <th>Действия</th>
               </tr>
             </thead>
@@ -73,7 +74,8 @@ const PagesAdmin = () => {
                 <tr data-id={page.id} key={idx}>
                   <td>{formatTime(page.createDate)}</td>
                   <td>{page.title}</td>
-                  <td>{page.link}</td>
+                  <td>{page.ownLink}</td>
+                  <td>{page.advertisingId ? "Объявление" : page.menuId ? "Меню" : "Дочерняя страница"}</td>
                   <td className="actions">
                     <Link
                       to={`/admin/page/edit`}

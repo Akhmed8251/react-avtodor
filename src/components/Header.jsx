@@ -10,62 +10,6 @@ import ContactsService from '../api/ContactsService'
 import { Link } from 'react-router-dom'
 import Tree from './ui/Tree'
 
-const treeData = [
-    {
-      key: "0",
-      label: "Факультет автомобильных дорог и транспорта",
-      children: [
-        {
-          key: "0-0",
-          label: "Факультет автомобильных дорог и транспорта",
-          children: [
-            {
-              key: "0-0-1",
-              label: "Факультет автомобильных дорог и транспорта",
-            },
-            {
-              key: "0-0-2",
-              label: "Факультет автомобильных дорог и транспорта",
-            },
-            {
-              key: "0-0-3",
-              label: "Document-0-3.doc",
-              children: [
-                {
-                    key: "0-0-0-1",
-                    label: "Факультет автомобильных дорог и транспорта",
-                },
-                {
-                    key: "0-0-0-2",
-                    label: "Document-0-3-2.doc",
-                },
-              ]
-            },
-          ],
-        },
-      ],
-    },
-    {
-      key: "1",
-      label: "Desktop",
-      children: [
-        {
-          key: "1-0",
-          label: "document1.doc",
-        },
-        {
-          key: "1-1",
-          label: "documennt-2.doc",
-        },
-      ],
-    },
-    {
-      key: "2",
-      label: "Downloads",
-      children: [],
-    },
-  ];
-
 const Header = () => {
   const {isAuth, setIsAuth, setIsAdminViewPublicPage, employeeName, setEmployeeName, setEmployeeRole } = useContext(AdminContext)
 
@@ -73,7 +17,7 @@ const Header = () => {
 
   const [mainMenu, setMainMenu] = useState([])
   const [getMainMenu, isMenuLoading, menuErr] = useFetching(async () => {
-    const response = await MainMenuService.getMainMenu()
+    const response = await MainMenuService.getMainMenuHierarchical()
     if (response.status === 200) {
       setMainMenu(response.data)
     } else {
@@ -128,41 +72,42 @@ const Header = () => {
         const headerTopContainer = document.querySelector(".header-top__container")
         if (window.matchMedia("(min-width: 769px)").matches) {
             headerMenuBody.style.transform = `translateY(0px)`
+            headerMenuBody.style.paddingBottom = `${headerTopContainer.scrollHeight}px`
         } else {
             headerMenuBody.style.transform = `translateY(${headerTopContainer.scrollHeight}px)`
+            headerMenuBody.style.paddingBottom = `${headerTopContainer.scrollHeight}px`
         }
     } else {
         if (window.matchMedia("(min-width: 769px)").matches) {
             headerMenuBody.style.transform = `translateX(-100%)`
+            headerMenuBody.style.paddingBottom = `0px`
         } else {
             headerMenuBody.style.transform = `translateY(-100%)`
+            headerMenuBody.style.paddingBottom = `0px`
         }
     }
   }
 
-  const openSubMenu = (menuWithSubmenu) => {
+  const toggleSubMenu = (menuWithSubmenu) => {
     menuWithSubmenu.classList.toggle("_open")
 
     const submenu = menuWithSubmenu.querySelector(".submenu");
     if (menuWithSubmenu.classList.contains("_open")) {
-        submenu.style.maxHeight = submenu.scrollHeight + "px";
-
-        if (submenu.closest(".submenu__list")) {
-            recalcParentSubmenuHeight(submenu)
-        }
+        submenu.style.maxHeight = "max-content";
     } else {
         submenu.style.maxHeight = null;
     }
   }
 
-  const recalcParentSubmenuHeight = (submenu) => {
-    const parentSubmenu = submenu.closest(".submenu__list").closest(".submenu")
-    parentSubmenu.style.maxHeight = (parentSubmenu.scrollHeight + submenu.scrollHeight) + "px";
-
-    if (parentSubmenu.closest(".submenu__list")) {
-        recalcParentSubmenuHeight(parentSubmenu)
-    }
-  }
+//   const recalcParentSubmenuHeight = (submenu) => {
+//     const parentSubmenu = submenu.closest(".submenu__list").closest(".submenu")
+//     console.log(`подменю = ${submenu.scrollHeight}; родитель подменю = ${parentSubmenu.scrollHeight};`)
+//     parentSubmenu.style.maxHeight = parentSubmenu.scrollHeight + submenu.scrollHeight + 20 + "px"; // 20 - отступ вниз
+//     console.log(`${parentSubmenu.style.maxHeight}`)
+//     if (parentSubmenu.closest(".submenu__list")) {
+//         recalcParentSubmenuHeight(parentSubmenu)
+//     }
+//   }
   
   return (
     <header className="header">
@@ -246,46 +191,7 @@ const Header = () => {
                             <span className="header-menu__top-item header-menu__top-item_main">МАДИ</span>
                             <span className="header-menu__top-item">Махачкалинский филиал</span>
                         </div>
-                        <ul className="header-menu__list">
-                            {
-                                isMenuLoading
-                                    ?
-                                        <Loader />
-                                    :
-                                        mainMenu.filter(m => m.sideMenuIsVisible === true).map((mainMenuItem, idx) => (
-                                            (mainMenuItem.childMenu && mainMenuItem.childMenu.length > 0)
-                                                ?
-                                                    <li key={idx} className="header-menu__item has-submenu" onClick={(evt) => openSubMenu(evt.target.closest(".has-submenu"))}>
-                                                        <div className="header-menu__submenu-wrapper submenu-wrapper">
-                                                            <a href={mainMenuItem.link} className="submenu-wrapper__link">{mainMenuItem.name}</a>
-                                                            <button className="submenu-wrapper__btn submenu-btn">
-                                                                <div className="submenu-btn__icon">
-                                                                    <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M1 1L9 9L17 1" stroke="#4a27c9" strokeWidth="2"/>
-                                                                    </svg> 
-                                                                </div>
-                                                            </button>
-                                                        </div>
-                                                        <div className="submenu">
-                                                            <ul className="submenu__list">
-                                                                {
-                                                                    mainMenuItem.childMenu.map((childMenuItem, idx) => (
-                                                                        <li key={idx} className="submenu__item">
-                                                                            <a href={childMenuItem.link} className="submenu__link">{childMenuItem.name}</a>
-                                                                        </li>
-                                                                    ))
-                                                                }
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                :
-                                                    <li key={idx} className="header-menu__item">
-                                                        <a href={mainMenuItem.link} className="header-menu__link">{mainMenuItem.name}</a>
-                                                    </li>
-                                        ))
-                            }
-                        </ul>
-                        <Tree treeData={treeData} isMainMenu openFn={(evt) => openSubMenu(evt.target.closest(".has-submenu"))} />
+                        <Tree treeData={mainMenu.filter(m => m.sideMenuIsVisible == true)} isMainMenu openFn={(evt) => toggleSubMenu(evt.target.closest(".has-submenu"))} />
                     </div>
                 </div>
                 <ul className="header-bottom__list">

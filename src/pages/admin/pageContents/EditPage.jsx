@@ -14,22 +14,130 @@ import { FILES_URL } from "../../../api/config";
 import Loader from "../../../components/ui/Loader";
 import deleteIcon from "../../../assets/images/menu-close.svg";
 import fileIcon from "../../../assets/images/file-icon.svg";
+import Select from "../../../components/ui/Select";
+import AdvertisingService from "../../../api/AdvertisingService";
+import MenuService from "../../../api/MenuService";
+
+const typesContent = [
+  {
+    value: "Объявление",
+    label: "Объявление"
+  },
+  {
+    value: "Меню",
+    label: "Меню"
+  },
+  {
+    value: "Дочерняя страница",
+    label: "Дочерняя страница"
+  }
+]
 
 const EditPage = () => {
   const redirect = useNavigate();
 
   const location = useLocation();
-  const editedPageState = location.state;
+  const editedPage = location.state;
 
   const deleteFileOnServerCheckboxRef = useRef(null);
 
-  const [editedPage, setEditedPage] = useState(editedPageState)
+  const advertisingSelectRef = useRef(null)
+  const menuSelectRef = useRef(null)
+  const contentSelectRef = useRef(null)
+
+  const resetSelectValue = (selectRef, setOptionsState = null) => {
+    selectRef.current?.setValue(null, "onChange")
+    setOptionsState && setOptionsState([])
+  }
+
+  const setSelectDefaultValue = (selectRef, name, value, dataArr) => {
+    selectRef.current.setValue(dataArr.find(d => d.value == value), "onChange")
+    setValue(name, value)
+}
+
+  const [advertisings, setAdvertisings] = useState([]);
+  const [advertisingId, setAdvertisingId] = useState(null)
+  const [getAdvertisings, isAdvertisingsLoading, advertisingsErr] = useFetching(async () => {
+    const response = await AdvertisingService.getAdvertisings();
+    if (response.status == 200) {
+      let dataArr = []
+        response.data.forEach(dataItem => {
+            dataArr.push({
+                value: dataItem.id,
+                label: dataItem.title || `Id = ${dataItem.id}`
+            })
+        })
+      setAdvertisings(dataArr);
+
+      setSelectDefaultValue(advertisingSelectRef, "advertisingId", editedPage.advertisingId, dataArr)
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
+    }
+  });
+
+  const [menuList, setMenuList] = useState([]);
+  const [menuId, setMenuId] = useState(null);
+  const [getMenuList, isMenuListLoading, menuErr] = useFetching(async () => {
+    const response = await MenuService.getMenuHierarchical();
+    if (response.status == 200) {
+      let dataArr = []
+        response.data.forEach(dataItem => {
+          if (dataItem.childMenus?.length > 0) {
+            dataItem.childMenus.forEach(dataItemChild => {
+              if (dataItemChild.childMenus?.length > 0) {
+                dataItemChild.childMenus.forEach(dataItemChildChild => {
+                  dataArr.push({
+                    value: dataItemChildChild.id,
+                    label: dataItemChildChild.name
+                  })
+                })
+              } else {
+                dataArr.push({
+                  value: dataItemChild.id,
+                  label: dataItemChild.name
+                })
+              }
+            })
+          } else {
+            dataArr.push({
+              value: dataItem.id,
+              label: dataItem.name
+            })
+          }  
+        })
+      setMenuList(dataArr);
+
+      setSelectDefaultValue(menuSelectRef, "menuId", editedPage.menuId, dataArr)
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
+    }
+  });
+
+  const [contents, setContents] = useState([]);
+  const [contentId, setContentId] = useState(null)
+  const [getContents, isContentsLoading, contentsErr] = useFetching(async () => {
+    const response = await ContentService.getContents();
+    if (response.status == 200) {
+      let dataArr = []
+      response.data.forEach(dataItem => {
+        dataArr.push({
+          value: dataItem.id,
+          label: dataItem.title
+        })
+      })
+      setContents(dataArr);
+
+      setSelectDefaultValue(contentSelectRef, "contentId", editedPage.contentId, dataArr)
+    } else if (response.status == 401) {
+      alert("Срок действия текущей сессии истек. Попробуйте войти заново")
+    }
+  });
+
   const [fileModels, setFileModels] = useState(null);
   const [getContentById, isGetPageLoading, pageErr] = useFetching(
     async (contentId) => {
       const response = await ContentService.getContentById(contentId);
       if (response.status == 200) {
-        setEditedPage(response.data)
         setFileModels(
           response.data.fileModels.filter((f) => f.isDeleted == false)
         );
@@ -105,12 +213,13 @@ const EditPage = () => {
     }
   );
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, watch, setValue, getValues } = useForm({
     mode: "onSubmit",
     defaultValues: {
       title: editedPage.title,
       htmlContent: editedPage.htmlContent,
-      link: editedPage.link,
+      ownLink: editedPage.ownLink,
+      typeContent: editedPage.advertisingId ? "Объявление" : editedPage.menuId ? "Меню" : "Дочерняя страница"
     },
   });
 
@@ -205,27 +314,51 @@ const EditPage = () => {
     setModalTabs(false);
   };
 
+  const watchTypeContent = watch("typeContent", getValues("typeContent"))
+
   const onEdit = (data) => {
     const pageContent = {
       id: editedPage.id,
       title: data.title,
-      link: data.link,
+      ownLink: data.ownLink,
       htmlContent: parsingCKEditorData(data.htmlContent),
       contentType: 0,
       createDate: editedPage.createDate,
       fileModels: editedPage.fileModels,
-      isDeleted: false,
-      parentContentId: null,
-      parentContent: null,
-      newsId: null,
-      advertisingId: null,
+      isDeleted: false
     };
+
+    if (advertisingId) {
+      pageContent.advertisingId = data.advertisingId
+    } else if (menuId) {
+      pageContent.menuId = data.menuId
+    } else if (contentId) {
+      pageContent.contentId = data.contentId
+    }
+
     editPage(pageContent, data.fileModels);
   };
 
   useEffect(() => {
-    getContentById(editedPage.id);
-  }, []);
+    if (watchTypeContent) {
+      resetSelectValue(advertisingSelectRef, setAdvertisings)
+      setAdvertisingId(null)
+
+      resetSelectValue(menuSelectRef, setMenuList)
+      setMenuId(null)
+
+      resetSelectValue(contentSelectRef, setContents)
+      setContentId(null)
+    }
+
+    if (watchTypeContent == "Объявление") {
+      getAdvertisings()
+    } else if (watchTypeContent == "Меню") {
+      getMenuList()
+    } else if (watchTypeContent == "Дочерняя страница") {
+      getContents()
+    }
+  }, [watchTypeContent])
 
   return (
     <>
@@ -260,13 +393,13 @@ const EditPage = () => {
               />
             </label>
             <label className="form__label">
-              <span className="form__text">Ссылка (не должна быть равна: bvi, fonts, Files, images, js)</span>
+              <span className="form__text">Ссылка (не должна быть равна названию одной из зарезервированных папок: bvi, fonts, Files, images, js, ckeditor)</span>
               <Controller
                 control={control}
-                name="link"
+                name="ownLink"
                 rules={{
                   required: true,
-                  pattern: /^(?!bvi$|\/bvi$|bvi\/$|\/bvi\/$|Files$|\/Files$|Files\/$|\/Files\/$|fonts$|\/fonts$|fonts\/$|\/fonts\/$|images$|\/images$|images\/$|\/images\/$|js$|\/js$|js\/$|\/js\/$).*$/
+                  pattern: /^(?!bvi$|\/bvi$|bvi\/$|\/bvi\/$|Files$|\/Files$|Files\/$|\/Files\/$|fonts$|\/fonts$|fonts\/$|\/fonts\/$|images$|\/images$|images\/$|\/images\/$|js$|\/js$|js\/$|\/js\/$|ckeditor$|\/ckeditor$|ckeditor\/$|\/ckeditor\/$).*$/i
                 }}
                 render={({
                   field: { value, onChange },
@@ -333,6 +466,106 @@ const EditPage = () => {
                 </div>
               )}
             </label>
+            <label className="form__label">
+              <span className="form__text">Тип контента</span>
+              <Controller
+                control={control}
+                name="typeContent"
+                rules={{
+                  required: true
+                }}
+                render={({ field: { value, onChange }, fieldState: { error } }) => (
+                  <div className={`${error ? "error" : ""}`}>
+                    <Select
+                      value={typesContent.find(t => t.value == value)}
+                      placeholder="Введите тип контента"
+                      options={typesContent}
+                      isDisabled={false}
+                      onChange={(newValue) => onChange(newValue.value)}
+                    />
+                </div>
+                )}
+              />
+            </label>
+            {
+              watchTypeContent == "Объявление"
+              ?
+              <label className="form__label">
+                <span className="form__text">Объявление</span>
+                <Controller
+                  control={control}
+                  name="advertisingId"
+                  rules={{
+                    required: watchTypeContent == "Объявление"
+                  }}
+                  render={({ field: { value, onChange }, fieldState: { error } }) => (
+                    <div className={`${error ? "error" : ""}`}>
+                      <Select
+                        value={advertisings.find(a => a.value == value)}
+                        ref={advertisingSelectRef}
+                        placeholder="Введите название объявления или его id"
+                        options={advertisings}
+                        isLoading={isAdvertisingsLoading}
+                        isDisabled={isAdvertisingsLoading}
+                        onChange={(newValue) => { setAdvertisingId(newValue?.value); onChange(newValue?.value) }}
+                      />
+                  </div>
+                  )}
+                />
+              </label>
+              :
+                  watchTypeContent == "Дочерняя страница"
+                  ?
+                  <label className="form__label">
+                    <span className="form__text">Дочерняя страница</span>
+                    <Controller
+                      control={control}
+                      name="contentId"
+                      rules={{
+                        required: watchTypeContent == "Дочерняя страница"
+                      }}
+                      render={({ field: { value, onChange }, fieldState: { error } }) => (
+                        <div className={`${error ? "error" : ""}`}>
+                          <Select
+                            value={contents.find(c => c.value == value)}
+                            ref={contentSelectRef}
+                            placeholder="Введите заголовок страницы"
+                            onChange={(newValue) => { setContentId(newValue?.value); onChange(newValue?.value) }}
+                            options={contents}
+                            isLoading={isContentsLoading}
+                            isDisabled={isContentsLoading}
+                          />
+                      </div>
+                      )}
+                    />
+                </label>
+                :
+                  watchTypeContent == "Меню"
+                  &&
+                <label className="form__label">
+                  <span className="form__text">Меню</span>
+                  <Controller
+                    control={control}
+                    name="menuId"
+                    rules={{
+                      required: watchTypeContent == "Меню"
+                    }}
+                    render={({ field: { value, onChange }, fieldState: { error } }) => (
+                      <div className={`${error ? "error" : ""}`}>
+                        <Select
+                          value={menuList.find(m => m.value == value)}
+                          ref={menuSelectRef}
+                          placeholder="Введите меню"
+                          onChange={(newValue) => { setMenuId(newValue?.value); onChange(newValue?.value) }}
+                          options={menuList}
+                          isLoading={isMenuListLoading}
+                          isDisabled={isMenuListLoading}
+                        />
+                      </div>
+                    )}
+                  />
+                </label>
+            }
             <label className="form__label">
               <span className="form__text">Контент</span>
               <Controller

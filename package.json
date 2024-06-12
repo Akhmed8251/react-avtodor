@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^1.6.2",
     "ckeditor4-react": "^5.0.0",
+    "primereact": "^10.6.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",

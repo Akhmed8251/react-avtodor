@@ -63,6 +63,7 @@ const AdvertisingsAdmin = () => {
           <table>
             <thead>
               <tr>
+                <th>Id</th>
                 <th>Дата создания</th>
                 <th>Заголовок</th>
                 <th>Главный текст</th>
@@ -75,6 +76,7 @@ const AdvertisingsAdmin = () => {
             <tbody>
               {advertisings.map((advertising, idx) => (
                 <tr data-id={advertising.id} key={idx}>
+                  <td>{advertising.id}</td>
                   <td>{formatTime(advertising.createDate)}</td>
                   <td>{advertising.title}</td>
                   <td>{advertising.mainText}</td>

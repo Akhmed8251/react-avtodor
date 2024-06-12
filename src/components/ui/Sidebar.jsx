@@ -28,6 +28,10 @@ const pages = [
     value: "about",
   },
   {
+    label: "Главные-меню",
+    value: "all-main-menu",
+  },
+  {
     label: "Меню",
     value: "all-menu",
   },
@@ -66,7 +70,7 @@ const Sidebar = () => {
         {pages.map((page, idx) => (
           <li key={idx} className="sidebar__item" data-name={page.label}>
             <Link to={`/admin/${page.value}`} className="sidebar__link">
-              {page.label}
+              {page.label.replace("-", " ")}
             </Link>
           </li>
         ))}

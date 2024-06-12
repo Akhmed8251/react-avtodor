@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   const [mainMenu, setMainMenu] = useState([])
   const [getMainMenu, isMenuLoading, menuErr] = useFetching(async () => {
-    const response = await MainMenuService.getMainMenu()
+    const response = await MainMenuService.getMainMenuHierarchical()
     if (response.status === 200) {
       setMainMenu(response.data)
     } else {
@@ -63,7 +63,7 @@ const Footer = () => {
                 <Loader />
                 :
                 mainMenu
-                  .filter((m) => m.topMainPageIsVisible === true)
+                  ?.filter((m) => m.topMainPageIsVisible === true)
                   .map((mainMenuItem, idx) => (
                     <li key={idx} className="footer-top__item">
                       <a href={mainMenuItem.link} className="footer-top__link">
@@ -90,13 +90,15 @@ const Footer = () => {
       </ul>
       <div className="footer__bottom footer-bottom">
         <div className="footer-bottom__container container">
-          <ul className="footer-bottom__list">
+          
             {
               isMenuLoading
                 ?
                 <Loader />
                 :
-                mainMenu
+                  mainMenu.filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === false && m.menuAboveAdvertisingIsVisible === false && m.childMenu && m.childMenu.length > 0).length > 0 &&
+                <ul className="footer-bottom__list">
+                {mainMenu
                   .filter((m) => m.topMainPageIsVisible === false && m.sideMenuIsVisible === false && m.menuAboveAdvertisingIsVisible === false && m.childMenu && m.childMenu.length > 0)
                   .map((mainMenuItem, idx) => (
                     <li key={idx} className="footer-bottom__item footer-item">
@@ -113,9 +115,10 @@ const Footer = () => {
                         }
                       </ul>
                     </li>
-                  ))
+                  ))}
+                  </ul>
             }
-          </ul>
+          
           <div className="footer-bottom__links">
             {
               isMenuLoading
