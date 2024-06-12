@@ -6,7 +6,6 @@ import MenuService from "../../../api/MenuService";
 import { useFetching } from "../../../hooks/useFetching";
 import Loader from "../../../components/ui/Loader";
 import Popup from "../../../components/ui/Popup";
-import TreeForTableMenu from "../../../components/admin/TreeForTableMenu"
 import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { formatTime } from "../../../utils/time";
